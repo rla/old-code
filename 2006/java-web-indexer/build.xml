@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+
+<!-- Indexeri ehitusskript -->
+<project name="indexer" basedir="." default="build">
+
+	<!-- Konfiguratsioon kaust -->
+	<property name="conf.dir" value="conf" />
+	
+	<!-- Ehitusseadete konfiguratsioonifail -->
+	<property file="${conf.dir}/build.properties" />
+	
+	<!-- Deploy konfiguratsioonifail -->
+	<property file="${conf.dir}/deploy.properties" />
+	
+	<!-- Andmebaasi konfiguratsioonifail -->
+	<property file="${conf.dir}/db.properties" />
+
+	<!-- Lähtekoodi kataloog -->
+	<property name="src.dir" value="src" />
+	
+	<!-- Kaust, kust genereeritakse levitatav .war fail -->
+	<property name="web.dir" value="war" />
+	
+	<!-- Kaust, kuhu kompileeritakse klassifailid -->
+	<property name="build.dir" value="${web.dir}/WEB-INF/classes" />
+	
+	<!-- Väliste teekide kaust -->
+	<property name="lib.dir" value="${tomcat.path}/common/lib" />
+	
+	<property name="dbconf.dir" value="db" />
+	
+	<!-- Dokumentatsiooni kaust -->
+	<property name="doc.dir" value="doc" />
+	<property name="doc.javadoc.dir" value="${doc.dir}/javadoc" />
+
+	<property name="build.tests.dir" value="${build.dir}" />
+	<property name="test.dir" value="test" />
+	
+	<!-- EMMA testide tulemuste salvestamise kaust -->
+	<property name="tests.report.dir" value="${doc.dir}/test-reports" />
+	
+	<!-- EMMA koodi katvust kirjeldava raporti asukoht -->
+	<property name="emma.coverage.dir" value="${doc.dir}/coverage-raports" />
+	
+	<!-- Väljalaske kaust -->
+	<property name="release.dir" location="release" />
+
+	<property name="java.javac" value="javac" />
+	<property name="java.java" value="java" />
+
+	<property name="devweb.xml" value="devweb-build.xml" />
+
+	<!-- Süsteemi põhiliste teekide asukoht -->
+	<path id="master-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${.dir}" />
+	</path>
+
+	<!--   Apache Tomcat'i jaoks vajalikud teegid -->
+	<fileset dir="${appserver.home}/common/lib">
+		<include name="servlet*.jar" />
+	</fileset>
+
+	<!-- Testide klassifailide asukoht -->
+	<path id="tests.run.classpath">
+		<pathelement location="${build.tests.dir}" />
+		<pathelement location="${lib.dir}/junit.jar" />
+		<path refid="emma.classpath" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Testide klassifailide kompileerimise kaust -->
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Koodi kaetust mõõtva emma klassifailide asukoht -->
+	<path id="emma.classpath">
+		<pathelement location="${lib.dir}/emma.jar" />
+		<pathelement location="${lib.dir}/emma_ant.jar" />
+	</path>
+	<taskdef resource="emma_ant.properties" classpathref="emma.classpath" />
+	
+	<!-- Andmebaasi ühendusdraiveri klassifailide asukoht -->
+	<path id="database.driver.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="postgresql*.jar" />
+		</fileset>
+	</path>
+	
+	<!-- Andmebaasi ja selle tabelite loomine -->
+	<target name="init_db" depends="init_db_create,init_db_dataload">
+	</target>
+	
+	<!-- Andmebaasi loomine -->
+	<target name="init_db_create" description="Creating database and needed user in maintenance database">
+		<sql
+			classpathref="database.driver.classpath"
+		    driver="org.postgresql.Driver"
+		    url="${db.maintenance.url}"
+		    userid="${db.maintenance.userid}"
+		    password="${db.maintenance.password}"
+			encoding="UTF-8"
+			autocommit="true"
+		    src="${dbconf.dir}/indexer-schema.sql"
+		/>
+	</target>
+	
+	<!-- Algandmete paigutamine andmebaasi -->
+	<target name="init_db_dataload" description="Creating tables and inserting initial data in the existing database">
+		<sql
+			classpathref="database.driver.classpath"
+		    driver="org.postgresql.Driver"
+		    url="${db.ylis.url}"
+		    userid="${db.ylis.userid}"
+		    password="${db.ylis.password}"
+			encoding="UTF-8"
+		    src="${dbconf.dir}/indexer-data.sql"
+		/>
+	</target>
+	
+	<!-- Andmebaasi skeema ja kasutaja eemaldamine-->
+	<target name="drop_db" description="Drop projects database and remove created role">
+		<sql
+			classpathref="database.driver.classpath"
+		    driver="org.postgresql.Driver"
+		    url="${db.maintenance.url}"
+		    userid="${db.maintenance.userid}"
+		    password="${db.maintenance.password}"
+			encoding="UTF-8"
+			autocommit="true"
+		    src="${dbconf.dir}/indexer-drop.sql"
+		/>
+	</target>
+	
+	<!-- Ainult AB tabelite kustutamine ja uuesti loomine -->
+	<target name="reload_db" description="Delete and recreate tables and insert initial data">
+		<sql
+			classpathref="database.driver.classpath"
+		    driver="org.postgresql.Driver"
+		    url="${db.ylis.url}"
+		    userid="${db.ylis.userid}"
+		    password="${db.ylis.password}"
+			encoding="UTF-8"
+		    src="${dbconf.dir}/indexer-schema.sql"
+		/>
+	</target>
+	
+	<!-- Lähtekoodi kompileerimine -->
+	<target name="build" description="Compile main source tree java files">
+		<mkdir dir="${build.dir}" />
+		<javac destdir="${build.dir}" encoding="UTF-8" target="1.5" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}" />
+			<classpath refid="master-classpath" />
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<!-- Puhastab väljundi kausta .class laiendiga failidest -->
+	<target name="clean" description="Clean output directories">
+		<delete>
+			<fileset dir="${build.dir}">
+				<include name="**/*.class" />
+			</fileset>
+		</delete>
+	</target>
+
+
+	<!-- Luuakse snapshot ehk pilt kõikidest inimloetavatest failidest süsteemi kaustas -->
+	<target name="snapshot" description="Create a complete snapshot.">
+		<!-- Versiooni nr-d tulevad version.properties failist-->
+		<mkdir dir="${release.dir}" />
+		<delete file="${release.dir}/${ant.project.name}-snapshot-${arendustest.version.milestone}.zip" failonerror="false" />
+		<zip file="${release.dir}/${ant.project.name}-snapshot-${arendustest.version.milestone}.zip">
+			<fileset dir=".">
+				<exclude name="${release.dir}/**" />
+				<exclude name="${build.dir}/**" />
+				<exclude name="devweb-personal.properties" />
+				<exclude name=".*/**" />
+			</fileset>
+		</zip>
+	</target>
+
+	<!-- Luuakse süsteemist väljalase, mida on võimalik test- või toodangkeskkonda paigaldada -->
+	<target name="release" description="Create release" depends="deploywar">
+		<!-- versiooni nr-d tulevd version.properties failist-->
+		<!--	<mkdir dir="${release.dir}" /> -->
+		<delete file="${release.dir}/${ant.project.name}-release-${arendustest.version.milestone}.zip" failonerror="false" />
+		<zip file="${release.dir}/${ant.project.name}-release-${arendustest.version.milestone}.zip">
+			<fileset dir=".">
+
+				<include name="**/release/*.war" />
+				<include name="${doc.dir}/deployment/**" />
+				<include name="${dbconf.dir}/*init*.sql" />
+			</fileset>
+		</zip>
+	</target>
+
+	<!-- Testide ehitamine ja käivitamine -->
+	<target name="test" depends="build-tests" description="Test the template application">
+		<mkdir dir="${tests.report.dir}" />
+		<mkdir dir="${emma.coverage.dir}" />
+
+		<emma enabled="true">
+			<instr instrpath="${build.dir}" mode="overwrite" metadatafile="${emma.coverage.dir}/metadata.emma" />
+		</emma>
+		<junit printsummary="yes" haltonfailure="no">
+			<classpath refid="tests.run.classpath" />
+			<formatter type="plain" />
+
+			<batchtest fork="yes" todir="${tests.report.dir}">
+				<fileset dir="${test.dir}">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<move file="coverage.ec" todir="${emma.coverage.dir}" failonerror="false" />
+		<emma enabled="true">
+			<report sourcepath="${src.dir}">
+				<infileset dir="${emma.coverage.dir}" includes="*.em*, *.ec" />
+				<html outfile="${emma.coverage.dir}/coverage.html" />
+			</report>
+		</emma>
+	</target>
+
+	<!-- Testide ehitamine -->
+	<target name="build-tests" depends="build" description="Build tests of the system">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.tests.dir}" />
+		<javac srcdir="${test.dir}" destdir="${build.tests.dir}" debug="true" debuglevel="lines,vars,source" encoding="utf-8" executable="${java.javac}" compiler="javac1.5" target="1.5" source="1.5" fork="true">
+			<classpath refid="compile.classpath" />
+			<classpath location="${build.classes.dir}" />
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<!-- Javadoc loomine -->
+	<target name="javadoc" description="Build internal documentation">
+		<mkdir dir="${doc.javadoc.dir}" />
+		<javadoc destdir="${doc.javadoc.dir}" classpathref="compile.classpath">
+			<fileset dir="${src.dir}" includes="**/*.java" />
+		</javadoc>
+	</target>
+
+	<!-- Süsteemi serverisse paigaldamine. Salvestatakse üle vaid muudetud failid -->
+	<target name="deploy" depends="build" description="Deploy application">
+		<echo message="Copying needed configuration files from ${conf.dir} to ${build.dir}" />
+		<copy todir="${build.dir}" preservelastmodified="true">
+			<fileset dir="${conf.dir}">
+				<include name="*.properties" />
+			</fileset>
+		</copy>
+		<copy todir="${deploy.path}" preservelastmodified="true">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Süsteemi serverisse paigaldamine. Süsteem paigaldatakse .war failina -->
+	<target name="deploywar" depends="build" description="Deploy application as a WAR file">
+		<echo message="Copying needed configuration files from ${conf.dir} to ${build.dir}" />
+		<copy todir="${build.dir}" preservelastmodified="true">
+			<fileset dir="${conf.dir}">
+				<include name="*.properties" />
+			</fileset>
+		</copy>		
+		<copy todir="${build.dir}" preservelastmodified="true">
+			<fileset dir="${conf.dir}">
+				<include name="log4j.properties" />
+				<include name="messages.properties" />
+			</fileset>
+		</copy>
+		<mkdir dir="${release.dir}" />
+		<war destfile="${release.dir}/${name}.war" webxml="${web.dir}/WEB-INF/web.xml">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</war>
+		<copy todir="${deploy.path}" preservelastmodified="true">
+			<fileset dir=".">
+				<include name="*.war" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Rakenduse kustutamine serverist -->
+	<target name="undeploy" description="Un-Deploy application">
+		<delete>
+			<fileset dir="${deploy.path}/${name}">
+				<include name="**/*.*" />
+			</fileset>
+		</delete>
+	</target>
+	<!-- /usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/usr/games:/opt/www/htdig/bin:/usr/lib/java/bin:/usr/lib/java/jre/bin:/opt/kde/bin:/usr/lib/qt/bin:/usr/share/texmf/bin:/arhiiv/server/ant/bin:/arhiiv/server/java/jdk1.5.0_02/bin -->
+</project>

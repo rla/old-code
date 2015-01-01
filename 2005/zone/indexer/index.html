@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+  <title>Tekstifailide indekseerija</title>
+  <meta name="Description" content="Tekstifailide indekseerija">
+  <meta name="Author" content="Raivo Laanemets">
+  <meta name="Copyright" content="(c) 2005 Raivo Laanemets">
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-13">
+  <style type="text/css">
+  body, li, i, h1, h2, h3, h4, h5, p {
+    font-family: Helvetica, sans-serif;
+  }
+  p {
+    padding-left: 20px;
+  }
+  .code {
+    background-color: #eeeeee;
+    padding: 15px;
+    font-family: Courier, serif; 
+    margin-left: 20px;
+  }
+  </style>
+  </head>
+<body style="width:600px">
+<h1>Tekstifailide indekseerija</h1>
+<p>
+Antud vahend on mõeldud failisüsteemis tekstifalide sisu indekseerimiseks,
+et hiljem leida kiiresti märksõnadele vastav fail.
+</p>
+<h2>Nõuded süsteemile</h2>
+<ul>
+  <li>PHP 5 CGI versioon, SPL laiendused</li>
+  <li>MySQL 4.1 (et töötaks näitena toodud alampäringut kasutav päring)</li>
+</ul>
+<h2>Indekseerimine</h2>
+<p>
+Kõigepealt tuleb luua indekseerija andmebaas(vt. <a href="indexer.sql">indexer.sql</a>),
+seejärel seada juurkaust ja MySQL serveri ühendusparameetrid failis
+<a href="create_index.phps">create_index.php</a>. Lõpuks käivitada
+create_index.php käsurealt käsuga:
+</p>
+<div class="code">
+<pre>
+$ php create_index.php
+</pre>
+</div>
+<p>
+Indekseerija kasutab vaid faile lõpuga:<br>
+<i>.txt, .log, .html, .htm, .bas, .cpp, .c, .h, .java, .pas, .xml, .php, .xsl, .asm, .s, .doc, .rtf</i><br>
+ja faile nimega:<br>
+<i>makefile, readme, todo, install, notice, license</i>.
+</p>
+<h2>Otsimine</h2>
+<p>
+Otsimine toimub SQL päringu abil(hetkel kasutajaliides puudub). Päring,
+mis tagastab failide nimekirja, millised sisaldavad määratud sõnu, näeb välja selline:
+</p>
+<div class="code">
+<pre>
+SELECT nodes.path
+FROM nodes, node_words
+WHERE nodes.id = node_words.node
+AND node_words.word
+IN (
+SELECT words.id
+FROM words
+WHERE word = 'sõna1' OR word='sõna2'
+)
+LIMIT 100 
+</pre>
+</div>
+<p>NB! Indekseerija kood on optimeerimata.</p>
+<p><i>Author: Raivo Laanemets, <a href="mailto:rlaanemt@ut.ee">rlaanemt@ut.ee</a></i><br></p>
+<p>
+<a href="http://validator.w3.org/check?uri=referer"><img
+  src="http://www.w3.org/Icons/valid-html401"
+  alt="Valid HTML 4.01!" height="31" width="88"></a>
+</p>
+</body>
+</html>

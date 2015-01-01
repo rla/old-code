@@ -1,0 +1,8 @@
+Testsuite: ee.pri.rl.parser.test.MethodCallSpeedTest
+Tests run: 1, Failures: 1, Errors: 0, Time elapsed: 0.005 sec
+
+Testcase: warning took 0.003 sec
+	FAILED
+No tests found in ee.pri.rl.parser.test.MethodCallSpeedTest
+junit.framework.AssertionFailedError: No tests found in ee.pri.rl.parser.test.MethodCallSpeedTest
+

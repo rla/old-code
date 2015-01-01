@@ -1,0 +1,2 @@
+wiki_tests.m:012: In clause for predicate `wiki_tests.main/2':
+wiki_tests.m:012:   warning: variable `Bs' occurs only once in this scope.

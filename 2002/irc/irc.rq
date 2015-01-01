@@ -1,0 +1,279 @@
+'(c) Raivo Laanemets 2002-2004
+'rl@starline.ee
+
+$include "Rapidq.inc"
+$typecheck on
+
+dim form as qform
+dim edit as qedit
+dim saadabtn as qbutton
+dim rich as qrichedit
+dim conbtn as qbutton
+dim time as qtimer
+dim text as string
+dim sock as qsocket
+dim server as string
+dim nick as string
+dim port as integer
+dim closebtn as qbutton
+dim pong as string
+dim logfail as qfilestream
+dim savebtn as qbutton
+dim redfont as qfont
+dim tavaline as qfont
+dim jimfont as qfont
+dim sinine as qfont
+dim chanlist as qlistbox
+dim kirjuta as integer
+dim chanstr as string
+dim listbtn as qbutton
+dim joinbtn as qbutton
+dim chan as string
+dim nimitmp as string
+
+chan=""
+
+redfont.color=&H0000ff
+redfont.name="Arial"
+
+tavaline.color=&H000000
+tavaline.name="Arial"
+
+jimfont.color=&H00aa00
+jimfont.name="Arial"
+
+sinine.color=&Hff0000
+sinine.name="Arial"
+
+server="irc.estirc.net"
+nick="Jim17"
+
+declare sub timeover
+declare sub yhenda
+declare sub saada
+declare sub katkesta
+declare sub save_log
+declare sub com_list
+declare sub com_join
+declare sub key_press(key as byte)
+
+function getrida(s as string) as string
+  getrida=right$(s, len(s)-instr(2, s, ":"))
+end function
+
+sub timeover
+  if sock.IsServerReady(port) then
+    text=sock.readline(port)
+    if len(text)>0 then
+      'rich.addstring text
+      'rich.addstring right$(text, len(text)-instr(2, text, ":"))
+      if instr(0, text, "/LIST")>0 then 
+        kirjuta=1 
+        chanlist.sorted=1
+      end if  
+      
+      if instr(0, text, "353")>0 then kirjuta=0
+      if instr(0, text, "366")>0 then kirjuta=1 
+      
+      if instr(0, text, "332")>0 then 
+        rich.SelAttributes=redfont
+        rich.addstring "Topic " +right$(text, len(text)-instr(2, text, ":"))
+        rich.SelAttributes=tavaline
+      end if
+      
+      if instr(0, text, "333")>0 then
+        rich.SelAttributes=redfont
+        rich.addstring "Topicu pani " +right$(text, len(text)-instr(2, text, chan)-len(chan)+1)
+      end if
+        
+      if instr(0, text, "PRIVMSG")>0 and instr(0, text, chan)>0 then
+        nimitmp=left$(text, instr(0, text, "!")-1) 
+        rich.addstring right$(nimitmp, len(nimitmp)-1) +">>" +right$(text, len(text)-instr(2, text, ":"))
+      end if
+      
+      if instr(0, text, "322")>0 then
+        chanstr=right$(text, len(text)-instr(0, text, "#")+1)
+        chanstr=left$(chanstr, instr(0, chanstr, ":")-1)
+        if len(chanstr)>1 then chanlist.additems left$(chanstr, instr(0, chanstr, " "))
+      end if
+      
+      if instr(0, text, "NOTICE")>0 then
+        rich.SelAttributes=redfont
+        rich.addstring getrida(text)
+        rich.SelAttributes=tavaline
+      end if
+
+      if instr(0, text, nick)>0 and instr(0, text, "NOTICE")=0 and instr(0, text, "332")=0 and instr(0, text, "333")=0 then
+        rich.SelAttributes=jimfont
+        if kirjuta=1 then rich.addstring getrida(text)
+        rich.SelAttributes=tavaline
+      end if 
+      
+      if left$(text,5)="ERROR" then
+        sock.close
+        rich.addstring "ÜHENDUS SULETUD"
+      end if
+      
+      if left$(text,4)="PING" then 
+        pong=right$(text, len(text)-instr(0, text, ":")+1)
+        sock.writeline(port, "PONG " +pong)
+        rich.SelAttributes=sinine
+        rich.addstring ">PING PONG"
+        rich.SelAttributes=tavaline
+      end if  
+      rich.selstart=len(rich.text)
+      sendmessage(rich.handle ,&HB7, 0, 0)
+    end if
+  end if  
+  time.interval=200
+end sub
+
+form.height=325
+form.width=625
+form.caption="IRC"
+form.center
+
+chanlist.left=450
+chanlist.top=30
+chanlist.height=200
+chanlist.width=140
+chanlist.parent=form
+
+time.interval=200
+time.ontimer=timeover
+time.enabled=0
+
+conbtn.left=25
+conbtn.top=50
+conbtn.caption="Ühenda"
+conbtn.onclick=yhenda
+conbtn.parent=form
+
+closebtn.left=100
+closebtn.top=50
+closebtn.caption="Katkesta"
+closebtn.onclick=katkesta
+closebtn.parent=form
+
+savebtn.left=175
+savebtn.top=50
+savebtn.onclick=save_log
+savebtn.caption="Save log"
+savebtn.parent=form
+
+rich.left=25
+rich.top=100
+rich.height=125
+rich.width=375
+rich.wanttabs=1
+rich.hidescrollbars=0
+rich.scrollbars=ssVertical
+rich.readonly=1
+rich.font=tavaline
+rich.plaintext=1
+rich.enabled=1
+rich.hideselection=1
+rich.parent=form
+
+edit.left=25
+edit.top=250
+edit.width=300
+edit.OnKeyPress=key_press
+edit.parent=form
+
+saadabtn.left=330
+saadabtn.top=250
+saadabtn.height=25
+saadabtn.onclick=saada
+saadabtn.caption="Saada"
+saadabtn.parent=form
+
+listbtn.left=450
+listbtn.top=250
+listbtn.onclick=com_list
+listbtn.caption="LIST"
+listbtn.parent=form
+
+joinbtn.left=525
+joinbtn.top=250
+joinbtn.onclick=com_join
+joinbtn.caption="JOIN"
+joinbtn.parent=form
+
+sub yhenda
+  rich.addstring "ühendan"
+  port=sock.connect(server, 6667)
+  if port>0 then
+    rich.addstring "*** ühendatud"
+    rich.addstring "*** ühenduse sättimine"
+    sock.writeline(port, "PASS mypass")
+    sock.writeline(port, "USER email " +sock.getHostIp +" " +Server +" :username")
+    sock.writeline(port, "NICK " +nick)
+  else
+    rich.addstring "Error"  
+    exit sub
+  end if
+  time.enabled=1  
+  kirjuta=1
+end sub
+
+sub saada
+  rich.addstring ">" +edit.text
+  if edit.text="LIST" then kirjuta=0
+  sock.writeline(port, edit.text)
+  edit.text=""
+end sub
+
+sub katkesta
+  sock.writeline(port, "QUIT 666irc")
+  sock.close
+  time.enabled=0
+  sleep 1
+  rich.addstring "Katkestatud"
+  form.close
+end sub
+
+sub save_log
+  rich.saveToFile("C:\irclog.txt")
+end sub
+
+sub com_list
+  rich.addstring ">LIST"
+  kirjuta=0
+  sock.writeline(port, "LIST")
+end sub
+
+sub com_join
+  if len(chan)>1 then 
+    rich.addstring(">PART " +chan)
+    sock.writeline(port, "PART " +chan)
+  end if
+  chan=chanlist.item(chanlist.itemindex)
+  rich.addstring(">JOIN " +chan)
+  sock.writeline(port, "JOIN " +chan)
+end sub
+
+sub key_press(key as byte)
+  if key=13 then
+    if len(edit.text)>0 then 
+      if left$(edit.text,1)="/" or left$(edit.text,1)="\" then
+        rich.addstring ">" +right$(edit.text, len(edit.text)-1)
+        sock.writeline(port, right$(edit.text, len(edit.text)-1))
+        sendmessage(rich.handle ,&HB7, 0, 0)
+        if left$(ucase$(edit.text),5)="/LIST" then kirjuta=0
+        if left$(ucase$(edit.text),5)="/JOIN" then chan=right$(edit.text, len(edit.text)-instr(0, text, " "))
+      else
+        if len(chan)>1 then
+          rich.addstring nick +">> " +edit.text
+          sock.writeline(port, "PRIVMSG " +chan +" " +edit.text)
+          sendmessage(rich.handle ,&HB7, 0, 0)   
+        else
+          rich.addstring "POLE KANALIL"
+        end if    
+      end if
+    end if
+    edit.text=""
+  end if  
+end sub
+
+form.showmodal

@@ -1,0 +1,104 @@
+[rlaanemt@kuu1 ~]$ mpirun -np 2 python RLPrax12_2.py 500
+n=1000, m=1000, k=1000
+Multiplication took: 11.595746040344238 seconds
+Communication time: 0.164453983306885 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.543848037719727 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$ mpirun -np 2 python RLPrax12_2.py 500
+n=1000, m=1000, k=1000
+Multiplication took: 11.704499959945679 seconds
+Communication time: 0.112689018249512 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.882658004760742 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$ mpirun -np 1 python RLPrax12_2.py 1000
+n=1000, m=1000, k=1000
+Multiplication took: 22.516541957855225 seconds
+Communication time: 0.000000000000000 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.623159170150757 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$ mpirun -np 1 python RLPrax12_2.py 1000
+n=1000, m=1000, k=1000
+Multiplication took: 22.579814910888672 seconds
+Communication time: 0.000000000000000 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.726007938385010 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$ mpirun -np 4 python RLPrax12_2.py 250
+rlaanemt@kuu2.mt.ut.ee's password:
+n=1000, m=1000, k=1000
+Multiplication took: 6.132923841476440 seconds
+Communication time: 0.792284250259399 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.751628875732422 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$ mpirun -np 4 python RLPrax12_2.py 250
+rlaanemt@kuu2.mt.ut.ee's password:
+n=1000, m=1000, k=1000
+Multiplication took: 6.186666965484619 seconds
+Communication time: 0.659869432449341 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.701545000076294 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$
+[rlaanemt@kuu1 ~]$ mpirun -np 6 python RLPrax12_2.py 167
+rlaanemt@kuu3.mt.ut.ee's password: rlaanemt@kuu2.mt.ut.ee's password:
+
+
+Permission denied, please try again.
+rlaanemt@kuu2.mt.ut.ee's password:
+n=1002, m=1002, k=1002
+Multiplication took: 4.575236082077026 seconds
+Communication time: 1.957459449768066 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.680794000625610 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$ mpirun -np 6 python RLPrax12_2.py 167
+rlaanemt@kuu3.mt.ut.ee's password: rlaanemt@kuu2.mt.ut.ee's password:
+
+n=1002, m=1002, k=1002
+Multiplication took: 4.356585025787354 seconds
+Communication time: 0.770492315292358 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.488208055496216 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$ mpirun -np 8 python RLPrax12_2.py 125
+rlaanemt@kuu2.mt.ut.ee's password: rlaanemt@kuu3.mt.ut.ee's password: rlaanemt@kuu4.mt.ut.ee's password:
+
+
+Permission denied, please try again.
+rlaanemt@kuu4.mt.ut.ee's password:
+n=1000, m=1000, k=1000
+Multiplication took: 3.273858070373535 seconds
+Communication time: 0.819120407104492 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.620349884033203 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$ mpirun -np 8 python RLPrax12_2.py 125
+rlaanemt@kuu3.mt.ut.ee's password: rlaanemt@kuu4.mt.ut.ee's password: rlaanemt@kuu2.mt.ut.ee's password:
+
+
+Permission denied, please try again.
+rlaanemt@kuu4.mt.ut.ee's password:
+
+Permission denied, please try again.
+rlaanemt@kuu4.mt.ut.ee's password:
+n=1000, m=1000, k=1000
+Multiplication took: 3.186223983764648 seconds
+Communication time: 1.056009531021118 seconds
+Finding built-in multiplication
+Built-in multiplication took: 13.689528942108154 seconds
+Checking multiplication result
+OK
+[rlaanemt@kuu1 ~]$

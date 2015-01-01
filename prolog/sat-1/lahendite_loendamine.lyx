@@ -1,0 +1,3288 @@
+#LyX 1.4.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass report
+\begin_preamble
+\usepackage[estonian]{babel}
+\usepackage{listings}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{amssymb}
+\end_preamble
+\language estonian
+\inputencoding auto
+\fontscheme ae
+\graphics default
+\paperfontsize 12
+\spacing onehalf
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 4cm
+\topmargin 4cm
+\rightmargin 4cm
+\bottommargin 4cm
+\secnumdepth -2
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+renewcommand{
+\backslash
+leq}{
+\backslash
+leqslant}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+renewcommand{
+\backslash
+geq}{
+\backslash
+geqslant}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcounter{lemma_counter}
+\backslash
+setcounter{lemma_counter}{1}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+lemma}[1]{
+\backslash
+hspace{1cm}
+\backslash
+textbf{Lemma 
+\backslash
+arabic{lemma_counter}
+\backslash
+stepcounter{lemma_counter}: #1}}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+proof}[0]{
+\backslash
+hspace{1cm}
+\backslash
+textbf{Tõestus: }}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+proofpart}[1]{
+\backslash
+hspace{1cm}
+\backslash
+textbf{#1.
+ }}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+proofend}[0]{
+\backslash
+(
+\backslash
+square
+\backslash
+)}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+proc}[1]{
+\backslash
+textsf{#1}}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcounter{algorithm_counter}
+\backslash
+setcounter{algorithm_counter}{1}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+horline}[0]{
+\backslash
+vspace{1ex}
+\backslash
+hrule width
+\backslash
+columnwidth
+\backslash
+vspace{1ex}}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newenvironment{algorithm}[1]{
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+vspace{0.5cm}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+horline
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+textbf{Algoritm 
+\backslash
+arabic{algorithm_counter}
+\backslash
+stepcounter{algorithm_counter}}: 
+\backslash
+proc{#1}
+\end_layout
+
+\begin_layout Standard
+
+}{
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+horline
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+vspace{0.5cm}
+\end_layout
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+ainput}[1]{
+\backslash
+newline
+\backslash
+emph{sisend:} #1}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+aoutput}[1]{
+\backslash
+newline
+\backslash
+emph{väljund:} #1}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+abody}[0]{
+\backslash
+horline}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcounter{theorem_counter}
+\backslash
+setcounter{theorem_counter}{1}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+newcommand{
+\backslash
+theorem}[1]{
+\backslash
+hspace{1cm}
+\backslash
+textbf{Teoreem 
+\backslash
+arabic{theorem_counter}
+\backslash
+stepcounter{theorem_counter}: #1}}
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+lstset{
+\end_layout
+
+\begin_layout Standard
+
+language=Prolog,
+\end_layout
+
+\begin_layout Standard
+
+basicstyle=
+\backslash
+small
+\backslash
+tt,
+\end_layout
+
+\begin_layout Standard
+
+commentstyle=
+\backslash
+tt
+\end_layout
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\family sans
+\size large
+TARTU ÜLIKOOL
+\newline
+MATEMAATIKA-INFORMAATIKATEADUSKOND
+\newline
+Arvutiteaduse instituut
+\newline
+Informaati
+ka eriala
+\family default
+\size default
+
+\begin_inset VSpace 3cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\family sans
+\series bold
+\size larger
+Raivo Laanemets
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\family sans
+\series bold
+\size largest
+DPLL protseduuri täiendamine lahendite täpseks loendamiseks
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\family sans
+\size larger
+Bakalaureusetöö
+\family default
+\size default
+
+\begin_inset VSpace 2cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align right
+
+\family sans
+\size larger
+Juhendaja: Tõnu Tamme
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 1cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align left
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+noindent Autor: ...........................................
+ ``.....'' mai
+\backslash
+hskip16pt 2007
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+vspace{2mm}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+noindent Juhendaja: ....................................
+ ``.....'' mai
+\backslash
+hskip16pt 2007
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 2cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\family sans
+\size large
+TARTU 2007
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Chapter
+Sissejuhatus
+\end_layout
+
+\begin_layout Standard
+Lausearvutusvalemi lahendite loendamisel on erinevaid rakendusi.
+ Näiteks loogikaskeemide omaduste väljaselgitamine ja testimismustrite genereeri
+mine.
+ Lahendite loendamisele saab taandada tuletust Bayes'i võrgus ja Dedekindi
+ numbrite leidmist.
+ Selles töös vaatleme lahendite täpset loendamist.
+ Koostatud on ka algoritme lahendite umbkaudse arvu leidmiseks, näiteks
+ kiirendavate kitsenduste abil, või kasutades tõenäosuslikke algoritme.
+ On teada, et ka umbkaudne loendamine garanteeritud väikese veaga on arvutusliku
+lt raske ülesanne.
+ Täpse lahendite arvu leidmise probleem on #P-täielik 
+\begin_inset LatexCommand \cite{key-8}
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Selles töös võtame vaatluse alla algoritmi, mis on saadud kehtestatavuse
+ algoritmi täiendades.
+ Kehtestatavuse algoritm baseerub artiklites 
+\begin_inset LatexCommand \cite{key-1,key-2}
+
+\end_inset
+
+ kirjeldatud protseduuril.
+ Nendes artikites on kirjeldatud algoritmi pedikaatarvutuses kirja pandud
+ teoreemide tõestamiseks (predikaatarvutuse valemi 
+\begin_inset Formula $F$
+\end_inset
+
+ samaselt tõesuse näitamine).
+ Esitatud protseduuri saab kirjeldada kolmest osast koosnevana:
+\end_layout
+
+\begin_layout Enumerate
+Valemi 
+\begin_inset Formula $\neg F$
+\end_inset
+
+ teisendamine prefikskujule 
+\begin_inset Formula $F'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Valemist 
+\begin_inset Formula $F'$
+\end_inset
+
+ kvantorivabade konjuktiivsel normaalkujul lausearvutusvalemite genereerimine
+ 
+\begin_inset Formula $F'_{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Eelmises sammus saadud valemi 
+\begin_inset Formula $F'_{k}$
+\end_inset
+
+ kehtestatavuse kontrollimine.
+ Kui 
+\begin_inset Formula $F'_{k}$
+\end_inset
+
+ on kehtestatav, siis mine tagasi sammu (2), vastasel korral väljasta 
+\begin_inset Quotes eld
+\end_inset
+
+tõene
+\begin_inset Quotes erd
+\end_inset
+
+ ja lõpeta töö.
+\end_layout
+
+\begin_layout Standard
+Algoritm toetud faktile, et valem 
+\begin_inset Formula $F$
+\end_inset
+
+ on samaselt tõene parajasti siis, kui 
+\begin_inset Formula $\neg F$
+\end_inset
+
+ on mittekehtestatav.
+ Sammus (2) tehtavad teisendused säilitavad kehtestatavust (s-ekvivalentsus).
+ Sammu (3) sooritamiseks rakendatakse valemile teatavaid süntaktilisi teisendusi
+ kuni saadakse tühivalem või valem, mis sisaldab tühiklauslit.
+ Tühivalem on kehtestatav, aga tühiklauslit sisaldav valem ei ole.
+ Praktiliselt kõik lausearvutuse kehtestatavuse täielikud aloritmid kasutavad
+ artiklites välja toodud teisendusreegleid.
+\end_layout
+
+\begin_layout Standard
+Töös uurime lahendite loendamise probleemi ja selle lahendamiseks välja
+ töötatud algoritmi, mis kasutab alusena kehtestatavuse algoritmi, mis baseerub
+ artiklites 
+\begin_inset LatexCommand \cite{key-1,key-2}
+
+\end_inset
+
+ kasutatud teisenduseeglitel.
+ Siin ei kasuta me kõiki neid reegleid, vaid võtame aluseks nn.
+ hargnemisreegli (
+\emph on
+branching rule
+\emph default
+) ja selle erikujud ning valemit lihtsustavad reeglid.
+ Need reeglid säilitavad ekvivalentsust ja antud töös tähtsat omadust: lahendite
+ arvu.
+\end_layout
+
+\begin_layout Standard
+Kõigepealt defineerime töös kasutatavad mõisted, seejärel kirjeldame teisendusre
+eglid, tõestame nende korrektsuse ja anname näiteid nende reeglite rakendamisest.
+ Pärast seda esitame kehtestatavuse otsinguprotseduuri ja näitame selle
+ termineeruvust.
+ Siis esitame viisi, kuidas otsinguprotseduuri täiendada loendamisprotseduuriks
+ ja tõestame selle korrektsuse.
+\end_layout
+
+\begin_layout Section
+Definitsioonid
+\end_layout
+
+\begin_layout Standard
+Muutujaks
+\emph on
+ 
+\emph default
+nimetame suvalist sümbolit 
+\begin_inset Formula $x$
+\end_inset
+
+ fikseeritud sümbolite hulgast.
+ Literaaliks 
+\begin_inset Formula $l$
+\end_inset
+
+ loeme muutujat 
+\begin_inset Formula $x$
+\end_inset
+
+ (
+\begin_inset Formula $l\equiv x$
+\end_inset
+
+) või tema eitust 
+\begin_inset Formula $-x$
+\end_inset
+
+ (
+\begin_inset Formula $l\equiv-x$
+\end_inset
+
+).
+ Klausliks 
+\begin_inset Formula $C$
+\end_inset
+
+ loeme literaalide disjunktsiooni 
+\begin_inset Formula $l_{1}\vee..\vee l_{n}$
+\end_inset
+
+.
+ Konjuktiivsel normaalkujul valemiks 
+\begin_inset Formula $F$
+\end_inset
+
+ loeme klauslite konjuktsiooni 
+\begin_inset Formula $C_{1}\wedge..\wedge C_{k}$
+\end_inset
+
+.
+ Muutuja 
+\begin_inset Formula $x$
+\end_inset
+
+ väärtustuseks nimetame funktsiooni 
+\begin_inset Formula $v$
+\end_inset
+
+, 
+\begin_inset Formula $v(x)\in\{0,1\}$
+\end_inset
+
+.
+ Literaali 
+\begin_inset Formula $l$
+\end_inset
+
+ loeme tõeseks, kui 
+\begin_inset Formula $l\equiv x$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(x)=1$
+\end_inset
+
+ või 
+\begin_inset Formula $l\equiv-x$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(x)=0$
+\end_inset
+
+.
+ Literaali 
+\begin_inset Formula $l$
+\end_inset
+
+ loeme vääraks, kui 
+\begin_inset Formula $l\equiv x$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(x)=0$
+\end_inset
+
+ või 
+\begin_inset Formula $l\equiv-x$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(x)=1$
+\end_inset
+
+.
+ Literaali 
+\begin_inset Formula $l\equiv x$
+\end_inset
+
+ komplementaariks nimetame literaali 
+\begin_inset Formula $\bar{l}\equiv-x$
+\end_inset
+
+.
+ Klauslit 
+\begin_inset Formula $C=l_{1}\vee..\vee l_{n}$
+\end_inset
+
+ nimetame väärtustusel 
+\begin_inset Formula $v$
+\end_inset
+
+ tõeseks (
+\begin_inset Formula $v(C)=1$
+\end_inset
+
+), kui 
+\begin_inset Formula $C$
+\end_inset
+
+ sisaldab vähemalt ühte tõest literaali, vastasel korral vääraks (
+\begin_inset Formula $v(C)=0$
+\end_inset
+
+).
+ Valemit 
+\begin_inset Formula $F=C_{1}\wedge..\wedge C_{k}$
+\end_inset
+
+ loeme väärtustusel 
+\begin_inset Formula $v$
+\end_inset
+
+ tõeseks (
+\begin_inset Formula $v(F)=1$
+\end_inset
+
+), kui ükski klauslitest 
+\begin_inset Formula $C_{1},..,C_{k}$
+\end_inset
+
+ pole väär, vastasel korral vääraks (
+\begin_inset Formula $v(F)=0$
+\end_inset
+
+).
+ Töös eeldame, et ükski klausel ei sisalda korraga literaali 
+\begin_inset Formula $l$
+\end_inset
+
+ ja tema komplementaari 
+\begin_inset Formula $\bar{l}$
+\end_inset
+
+.
+ Samuti eeldame, et ükski literaal ei esine samas klauslis mitu korda ja
+ valem ei sisalda ühtegi klauslit topelt.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Konjuktiivsel normaalkujul valemi 
+\begin_inset Formula $F=C_{1}\wedge..\wedge C_{n}$
+\end_inset
+
+ võib samastada klauslite hulgaga 
+\begin_inset Formula $\{ C_{1},..,C_{n}\}$
+\end_inset
+
+.
+ Klausli 
+\begin_inset Formula $C=l_{1}\vee..\vee l_{k}$
+\end_inset
+
+ võib samastada literaalide hulgaga 
+\begin_inset Formula $\{ l_{1},..,l_{k}\}$
+\end_inset
+
+.
+ Tühivalemi 
+\begin_inset Formula $\emptyset$
+\end_inset
+
+ loeme tõeseks.
+ Tühiklausli 
+\begin_inset Formula $\emptyset$
+\end_inset
+
+ loeme vääraks.
+ Konjuktiivsel normaalkujul valemi, mis sisaldab tühiklauslit, loeme samuti
+ vääraks.
+ Valemi ja klauslite väljendamine hulga kujul teeb lihtsamaks ja loetavamaks
+ algoritmide esitamise.
+\end_layout
+
+\begin_layout Standard
+Valemist 
+\begin_inset Formula $F$
+\end_inset
+
+ rääkides mingi konkreetse väärtustuse 
+\begin_inset Formula $v$
+\end_inset
+
+ piires kasutame tähistusviisi 
+\begin_inset Formula $F|_{A=1}$
+\end_inset
+
+ näitamaks, et 
+\begin_inset Formula $v(A)=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Chapter
+Tuletusreeglid
+\end_layout
+
+\begin_layout Standard
+Siin kirjeldatavad ja kasutatavad tuletusreeglid säilitavad valemi kehtestatavus
+t.
+ Tuletamine toimub ülaltpoolt allapoole, mis tähendab, kui reegli ülemises
+ osas olev valem on tõene mingil väärtustusel, siis on seda ka reegli alumises
+ osas olev valem.
+ Iga reegli jaoks anname tema üldkuju, kommentaarid reegli kohta ja näite
+ tema kasutamisest.
+ Reeglite korrektsuse tõestame töö järgmises osas.
+\end_layout
+
+\begin_layout Section
+Tõeste klauslite elimineerimine
+\end_layout
+
+\begin_layout Standard
+Tõeste klauslite elimineerimisreegel on valemit lihtsustav reegel mingi
+ väärtustuse piires.
+ Näiteks vaatleme valemit
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $F|_{A=1}=C_{1}\wedge C_{2}$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{1}=A\vee B$
+\end_inset
+
+ ja 
+\begin_inset Formula $C_{2}=C\vee B$
+\end_inset
+
+.
+ Ilmselt on selge, et valemit 
+\begin_inset Formula $F$
+\end_inset
+
+ saab lihtsustada, eemaldades sellest tõesed klauslid.
+ Antud juhul on tõene 
+\begin_inset Formula $C_{1}$
+\end_inset
+
+ ning me saame lihtsustatud valemiks 
+\begin_inset Formula $F'=C_{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Reegli üldkuju positiivselt esineva muutuja jaoks 
+\emph on
+(R1p)
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}|_{x=1}}{C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{l}},l_{i_{j}}\equiv x|_{x=1}}R1p\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Reegli üldkuju negatiivselt esineva muutuja jaoks 
+\emph on
+(R1n)
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}|_{x=0}}{C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{l}},l_{i_{j}}\equiv-x|_{x=0}}R1n\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Elimineerimisreeglit on mõistlik kasutada vahetult pärast muutuja väärtuse
+ fikseerimist (näiteks vahetult pärast väärtustusreegli rakendamist).
+ See võimaldab eemaldada valemist klauslid, mis on juba tõeseks muutunud,
+ ning mis ei anna midagi juurde valemi kehtestatavusele.
+ Kuivõrd valemis võib literaal 
+\begin_inset Formula $(l\equiv x)$
+\end_inset
+
+ sisalduda rohkem kui ühes klauslis, tuleb reeglit rakendada järjest, kuni
+ kõik sellised klauslid on elimineeritud.
+\end_layout
+
+\begin_layout Section
+Väärade literaalide elimineerimine
+\end_layout
+
+\begin_layout Standard
+Eelmise reegli abil saime valemist eraldada klauslid, mis olid juba tõesed,
+ ning mis ei anna midagi juurde valemi muutujate sobivate väärtustuste otsimisel.
+ Samuti võime klauslitest kustutada literaalid, mille kohta teame, et nad
+ on seni leitud väärtustuses väärad.
+ Võtame näiteks valemi 
+\begin_inset Formula $F|_{B=0}=C_{1}\wedge C_{2}$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{1}=A\vee B$
+\end_inset
+
+ ja 
+\begin_inset Formula $C_{2}=C\vee B$
+\end_inset
+
+.
+ Mõlemast klauslist 
+\begin_inset Formula $C_{1},C_{2}$
+\end_inset
+
+ võime eemaldada literaali 
+\begin_inset Formula $B$
+\end_inset
+
+.
+ Selle tulemusena saame valemi 
+\begin_inset Formula $F'|_{B=0}=C'_{1}\wedge C'_{2}$
+\end_inset
+
+, kus 
+\begin_inset Formula $C'_{1}=A$
+\end_inset
+
+ ja 
+\begin_inset Formula $C'_{2}=B$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Reegli üldkuju positiivselt esineva muutuja jaoks 
+\emph on
+(R2p)
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k},C_{i}'=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}|_{x=0}}{C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}},l_{i_{j}}\equiv x|_{x=0}}R2p\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Reegli üldkuju negatiivselt esineva muutuja jaoks 
+\emph on
+(R2n)
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k},C_{i}'=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}|_{x=1}}{C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}},l_{i_{j}}\equiv-x|_{x=1}}R2n\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sarnaselt eespool kirjeldatud tõeste klauslite elimineerimise reegliga,
+ on mõistlik antud reeglit rakendada vahetult pärast mingi muutuja väärtuse
+ fikseerimist.
+ Samuti võib muutuja esineda väärana rohkem kui ühes klauslis.
+ Seega tuleks ka seda reeglit rakendada järjest nii kaua, kuni vastavaid
+ klausleid enam valemis ei ole.
+\end_layout
+
+\begin_layout Section
+Väärtustusreegel
+\end_layout
+
+\begin_layout Standard
+Hargnemisreegel (
+\emph on
+branching rule
+\emph default
+) jaotab valemi kaheks komponendiks.
+ Jaotamine tehakse mingi muutuja järgi, mis pole seni veel väärtustatud.
+ Ühte komponenti võetakse muutuja tõese väärtusega ja teise komponenti väära
+ väärtusega.
+ Näiteks olgu antud valem 
+\begin_inset Formula $F=C_{1}\wedge C_{2}$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{1}=A\vee B$
+\end_inset
+
+ ja 
+\begin_inset Formula $C_{2}=C\vee B$
+\end_inset
+
+.
+ Valime jaotamise aluseks muutuja 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ Siis saame kaks valemit 
+\begin_inset Formula $F|_{A=1}$
+\end_inset
+
+ ja 
+\begin_inset Formula $F|_{A=0}$
+\end_inset
+
+.
+ [näidata tulemust pärast lihtsustuste sisseviimist] Sisuliselt võimaldab
+ hargnemisreegel jagada kehtestatavuse otsingu kaheks: esimeses osas otsitakse
+ mudelit, kus 
+\begin_inset Formula $v_{1}(A)=1$
+\end_inset
+
+ ning teises osas mudelit, kus 
+\begin_inset Formula $v_{2}(A)=0$
+\end_inset
+
+.
+ On selge, et selline jaotus jagab valemi väärtustuste hulga kaheks.
+ Seda omadust saame väga hästi ära kasutada valemi tõeväärtuste loendamisel.
+ Siis esitame hargnemisreegli kahe eraldi tuletusreeglina.
+ Esimeses reeglis (a) valitakse muutuja väärtuseks 
+\begin_inset Quotes eld
+\end_inset
+
+tõene
+\begin_inset Quotes erd
+\end_inset
+
+, teises (b) aga 
+\begin_inset Quotes eld
+\end_inset
+
+väär
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Väärtustusreegli a üldkuju positiivselt esineva muutuja jaoks 
+\emph on
+(R3ap)
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j}}\vee\dots\vee l_{i_{k}},l_{i_{j}}\equiv x|_{x=1}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R3ap\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Väärtustusreegli a üldkuju negatiivselt esineva muutuja jaoks 
+\emph on
+(R3an)
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j}}\vee\dots\vee l_{i_{k}},l_{i_{j}}\equiv-x|_{x=1}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R3an\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Väärtustusreegli b üldkuju positiivselt esineva muutuja jaoks 
+\emph on
+(R3bp)
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j}}\vee\dots\vee l_{i_{k}},l_{i_{j}}\equiv x|_{x=0}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R3bp\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Väärtustusreegli b üldkuju negatiivselt esineva muutuja jaoks 
+\emph on
+(R3bn)
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j}}\vee\dots\vee l_{i_{k}},l_{i_{j}}\equiv-x|_{x=0}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R3bn\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Väärtustusreegli rakendamise järel on mõistlik rakendada järjest nii tõeste
+ klauslite elimineerimisreeglit kui ka väärade literaalide elimineerimisreeglit,
+ et eemaldada valemitest mittevajalikud komponendid.
+\end_layout
+
+\begin_layout Section
+Ühe literaaliga klausli elimineerimine
+\end_layout
+
+\begin_layout Standard
+Ühe literaaliga klausli elimineerimisreegel on väärtustusreegli erikuju.
+ Olgu antud valem 
+\begin_inset Formula $F=C_{1}\wedge C_{2}$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{1}=A$
+\end_inset
+
+ ja 
+\begin_inset Formula $C_{2}=B\vee\neg A$
+\end_inset
+
+.
+ Rakendame nüüd hargnemisreeglit 
+\begin_inset Formula $A$
+\end_inset
+
+ järgi.
+ Saame kaks valemit 
+\begin_inset Formula $F|_{A=1}$
+\end_inset
+
+ ja 
+\begin_inset Formula $F|_{A=0}$
+\end_inset
+
+.
+ On selge, et valem 
+\begin_inset Formula $F|_{A=0}$
+\end_inset
+
+ on väär, sest klausel 
+\begin_inset Formula $C_{1}$
+\end_inset
+
+ on väär (ning saaksime pärast väära literaali 
+\begin_inset Formula $A$
+\end_inset
+
+ elimineerimist tühja klausli).
+\end_layout
+
+\begin_layout Standard
+Reegli üldkuju positiivselt esineva muutuja jaoks 
+\emph on
+(R4p)
+\emph default
+:
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k},C_{i}=l_{i},l_{i}\equiv x|_{x=1}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R4p\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Reegli üldkuju negatiivselt esineva muutuja jaoks 
+\emph on
+(R4n)
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k},C_{i}=l_{i},l_{i}\equiv-x|_{x=0}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R4n\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Reeglite korrektsus
+\end_layout
+
+\begin_layout Standard
+Nüüd näitame ülalkirjeldatud reeglite korrektsuse, st.
+ näitame, et reeglid 
+\emph on
+R1p, R1n, R2p, R2n, R3ap, R3an, R3bp, R3bn, R4p 
+\emph default
+ja
+\emph on
+ R4n
+\emph default
+ säilitavad valemi kehtestatavuse.
+ Kõik need tõestused on sarnased: kõigepealt valime suvalise interpretatsiooni
+ 
+\begin_inset Formula $v$
+\end_inset
+
+, kus reegli ülemisel pool olev valem on tõene, seejärel näitame, et selles
+ interpretatsioonis 
+\begin_inset Formula $v$
+\end_inset
+
+ on ka reegli alumisel poolel olev valem tõene.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+lemma{tõeste klauslite elimineerimine on korrektne}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Jagame tõestuse kahte ossa: kõigepealt näitame reegli 
+\emph on
+R1p
+\emph default
+ korrektsuse, siis teeme sedasama reegli 
+\emph on
+R1n
+\emph default
+ jaoks.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofpart{R1p}
+\end_layout
+
+\end_inset
+
+ Vaatleme valemit 
+\begin_inset Formula $F=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}$
+\end_inset
+
+.
+ Näitame suvalise interpretatsiooni 
+\begin_inset Formula $v$
+\end_inset
+
+ jaoks, kus 
+\begin_inset Formula $v(x)=1$
+\end_inset
+
+, kui 
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\end_inset
+
+, siis ka 
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{l}}$
+\end_inset
+
+ ja 
+\begin_inset Formula $l_{i_{j}}\equiv x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proof
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(x)=1$
+\end_inset
+
+  
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(l_{i_{j}})=1$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(C_{i})=1$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\end_inset
+
+  
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofend
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofpart{R1n}
+\end_layout
+
+\end_inset
+
+
+\series bold
+\emph on
+ 
+\series default
+\emph default
+Vaatleme valemit 
+\begin_inset Formula $F=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}$
+\end_inset
+
+.
+ Näitame suvalise interpretatsiooni 
+\begin_inset Formula $v$
+\end_inset
+
+ jaoks, kus 
+\begin_inset Formula $v(x)=0$
+\end_inset
+
+, kui 
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\end_inset
+
+, siis ka 
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{l}}$
+\end_inset
+
+ ja 
+\begin_inset Formula $l_{i_{j}}\equiv-x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proof
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(x)=0$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(l_{i_{j}})=1$
+\end_inset
+
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(C_{i})=1$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofend
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+lemma{väärade literaalide elimineerimine on korrektne}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Jagame taas tõestuse kahte ossa.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofpart{R2p}
+\end_layout
+
+\end_inset
+
+
+\series bold
+\emph on
+ 
+\series default
+\emph default
+Olgu 
+\begin_inset Formula $F=C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k}$
+\end_inset
+
+ ja 
+\begin_inset Formula $C_{i}'=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$
+\end_inset
+
+ ning 
+\begin_inset Formula $l_{i_{j-1}}\equiv x$
+\end_inset
+
+.
+ Näitame suvalise interpretatsiooni 
+\begin_inset Formula $v$
+\end_inset
+
+ jaoks, kus 
+\begin_inset Formula $v(x)=0$
+\end_inset
+
+, kui 
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k})=1$
+\end_inset
+
+, siis ka 
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k})=1$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proof
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k})=1$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+ ja 
+\begin_inset Formula $v(x)=0$
+\end_inset
+
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\noun default
+\color inherit
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1})=\dots v(C_{i}')=\dots=v(C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(l_{i_{j}})=0$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1})=\dots v(C_{i}')=\dots=v(C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(C_{i})=v(C_{i}'\vee l_{i_{j}})=1$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k})=1$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofend
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofpart{R2n}
+\end_layout
+
+\end_inset
+
+
+\series bold
+\emph on
+ 
+\series default
+\emph default
+Olgu 
+\begin_inset Formula $F=C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k}$
+\end_inset
+
+ ja 
+\begin_inset Formula $C_{i}'=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$
+\end_inset
+
+ ning 
+\begin_inset Formula $l_{i_{j-1}}\equiv-x$
+\end_inset
+
+.
+ Näitame suvalise interpretatsiooni 
+\begin_inset Formula $v$
+\end_inset
+
+ jaoks, kus 
+\begin_inset Formula $v(x)=1$
+\end_inset
+
+, kui 
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k})=1$
+\end_inset
+
+, siis ka 
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k})=1$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proof
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k})=1$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+ ja 
+\begin_inset Formula $v(x)=1$
+\end_inset
+
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\noun default
+\color inherit
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1})=\dots v(C_{i}')=\dots=v(C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(l_{i_{j}})=0$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1})=\dots v(C_{i}')=\dots=v(C_{k})=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v(C_{i})=v(C_{i}'\vee l_{i_{j}})=1$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k})=1$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofend
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+lemma{väärtustusreeglid on korrektsed}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proof
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Reeglid 
+\emph on
+R3ap, R3an, R3bp, R3bn
+\emph default
+ on triviaalselt korrektsed.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofend
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+lemma{ühe literaaliga klausli elimineerimine on korrektne}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proof
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tegemist on väärtustusreeglite erijuhuga.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofend
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Näidistuletus
+\end_layout
+
+\begin_layout Standard
+Järgnevalt on esitatud valemi 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $F=C_{1}\wedge C_{2}\wedge C_{3}$
+\end_inset
+
+, kus 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\noun default
+\color inherit
+
+\begin_inset Formula $C_{1}=A\vee B\vee\neg C$
+\end_inset
+
+, 
+\begin_inset Formula $C_{2}=\neg A\vee\neg B$
+\end_inset
+
+ ja 
+\begin_inset Formula $C_{3}=C\vee\neg B$
+\end_inset
+
+ tuletuspuu:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\dfrac{\dfrac{\dfrac{\dfrac{\dfrac{\emptyset|_{A=1,B=0}}{(C\vee\neg B)|_{A=1,B=0}}R1n}{(\neg B)\wedge(C\vee\neg B)|_{A=1}}R4n}{(\neg A\vee\neg B)\wedge(C\vee\neg B)|_{A=1}}R2n}{(A\vee B\vee\neg C)\wedge(\neg A\vee\neg B)\wedge(C\vee\neg B)|_{A=1}}R1p}{(A\vee B\vee\neg C)\wedge(\neg A\vee\neg B)\wedge(C\vee\neg B)}R3ap\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Praktilistes rakendustes huvitab meid mingi valemi 
+\begin_inset Formula $F$
+\end_inset
+
+ muutujate väärtustus 
+\begin_inset Formula $v$
+\end_inset
+
+, millel ta tõene on.
+ Selleks tuleb koostada protseduur, mis konstrueerib valemi tuletuspuid.
+ Seda ülesannet võime vaadelda kui otsingut olekute ruumis.
+ Sellisel juhul peab otsinguprotseduur rakendama tuletusreegeid tagurpidi,
+ st.
+ altpoolt ülespoole.
+ See tähendab, et igal sammul tuleks proovida rakendada reeglit, mida rakendada
+ saab.
+ Samme tuleks teha nii kaua, kuni oleme saanud tühivalemi 
+\begin_inset Formula $\emptyset$
+\end_inset
+
+.
+ Korjates kokku väärtustusreeglite rakendamisel saadud muutujate väärtused,
+ võime lõpuks õelda, millisel muutujate väärtustusel oli antud valem tõene.
+ Järgnevalt proovime leida näites kasutatud valemi 
+\begin_inset Formula $F$
+\end_inset
+
+ muutujate väärtustuse, millel see valem on tõene.
+\end_layout
+
+\begin_layout Section
+Näidisotsing
+\end_layout
+
+\begin_layout Standard
+Olgu antud valem 
+\begin_inset Formula $F=C_{1}\wedge C_{2}\wedge C_{3}$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{1}=A\vee B\vee\neg C$
+\end_inset
+
+, 
+\begin_inset Formula $C_{2}=\neg A\vee\neg B$
+\end_inset
+
+ ja 
+\begin_inset Formula $C_{3}=C\vee\neg B$
+\end_inset
+
+.
+ Rakendame teisendusi sellele valemile, et leida kehtestav väärtustus.
+\end_layout
+
+\begin_layout Enumerate
+Väärtustusreegli kasutamine 
+\begin_inset Formula $A$
+\end_inset
+
+ järgi, saame valemi 
+\begin_inset Formula $F|_{A=1}$
+\end_inset
+
+.
+ Kõigepealt rakendame lihtsustavaid teisendusi valemile 
+\begin_inset Formula $F|_{A=1}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Elimineerime tõese klausli 
+\begin_inset Formula $C_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Elimineerime väära literaali 
+\begin_inset Formula $\neg A$
+\end_inset
+
+ klauslist 
+\begin_inset Formula $C_{2}$
+\end_inset
+
+, saame valemi 
+\begin_inset Formula $F'|_{A=1}={C'}_{2}\wedge C_{3}$
+\end_inset
+
+, 
+\begin_inset Formula ${C'}_{2}=\neg B$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Valemile 
+\begin_inset Formula $F'|_{A=1}$
+\end_inset
+
+ rakendame nüüd ühe literaaliga klausli elimineerimist klausli 
+\begin_inset Formula $C'_{2}$
+\end_inset
+
+ järgi.
+ Saame valemi 
+\begin_inset Formula $F''|_{A=1,B=0}$
+\end_inset
+
+.
+ Kohe saame ka valemit lihtsustada, eemaldades klausli 
+\begin_inset Formula $C_{3}.$
+\end_inset
+
+ Kuna tulemuseks on tühi valem, mis on tõene valem, siis võime otsingu lõpetada.
+ Otsingu tuleusena oleme saanud osalise väärtustuse 
+\begin_inset Formula $v_{o}$
+\end_inset
+
+, kus 
+\begin_inset Formula $v_{o}(A)=1$
+\end_inset
+
+ ja 
+\begin_inset Formula $v_{o}(B)=0$
+\end_inset
+
+.
+ On lihtne kontrollida, et esialgne valem on antud väärtususes tõene sõltumata
+ 
+\begin_inset Formula $C$
+\end_inset
+
+ väärtusest.
+\end_layout
+
+\begin_layout Standard
+Nüüd oleme valmis formuleerima otsingualgoritmi valemi kehtestatavuse kindlakste
+gemiseks.
+\end_layout
+
+\begin_layout Section*
+Kehtestatavuse otsinguprotseduur
+\end_layout
+
+\begin_layout Standard
+Ülalkirjeldatud teisendusreeglite rakendamiseks saame kirja panna otsinguprotsed
+uuri.
+ Protseduuri paneme kirja kui rekursiivse otsingu, mille eesmärgiks on leida
+ etteantud valemi muutujate tõene väärtustus.
+ Protseduur 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proc{OP}
+\end_layout
+
+\end_inset
+
+ (otsinguprotseduur) saab sisendina valemi 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ Protseduuri esimeses sammus kontrollime valemi triviaalset tõesust/väärust
+ vastavalt sellele, kas valem on tühi või sisaldab tühja klauslit.
+ Kui valemi tõesuse üle ei saa veel otsustada, siis rakendame hargnemisreeglit.
+ Kõigepealt üritame kasutada reegli erikuju, ühe literaaliga klausli elimineerim
+ist.
+ Kui ühe literaaliga klauslit valemis ei esine, rakendame üldist hargnemisreegli
+t mingi valemi muutuja 
+\begin_inset Formula $x$
+\end_inset
+
+ järgi, kusjuures muutuja valime protseduuri 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proc{VM}
+\end_layout
+
+\end_inset
+
+ (vali muutuja) järgi.
+ Kuivõrd üldine hargnemisreegel jagab otsingu kaheks, siis jätkame kõigepealt
+ esimese haru järgi.
+ Kui see ei anna tulemust, siis jätkame teise haru järgi.
+ Enne kumbagi harusse suundumist rakendame valemile lihtsustavaid teisendusi:
+ tõeste klauslite elimineerimist ja väärade literaalide elimineerimist.
+ Kõik algoritmis rakendatavad teisendused sooritatakse altpoolt ülespoole.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{algorithm}{OP}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+ainput{konjuktiivsel normaalkujul valem $F$.}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+aoutput{tulemus, kas valem $F$ on kehtestatav või mitte.}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+abody
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Kui 
+\begin_inset Formula $F=\emptyset$
+\end_inset
+
+, siis tagasta 
+\begin_inset Quotes eld
+\end_inset
+
+kehtestatav
+\begin_inset Quotes erd
+\end_inset
+
+ ja lõpeta töö.
+\end_layout
+
+\begin_layout Enumerate
+Kui 
+\begin_inset Formula $\emptyset\in F$
+\end_inset
+
+, siis tagasta 
+\begin_inset Quotes eld
+\end_inset
+
+mittekehtestatav
+\begin_inset Quotes erd
+\end_inset
+
+ ja lõpeta töö.
+\end_layout
+
+\begin_layout Enumerate
+Kui leidub ühikliteraaliga klausel 
+\begin_inset Formula $C_{i}=l$
+\end_inset
+
+ valemis 
+\begin_inset Formula $F$
+\end_inset
+
+, siis
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Kui 
+\begin_inset Formula $l\equiv x$
+\end_inset
+
+, siis rakenda valemile 
+\begin_inset Formula $F$
+\end_inset
+
+ teisendust 
+\emph on
+R4p
+\emph default
+, saades valemi 
+\begin_inset Formula $F|_{x=1}$
+\end_inset
+
+.
+ Sellele valemile rakenda järjest lihtsustavaid teisendusi 
+\emph on
+R1p
+\emph default
+ ja 
+\emph on
+R2n
+\emph default
+, kuni neid rohkem rakendada ei saa.
+ Lihtsustamiste tulemusena saadi valem 
+\begin_inset Formula $F'$
+\end_inset
+
+.
+ Tagasta 
+\begin_inset Formula $OP(F')$
+\end_inset
+
+ tulemus.
+\end_layout
+
+\begin_layout Enumerate
+Kui 
+\begin_inset Formula $l\equiv-x$
+\end_inset
+
+, siis rakenda valemile 
+\begin_inset Formula $F$
+\end_inset
+
+ teisendust 
+\emph on
+R4n
+\emph default
+, saades valemi 
+\begin_inset Formula $F|_{x=0}$
+\end_inset
+
+.
+ Sellele valemile rakenda järjest lihtsustavaid teisendusi 
+\emph on
+R1n
+\emph default
+ ja 
+\emph on
+R2p
+\emph default
+, kuni neid rohkem rakendada ei saa.
+ Lihtsustamiste tulemusena saadi valem 
+\begin_inset Formula $F'$
+\end_inset
+
+.
+ Tagasta 
+\begin_inset Formula $OP(F')$
+\end_inset
+
+ tulemus.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Kui kolmandas sammus ei leidunud ühe literaaliga klauslit, siis rakendame
+ ühte väärtustusreeglitest 
+\emph on
+R3ap, R3an, R3bp, R3bn
+\emph default
+.
+ Need reeglid eeldavad ühe muutuja 
+\begin_inset Formula $x$
+\end_inset
+
+ valikut.
+ Muutuja valik toimub taas protseduuriga 
+\begin_inset Formula $x=VM(F)$
+\end_inset
+
+.
+ Rakendades ühte neist reeglitest, saame valemi 
+\begin_inset Formula $F'$
+\end_inset
+
+.
+ Tagasta 
+\begin_inset Formula $OP(F')$
+\end_inset
+
+ tulemus.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hetkel teostame muutuja valiku sammudel (3) ja (4) juhuslikul.
+ Selleks võib olla näiteks kõige 
+\begin_inset Quotes eld
+\end_inset
+
+vasakpoolsem
+\begin_inset Quotes erd
+\end_inset
+
+ muutuja.
+ Artiklis 
+\begin_inset LatexCommand \cite{key-10}
+
+\end_inset
+
+ on põhjalikult vaadeldud muutuja valiku põhimõtteid DPLL protseduuris ja
+ sarnastes algoritmides.
+ Teatud valemite klassi jaoks võib sobiva põhimõtte järgi valitud muutuja
+ anda head heuristilist väärtust, mis vähendab protseduuri keskmist tööaega.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{algorithm}{VM}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+ainput{konjuktiivsel normaalkujul valem $F$.}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+aoutput{mingi valemis $F$ esinev muutujasümbol.}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+abody
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Tagasta juhuslikult valitud muutuja valemist 
+\begin_inset Formula $F$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Otsinguprotseduuri korrektsus
+\end_layout
+
+\begin_layout Standard
+Nüüd näitame, et ülalkirjeldatud algoritm 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proc{OP}
+\end_layout
+
+\end_inset
+
+ on korrektne nii kehtestatavuse kui ka mittekehtestatavuse suhtes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+theorem{kui otsinguprotseduur 
+\backslash
+textsf{OP} tagastab konjuktiivsel normaalkujul valemi $F$ korral kehtestatav,
+ siis on valem  kehtestatav.}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proof
+\end_layout
+
+\end_inset
+
+ otsinguprotseduur koostab valemi 
+\begin_inset Formula $F$
+\end_inset
+
+ tuletuspuu ja kasutab ainult tuletusreegleid 
+\emph on
+R1p, R1n, R2p, R2n, R3ap, R3an, R3bp, R3bn, R4p 
+\emph default
+ja
+\emph on
+ R4n.
+
+\emph default
+ Vastavalt lemmadele (1), (2), (3) ja (4) säilitavad need reeglid valemi
+ kehtestatavuse.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofend
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Otsinguprotseduuri termineeruvus
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+theorem{otsinguprotseduur 
+\backslash
+proc{OP} termineerub}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proof
+\end_layout
+
+\end_inset
+
+ On selge, et otsinguprotseduur 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proc{OP}
+\end_layout
+
+\end_inset
+
+ lõpetab töö, kui valem on tühi või sisaldab tühja klauslit (vastavalt sammus
+ (1) ja (2)).
+ Termineeruvuse näitamiseks piisab näidata, et protseduuri 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proc{OP}
+\end_layout
+
+\end_inset
+
+ rakendamisel 
+\begin_inset Formula $n$
+\end_inset
+
+-muutujaga valemile on protseduuri rekursiivsed rakendamised 
+\begin_inset Formula $n-1$
+\end_inset
+
+-muutujalistele valemitele.
+ Sellisel juhul väheneb iga rekursiivse kutsega rangelt valemi muutujate
+ arv.
+ On selge, et lõpliku 
+\begin_inset Formula $n$
+\end_inset
+
+ korral ei saa teha mittelõplikku arvu rekursiivseid pöördumisi, jõudmata
+ 
+\begin_inset Formula $0$
+\end_inset
+
+-muutujaga valemini, milleks saab olla vaid valem tingimuses (1) või (2).
+\end_layout
+
+\begin_layout Standard
+Kõigepealt näitame, et sammus (3) saadav valem 
+\begin_inset Formula $F$
+\end_inset
+
+' sisaldab 
+\begin_inset Formula $k\le n$
+\end_inset
+
+ muutujat, kui 
+\begin_inset Formula $F$
+\end_inset
+
+ sisaldas 
+\begin_inset Formula $n$
+\end_inset
+
+ muutujat.
+ On selge, et 
+\begin_inset Formula $F$
+\end_inset
+
+ sisaldab vähemalt ühte muutujat 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Vaatleme juhtu (3.a), kus 
+\begin_inset Formula $C_{i}\in F$
+\end_inset
+
+, 
+\begin_inset Formula $C_{i}=l$
+\end_inset
+
+, 
+\begin_inset Formula $l\equiv x$
+\end_inset
+
+.
+ Kõik klauslid, mis sisaldavad literaali 
+\begin_inset Formula $l$
+\end_inset
+
+, on tõesed ja me eemaldame nad järjestikuse tõeste klauslite eemaldamise
+ reegli rakendamisega.
+ Selle tulemusena ei ole saadud valemis ühtegi muutuja 
+\begin_inset Formula $x$
+\end_inset
+
+ positiivset esinemist.
+ Teisest küljest, kõikidest klauslitest, milles sisaldaldub 
+\begin_inset Formula $x$
+\end_inset
+
+ negatiivselt (
+\begin_inset Formula $\overline{l}\equiv x$
+\end_inset
+
+), kustutame kõik 
+\begin_inset Formula $\overline{l}$
+\end_inset
+
+ esinemised järjestikuse väärade literaalide elimineerimise reegliga.
+ Seega ei sisalda valem 
+\begin_inset Formula $F'$
+\end_inset
+
+ enam muutujat 
+\begin_inset Formula $x$
+\end_inset
+
+, st.
+ tema muutujate arv on vähenenud ühe võrra.
+ Juhu (3.b) jaoks on tõestuse käik analoogiline.
+\end_layout
+
+\begin_layout Standard
+Sammus (4) eeldame, et 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proc{VM}
+\end_layout
+
+\end_inset
+
+ termineerub, muidu on tõestuse käik sarnane, kasutades lihtsustavate reeglite
+ järjestrakendamisel muutuja 
+\begin_inset Formula $x$
+\end_inset
+
+ kadumist esialgsest valemist.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofend
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Lahendite loendamine
+\end_layout
+
+\begin_layout Standard
+Tähistagu 
+\begin_inset Formula $\mu_{n}(F)$
+\end_inset
+
+ 
+\begin_inset Formula $n$
+\end_inset
+
+-muutujaga lausearvutusvalemi 
+\begin_inset Formula $F$
+\end_inset
+
+ muutujate tõeste väärtustuste arvu.
+ Meid huvitab efektiivne 
+\begin_inset Formula $\mu_{n}$
+\end_inset
+
+ arvutamise protseduur suvalise etteantud valemi 
+\begin_inset Formula $F$
+\end_inset
+
+ jaoks.
+ Artiklis 
+\begin_inset LatexCommand \cite{key-4}
+
+\end_inset
+
+ on näidatud, et selleks saab edukalt kasutada DPLL protseduuri.
+ Meie formuleerime algoritmi (loendamisprotseduur) siin kirjeldatud loogilise
+ raamistiku piires ning tõestame selle korrektsuse ning termineeruvuse.
+\end_layout
+
+\begin_layout Standard
+Kõigepealt vaatleme triviaalseid juhte, tühivalemit ja tühja klauslit sisaldavat
+ valemit.
+ Parameeter 
+\begin_inset Formula $n$
+\end_inset
+
+ tähistab antud juhul fiktiivseid muutujaid, mis on küll olemas, aga ei
+ esine valemis.
+ On selge, et tühja valemi 
+\begin_inset Formula $F=\emptyset$
+\end_inset
+
+ korral 
+\begin_inset Formula $\mu_{n}(F){=n}^{2}$
+\end_inset
+
+, sest nendele 
+\begin_inset Formula $n$
+\end_inset
+
+ muutujale võib anda suvalise väärtustuse.
+ Seevastu tühivalemi korral on meil tegemist samaselt väära valemiga ja
+ mingi fiktiivsete muutujate väärtustus ei saa valemit tõeseks muuta.
+ Seega kui 
+\begin_inset Formula $\emptyset\in F$
+\end_inset
+
+, siis 
+\begin_inset Formula $\mu_{n}(F)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Loendamisprotseduuri ehitame üles eespool kirjeldatud tuletusreegleid kasutades.
+ Kõigepealt näitame, et tõeste klauslite elimineerimisreeglid 
+\emph on
+(R1p, R1n)
+\emph default
+ säilitavad valemi 
+\begin_inset Formula $F$
+\end_inset
+
+ lahendite arvu.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+lemma{tõeste klauslite elimineerimisreegel säilitab
+\end_layout
+
+\begin_layout Standard
+
+konjuktiivsel normaalkujul valemi $F$ lahendite arvu.}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proof
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Olgu valem 
+\begin_inset Formula $F=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}$
+\end_inset
+
+.
+ Pärast tõeste klauslite elimineerimisreegli ülalt alla rakendamist saame
+ valemi 
+\begin_inset Formula $F'=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k}$
+\end_inset
+
+, kus 
+\begin_inset Formula $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{l}}$
+\end_inset
+
+ ja 
+\begin_inset Formula $l_{i_{j}}\equiv x$
+\end_inset
+
+.
+ Lisaks on meil kitsendus 
+\begin_inset Formula $v(x)=\delta$
+\end_inset
+
+, 
+\begin_inset Formula $\delta\in\{0,1\}$
+\end_inset
+
+ mingi muutuja 
+\begin_inset Formula $x$
+\end_inset
+
+ jaoks.
+ On selge, et 
+\begin_inset Formula $\mu_{n}(F)=\mu_{n}(F')$
+\end_inset
+
+ (1) parajasti siis, kui iga 
+\begin_inset Formula $F$
+\end_inset
+
+ lahend on 
+\begin_inset Formula $F'$
+\end_inset
+
+ lahendiks ja iga 
+\begin_inset Formula $F'$
+\end_inset
+
+ lahend on ka 
+\begin_inset Formula $F$
+\end_inset
+
+ lahendiks.
+ Vastavalt lemmale (1) teame, et iga 
+\begin_inset Formula $F$
+\end_inset
+
+ lahend on ka 
+\begin_inset Formula $F'$
+\end_inset
+
+ lahend.
+ Siin näitame, et iga 
+\begin_inset Formula $F'$
+\end_inset
+
+ lahend on ka 
+\begin_inset Formula $F$
+\end_inset
+
+ lahend (siin räägime võrratuses (1) mõlemas pooles samadest muutujatest,
+ muidu ei omaks see võrratus mõtet).
+\end_layout
+
+\begin_layout Standard
+Olgu 
+\begin_inset Formula $v$
+\end_inset
+
+ suvaline interpretatsioon, kus 
+\begin_inset Formula $v(F')=1$
+\end_inset
+
+.
+ Siis
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $v(C_{1})=\dots v(C_{i-1})=v(C_{1})=v(C_{i+1})=\dots=v(C_{k})=1$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\newline
+ 
+\begin_inset Formula $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+proofend
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Kokkuvõte
+\end_layout
+
+\begin_layout Chapter
+Using DPLL procedure to count models
+\end_layout
+
+\begin_layout Subsection
+Bachelor thesis
+\end_layout
+
+\begin_layout Subsection
+Raivo Laanemets
+\end_layout
+
+\begin_layout Subsection
+Abstract
+\end_layout
+
+\begin_layout Standard
+In this thesis we present logical inference system for satisfiable boolean
+ formulas.
+ The rules of this system resemble the steps of well-know DPLL algorithm
+ for boolean satisfiability problem.
+ The proof of correctness of this system is given.
+ After that we build up SAT procedure that uses exactly these rules.
+ The correctness and termination of this procedure is given.
+ Finally we show how to extend the given SAT procedure to effectively count
+ the satisfying assignments.
+ 
+\end_layout
+
+\begin_layout Chapter
+Lisa A: Otsinguprotseduuri realisatsioon keeles Prolog
+\end_layout
+
+\begin_layout Standard
+\align left
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+setstretch{1.0}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+lstinputlisting{op_ok.pl}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+onehalfspacing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Lisa B: Loendamisprotseduuri realisatsioon keeles Prolog
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Comment
+status open
+
+\begin_layout Standard
+lisada allolev TeX kood Bib alla, et sisukorra kirje oleks õiges kohas.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+ 
+\backslash
+addcontentsline{toc}{chapter}{Kirjandus}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-1}
+M.Davis, H.Putnam, 
+\emph on
+A Computing Procedure for Quantification Theory
+\emph default
+, J.
+ Assoc.
+ Comput.
+ Mach., 7:201-215, 1960.
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-2}
+M.Davis, G.Logemann, D.Loveland, 
+\emph on
+A Machine Program for Theorem-Proving
+\emph default
+, Communications of the ACM, 4:394-397, 1962.
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-4}
+E.Birnbaum, E.L.Lozinskii, 
+\emph on
+The Good Old Davis-Putnam Procedure Helps Counting Models, 
+\emph default
+Journal of Artifical Intelligence Research 10, 1999, p.
+ 457-477
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-5}
+C.P.Gomes, A.Sabharwal, B.Selman, 
+\emph on
+Model Counting: A New Strategy for Obtaining Good Bounds, 
+\emph default
+AAAI 2006
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-6}
+T.Sang, P.Beame, H.Kautz, 
+\emph on
+Solving Bayesian Networks by Weighted Model Counting, 
+\emph default
+AAAI 2005: 475-482
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-8}
+D.Roth, 
+\emph on
+On the hardness of approximate reasoning,
+\emph default
+ Artifical Intelligence, 82(1/2):273-302, 1996
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-9}
+M.W.Moskewicz, C.F.Madigan, Y.Zhao, L.Zhang, S.Malik, 
+\emph on
+Chaff: Engineering an Efficent SAT Solver, 
+\emph default
+In Proceedings of the 38th Design Automation Conference (DAC'01), June 2001
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-10}
+M.G.Lagoudakis, M.L.Littman, 
+\emph on
+Learning to Select Branching Rules in the DPLL Procedure for Satisfiability,
+ 
+\emph default
+Electronic Notes in Discrete Mathematics (ENDM), Vol.
+ 9, Elsevier LICS 2001 Workshop on Theory and Applications of Satisfiability
+ Testing (SAT 2001) Boston, MA, June 14-15, 2001
+\end_layout
+
+\end_body
+\end_document

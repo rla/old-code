@@ -1,0 +1,89 @@
+\chapter*{Sissejuhatus}
+\addcontentsline{toc}{chapter}{Sissejuhatus}
+
+Lausearvutusvalemi lahendite loendamise probleem on tihedalt seotud
+kehtestatavuse probleemiga ja omab seetõttu suurt teoreetilist ning
+praktilist tähtsust. Mitmed olulised probleemid on teisendatavad
+nendele probleemidele. Seetõttu on tähtis nii loendamise kui kehtestatavuse
+algoritmide efektiivsus, st. töökiirus. Selles vallas on viimasel ajal
+toimunud palju uuringuid ning erinevate lahendusalgoritmide kohta on kirjutatud
+kümneid artikleid.
+
+Valemi kehtestatavus kui otsustusprobleem on \textit{NP-täielik} \cite{cook71},
+mis paigutab ta samasse keerukuslassi kümnete teiste oluliste probleemidega.
+
+Lahendite loendamise probleem on kehtestatavusele vastav loendamisprobleem.
+Tema kuulub keerukusklassi \textit{\#P-täielik} \cite{roth96}. Samuti on
+teada, et lahendite arvu isegi ligikaudne leidmine väikese garanteeritud veaga
+on arvutuslikult raske ülesanne. Klassis \textit{\#P-täielik} asuvad ka mitmed
+tehisintellekti valdkonnast tuntud ülesanded, näiteks tuletus Bayes'i võrgus ja
+teised tuletusprobleemid mittetäieliku teadmusega (tõenäosuslikes)
+süsteemides.
+
+Kehtestatavuse jaoks on teada palju algoritme. Üheks neist on \textit{DPLL}
+\emph{(Davis-Putnam-Logemann-Loveland)} protseduur \cite{davis60,davis62},
+mille edasiarendatud variandid on kõrge efektiivsusega lahendusprogrammides
+kasutusel ka tänapäeval, rohkem kui 40 aastat pärast originaalalgoritmi
+publitseerimist.
+
+Hiljuti selgus, et \textit{DPLL} algoritmi saab küllaltki edukalt täiendada ka
+lahendite loendamise jaoks \cite{birnbaum99}.
+
+\section*{Töö ülesehitus ja eesmärgid}
+
+Käesolevas töös vaadeldakse originaalsest \textit{DPLL} algoritmist
+saadud lausearvutusvalemite lahendite loendamisalgoritmi.
+
+Töö alguses esitatakse probleemi formaalne kirjeldus ja töös
+läbivalt kasutatavate mõistete definitsioonid.
+
+Esimeses osas esitatakse algoritmide kirjeldus ning pseudokood,
+selgitatakse lahti kasutatud ideed ja antakse
+põhjendus, miks ühe või teise põhimõtte tarvitamine on lubatav ja mõistlik.
+
+Teises osas antakse lihtne realisatsioon
+programmerimiskeeles Prolog. Põhiliselt sisaldab see peatükk kasutatud
+andmestruktuuride ja protseduuride kirjeldusi ning näiteid nende kasutamisest.
+
+Tööd jääb lõpetama lisaosana kaasa pandud programmi dokumentatsioon, s.o.
+koostatud protseduuride sisend/väljundargumentide kirjeldused ning lühike
+ülevaade sellest, mida konktreetne protseduur teeb. Programmi masinloetava
+lähetkoodi võib leida kaasapandud optiliselt andmekandjalt.
+
+\section*{Definitsioonid}
+
+\emph{Muutujaks} nimetame suvalist sümbolit $x$
+fikseeritud sümbolite hulgast. \emph{Literaaliks} $l$ loeme muutujat $x$ ($l\equiv x$) või tema
+eitust $-x$ ($l\equiv-x$). \emph{Klausliks} $C$ loeme literaalide disjunktsiooni
+$C=l_{1}\vee\dots\vee l_{n}$. \emph{Konjuktiivsel normaalkujul valemiks} (KNK)
+$F$ loeme klauslite konjuktsiooni $F=C_{1}\wedge\dots\wedge C_{k}$. Muutuja
+$x$ \emph{väärtustuseks} nimetame funktsiooni $v$, $v(x)\in\{0,1\}$. Literaal
+$l$ on tõene, kui $l\equiv x$ ja $v(x)=1$ või $l\equiv\neg x$
+ja $v(x)=0$. Literaali $l$ on väär, kui $l\equiv x$ ja $v(x)=0$
+või $l\equiv-x$ ja $v(x)=1$. Literaali $l\equiv x$ \emph{komplementaariks}
+on literaal $\bar{l}\equiv\neg x$ ja literaali $l'\equiv\neg x$ komplementaariks
+on $\bar{l'}\equiv x$. Klauslit $C=l_{1}\vee\dots\vee l_{n}$
+nimetame väärtustusel $v$ tõeseks ($v(C)=1$), kui $C$ sisaldab
+vähemalt ühte tõest literaali, vastasel korral vääraks ($v(C)=0$).
+Valemit $F=C_{1}\wedge\dots\wedge C_{k}$ loeme väärtustusel $v$ tõeseks
+($v(F)=1$), kui ükski klauslitest $C_{1},\dots,C_{k}$ pole väär, vastasel
+korral vääraks ($v(F)=0$).
+
+\emph{n-muutuja Boole'i funktsiooniks} $f$ nimetame
+funktsiooni signatuuriga \mbox{$f:\{0,1\}^n\to \{0,1\}$}. On selge, et suvalist
+Boole'i funktsiooni saab esitada mingi talle vastava lausearvutuse valemiga.
+
+\textbf{Kehtestatavusprobleem}
+
+Olgu antud $n$-muutuja Boole'i funktsioon $f(x_1,\dots,x_n)$.
+Kehtestatavusprobleem küsib, kas leidub\footnotemark[1] selline muutujate
+$x_1,\dots,x_n$ väärtustus, kus $f(x_1,\dots,x_n)=1$.
+
+\textbf{Loendamisprobleem}
+
+Olgu antud $n$-muutuja Boole'i funktsioon $f(x_1,\dots,x_n)$. Lahendite
+loendamise probleem on loendamisprobleem, mitu erinevat $x_1,\dots,x_n$
+väärtustust leidub, kus $f(x_1,\dots,x_n)=1$.
+
+\footnotetext[1]{Praktilistes rakendustes omavad sageli tähtsust ka
+tegelikud muutujate väärtused.}

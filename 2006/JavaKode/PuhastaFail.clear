@@ -1,0 +1,122 @@
+import java.io.*;
+class PuhastaFail {
+	
+	
+	
+	static boolean Fail(String failinimi) {
+	
+		
+		
+		BufferedReader sisend;
+		PrintWriter valjund;
+		
+		try {
+		
+			sisend=new BufferedReader(new FileReader(failinimi +));
+			
+		} catch (IOException e) {
+		
+			System.out.println( +failinimi +);
+			return false;
+			
+		}
+		
+		try {
+		
+			valjund=new PrintWriter(new FileWriter(failinimi +), true);
+			
+		} catch (IOException e) {
+		
+			System.out.println( +failinimi +);
+			return false;
+		
+		}
+		
+		
+		
+		char ch=' ';
+		char oldch=' ';
+		
+		boolean n_kommentaar=false; 
+		boolean kommentaar=false; 
+		boolean string=false; 
+		
+		String rida;
+		String puhastatud=;
+		
+		int i=0;
+		
+		while (true) {
+		
+			
+			
+			puhastatud=;
+			n_kommentaar=false;
+			
+			try {
+			
+				rida=sisend.readLine();
+				if (rida==null) break;
+				
+				
+				
+				
+				for (i=0; i<rida.length(); i++) {
+					
+					ch=rida.charAt(i);
+					
+					
+					
+					if (ch=='*' && oldch=='' && !string) {
+						
+						kommentaar=true;
+					
+					} else if (ch=='' && oldch=='' && !string) {
+					
+						n_kommentaar=true;
+					
+					} else if (ch=='
+' && oldch!='\\' && string && !kommentaar && !n_kommentaar) {
+					
+						string=false;
+					
+					} else if (!kommentaar && !string && !n_kommentaar) {
+					
+						if (ch!='') puhastatud+=ch;
+					
+					}
+					
+					oldch=ch;
+				
+				}
+				
+				
+				
+				if (puhastatud.length()>0) valjund.println(puhastatud);
+			
+			} catch (IOException e) {
+			
+				break;
+			
+			}
+		
+		}
+		
+		
+		
+		try {
+		
+			sisend.close();
+			valjund.close();
+			
+		} catch (IOException e) {
+		
+			System.out.println();
+			return false;
+		
+		}
+		
+		return true;
+	
+	}
+}

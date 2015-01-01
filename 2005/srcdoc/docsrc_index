@@ -1,0 +1,15 @@
+#!/bin/sh
+
+rm -f "$1/srcdoc_index.html"
+rm -f "$1/srcdoc_index.temp"
+
+for f in `ls -1 $1`
+do
+	if [ -f $1'/'$f ] ; then
+	echo "<li><a href=\"$f\">$f</a></li>" >> "$1/srcdoc_index.temp"
+	fi
+done
+
+cat ~/.srcdoc_index.html | rewrite file-list "$1/srcdoc_index.temp" > "$1/srcdoc_index.html"
+
+rm -f "$1/srcdoc_index.temp"

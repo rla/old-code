@@ -1,0 +1,20 @@
+#results
+  %table
+    %tr
+      %th Name
+      %th URL
+      %th Error string
+      %th Time taken (s)
+      %th Actions
+      - for s in @sites
+        %tr{ :class => s.is_failed ? 'error' : 'ok' }
+          %td= s.name
+          %td= s.url
+          %td= s.error_string
+          %td= ("%.2f" % s.time_taken)
+          %td
+            =link_to 'Edit', edit_site_path(s) |
+            =link_to 'Delete', site_path(s),
+              { :confirm => 'Are you sure?', :method => :delete, :class => "delete-link" }
+            
+  =will_paginate @sites

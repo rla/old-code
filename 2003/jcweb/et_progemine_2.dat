@@ -1,0 +1,19 @@
+*pascal/akermann.pas.html*Programm ackermani arvude leidmiseks(rekursiivne).*pascal/akermann.pas
+*pascal/vyk.pas.html*Leiab kahe arvu väikseima ühiskordse.*pascal/vyk.pas 
+*pascal/expo.pas.html*Eksponentfunktsiooni arvutamine.*pascal/expo.pas
+*pascal/fibonats.pas.html*Fibonatsi arvude leidmine.*pascal/fibonats.pas
+*pascal/arvn.pas.html*Arvutab mingi arvu astme.*pascal/arvn.pas
+*pascal/nruut.pas.html*Täisarvu ruudu leidmine(rekursiivne).*pascal/nruut.pas
+*pascal/fakt.pas.html*Arvutab faktoriaali n!(rekursiivne).*pascal/fakt.pas
+*pascal/aste.pas.html*Täisarv mingil astmel(rekursiivne).*pascal/aste.pas
+*pascal/sinus.pas.html*Siinuse arvutamise algoritm.*pascal/sinus.pas
+*pascal/umberj.pas.html*Järjestab ümber stringi(kõik võimalused).*pascal/umberj.pas
+*pascal/algarud.pas.html*Esimesed 100 algarvu.*pascal/algarud.pas
+*pascal/algtegur.pas.html*Jagab arvu algteguriteks.*pascal/algtegur.pas
+*pascal/arvkohad.pas.html*Täisarvu kohtade arv.*pascal/arvkohad.pas
+*pascal/arvujada.pas.html*Arvujada nihutamine ja pööramine.*pascal/arvujada.pas
+*pascal/arvujaga.pas.html*Leiab arvu jagajad.*pascal/arvujaga.pas
+*pascal/generaa.pas.html*Genereerib n täisarvu lõigul a-st b-ni ja kirjutab faili..*pascal/generaa.pas
+*pascal/jaglah.pas.html*Arvu jagamise algoritm lahutamisega.*pascal/jaglah.pas
+*pascal/jarjjada.pas.html*Järjestab arvud jadas.*pascal/jarjjada.pas
+*pascal/kirje.pas.html*Programm isikute andmebaasi moodustamiseks. Kasutab kirjeid.*pascal/kirje.pas

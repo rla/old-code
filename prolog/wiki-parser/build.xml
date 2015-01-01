@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<project name="wiki-parser" basedir="." default="build">
+    <property file="build.properties"/>
+
+    <property name="src.dir" value="javas"/>
+    <property name="build.dir" value="build"/>
+    <property name="name" value="wiki-parser"/>
+
+    <path id="master-classpath">
+        <fileset dir="${web.dir}/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${appserver.home}/common/lib">
+            <include name="servlet*.jar"/>
+        </fileset>
+        <pathelement path="${build.dir}"/>
+    </path>
+
+    <target name="build" description="Compile main source tree java files">
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" debug="true"
+               deprecation="false" optimize="false" failonerror="true">
+            <src path="${src.dir}"/>
+            <classpath refid="master-classpath"/>
+        </javac>
+    </target>
+</project>

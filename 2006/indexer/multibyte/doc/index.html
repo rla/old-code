@@ -1,0 +1,64 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Multibyte library</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../../../laanemets.css" />
+</head>
+<body>
+<h1>Multibyte library</h1>
+<div class="spacing"></div>
+
+<h2>Data Structures</h2>
+
+<h3>MULTIBYTE</h3>
+<i>
+Data structure to store multibyte character. The actual character
+consists of 2 C char's in the field of chars.
+</i>
+
+<h3>MULTIBYTE_SEQ</h3>
+<i>
+Data structure to store the linear sequence of multibyte characters.
+</i>
+
+<h2>Functions</h2>
+
+<h3>MULTIBYTE_SEQ *multibyte_file(char *filename)</h3>
+<i>
+Read the file filename into multibyte sequence. If the file was
+not readable, returns NULL.
+</i>
+
+<h3>int multibyte_isnum(MULTIBYTE *mbyte)</h3>
+<i>
+Helping function to detect if the multibyte is numeric (0..9).
+</i>
+
+<h3>int multibyte_isspace(MULTIBYTE *mbyte)</h3>
+<i>
+Helping function to detect if the multibyte is space.
+</i>
+
+<h3>int multibyte_isdot(MULTIBYTE *mbyte)</h3>
+<i>
+Helping function to detect if the multibyte is dot.
+</i>
+
+<h3>int multibyte_isle(MULTIBYTE *mbyte)</h3>
+<i>
+Helping function to detect if the multibyte is line end.
+</i>
+
+<h2>License: GNU</h2>
+
+<p><a href="../multibyte.zip">multibyte.zip</a></p>
+
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <a href="mailto:rlaanemt@ut.ee">rlaanemt@ut.ee</a>, 11.09.06
+
+</body>
+</html>

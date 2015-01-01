@@ -1,0 +1,9 @@
+`Java'             -> #`Class'#
+`Class'            -> class #i# `Class_body'
+`Class_body'       -> { `Method_definition'
+
+`Class_body'       -> `Method_definition'`Class_body' }
+
+`Method_definition' -> public #i# #i# ( ) { `Method_body' }
+
+`Method_body' -> haha

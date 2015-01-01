@@ -1,0 +1,11 @@
+(to-derive (flip (heads)))
+(to-derive (flip (tails)))
+
+(fact (n (z)))
+(fact (n (s n)) (n n))
+
+(fact (member V0 (cons V0 V1)))
+(to-derive (member V0 (cons V1 V2)) (member V0 V2))
+        
+(fact (append (nil) V0 V0))
+(to-derive (append (cons V0 V1) V2 (cons V0 V3)) (append V1 V2 V3))

@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+  <TITLE>United</TITLE>
+</HEAD>
+<BODY>
+<?php 
+echo "hahaa" ;
+?>
+<?php
+  $filename="text.txt" ;
+  $handle=fopen($filename, 'a') ;
+  $string="tere" ;
+  fputs($handle, $string) ;
+  fclose($handle) ;
+?>
+</BODY>
+</HTML>

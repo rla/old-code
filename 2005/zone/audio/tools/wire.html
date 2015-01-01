@@ -1,0 +1,63 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Juhtme ristlõike ja massi kalkulaator</title>
+<style type="text/css">
+td, form, input, p, li { font-family:Helvetica }
+</style>
+</head>
+<body>
+<h1 style="font-family:Helvetica">Juhtme ristlõike ja massi kalkulaator</h1>
+<p style="margin-left:20px;width:500px">
+Kalkulaator eeldab, et juhtme läbimõõt on antud millimeetrites,
+kusjuures ei arvestata isolatsiooni. Arvutaja kasutab
+massi leidmiseks tihedusi:<br>
+Vask: 8920 kg/m^3<br>
+Alumiinium: 2700 kg/m^3
+</p>
+<h2 style="font-family:Helvetica">Arvutamiseks vajalikud parameetrid:</h2>
+<ul>
+<li>Juhtme läbimõõt(mm).</li>
+<li>Juhtme materjal (vask või alumiinium).</li>
+<li>Juhtme pikkus (m).</li>
+</ul>
+<form method="post" action="wire.php">
+<table style="border:3px solid #cccccc;background-color:#eeeeee;margin:20px" cellspacing="0">
+<tr>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  Juhtme läbimõõt(mm):
+  </td>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  <input type="text" name="d" maxlength="4" value="1.00">
+  </td>
+</tr>
+<tr>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  Juhtme materjal:
+  </td>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  <select name="m">
+  <option value="8920">Vask</option>
+  <option value="2700">Alumiinium</option>
+  </select>
+  </td>
+</tr>
+<tr>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  Juhtme pikkus(m):
+  </td>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  <input type="text" name="l" maxlength="4" value="100">
+  </td>
+</tr>
+<tr>
+  <td style="padding:20px" colspan="2">
+  <input type="submit" value="Arvuta">
+  </td>
+</tr>
+</table>
+</form>
+</body>
+</html>

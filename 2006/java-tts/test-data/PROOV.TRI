@@ -1,0 +1,7 @@
+#
+READ a;
+READ b;
+READ c;
+x:=a+b*c;
+WRITE x;
+#

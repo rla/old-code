@@ -1,0 +1,62 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Eeltakisti kalkulaator</title>
+<style type="text/css">
+td, form, input, p, li { font-family:Helvetica, sans-serif; }
+li { width: 500px; }
+</style>
+</head>
+<body>
+<h1 style="font-family:Helvetica">Eeltakisti kalkulaator</h1>
+<p style="margin-left:20px;width:500px">
+Antud vahend võimaldab arvutada eeltakistit nii
+valgusdioodile kui ka stabilitronile(zener dioodile).
+Loomulikult eeldab kalkulaator, et rakendatav pinge on tööpingest
+kõrgem.
+</p>
+<h2 style="font-family:Helvetica">Arvutamiseks vajalikud parameetrid:</h2>
+<ul>
+<li>Tööpinge(V) - valgusdioodi või stabilitroni tööpinge.</li>
+<li>Rakendatav pinge(V).</li>
+<li>Töövool(mA) - valgusdioodi või stabilitroni töövool. Tavaliselt
+võib võtta valgusdioodi töövooluks 10mA. Stabilitroni töövool sõltub
+ka maksimaalsest lubatavast hajuvast võimsusest.</li>
+</ul>
+<form method="post" action="balance.php">
+<table style="border:3px solid #cccccc;background-color:#eeeeee;margin:20px" cellspacing="0">
+<tr>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  Tööpinge(V):
+  </td>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  <input type="text" name="u" maxlength="4" value="3.00">
+  </td>
+</tr>
+<tr>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  Rakendatav pinge(V):
+  </td>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  <input type="text" name="e" maxlength="4" value="12.0">
+  </td>
+</tr>
+<tr>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  Töövool(mA):
+  </td>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  <input type="text" name="i" maxlength="4" value="10.0">
+  </td>
+</tr>
+<tr>
+  <td style="padding:20px" colspan="2">
+  <input type="submit" value="Arvuta">
+  </td>
+</tr>
+</table>
+</form>
+</body>
+</html>

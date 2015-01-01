@@ -1,0 +1,118 @@
+Veebimootori administreerimisliides.
+======================
+Raivo Laanemets
+05. august 2004
+
+
+1. Paigaldus
+-------------
+
+1) Kopeeri failid index.php, conf.php, login.html ja kausta /php sisu kohta, kuhu soovid administreerimisliidest paigaldada.
+2) Muuda faili conf.php sisu. Täpsemalt loe 'seadistamise' alt.
+3) Esimest korda käivitades küsib süsteem sobivat parooli root kasutaja jaoks, sisestage see ja jätke meelde. Kasutajate paroole pole võimalik taastada.
+
+
+
+2. Seadistamine
+-----------------
+
+Mysql serveriga ühendamiseks vajalikud andmed paiknevad failis conf.php.
+
+
+
+
+3. Kasutajad
+-------------
+
+Liidest on võimalik jagada erinevate kasutajate vahel. Ühel kasutajal võib olla õigus ühe või mitme saidi muutmiseks. Kasutajad saab lisada ja kustudada vaid root.
+
+Valige vaskust menüüst Kasutajad. Sisestage kasutaja nimi ja parool, need ei tohiks sisaldada tühikuid ega erimärke. Seejärel vajutage 'Lisa'. Samalt lehelt on võimalik ka kasutajaid kustudada.
+
+Õigusi saidi muutmiseks saab seada vajutades kasutajanimele.
+
+
+
+
+4. Saidid
+---------
+
+Sait on sarnase kontekstiga lehekülgede kogum. Uue saidi loomise õpetust vaata Veebimootori LoeMind.txt failist. Liidese toetust saab lisada valides vasakult menüüst Saidid. Lisamiseks sisestage saidi nimi, tee ja andmebaas (süsteemi praegune versioon eeldab, et saitide ja administreerimisliidese andmebaasidel on ühine server ning kasutajanimi ) ja vajutage 'Lisa'. Samal leheküljel on ka info juba loodud saitide kohta. Vajutades selle nimele, seatakse muudetavaks saidiks valitu.
+
+
+
+
+5. Objektid
+------------
+
+Objekt tähistab ühte osa koodist. Selle sisuks võib olla html või php. Täpsemalt on erinevaid tüüpe neli: html, text, css ja php. Kõik lehed koosnevad objektidest.
+
+
+
+
+
+6. Lehed
+---------
+
+Leht on objekt, mis määratakse GET või POST meetodi kaudu ja ta tähistab konkreetset lehekülge. Iga objekt ei saa leht olla. See, millised objektidest on määratud lehtedeks saab seada, valides vasakult menüüst 'Lehed'.
+
+
+
+7. Templeidid
+--------------
+
+Templeidid on seotud ühe saidiga ning abistavad sarnase sisuga objektide/lehtede koostamisel.
+
+
+
+
+
+8. Andmebaasid
+-----------------
+
+1) kasutaja_saidid:
+	kasutaja_id int.
+	saidi_id int.
+	id int.
+
+2) kasutajad:
+	nimi char(10).
+	parool char(32).
+	kasutaja_id int.
+
+3) saidid:
+	saidi_id int.
+	saidi_nimi char(50).
+	saidi_tee char(250).
+	baas char(20).
+
+4) <saidi_nimi>_templeidid:
+	id char(20).
+	tekst text.
+
+5) <saidi_nimi>_moodulid:
+	id char(20).
+	mis char(20).
+
+6) <saidi_nimi>_ajalugu:
+	kasutaja_id int.
+	objekti_id int.
+	aeg int.
+
+9.Moodulid
+------------
+
+Asuvad kaustas /moodulid. Saidile installeerides käivitatakse install.php, mis asub ühes /moodulid alamkaustas. Administreerimisliides näitab mooduli infot scriptist /moodulid/<mooduli nimi>/action.php.
+Kasutajapoolne osa on nimega <mooduli nimi>.php, mis kopeeritakse saidi /php kausta ja lisatakse kui objekt.
+
+
+
+10. Tagavarakoopiad
+-----------------------
+
+Faili formaat:
+
+<saidi nimi>:<tagavarakoopia koostamise aeg>:;
+<keel1>:<keel2>:<keel3>:...<keeln>:;
+<objekt1>:<tyyp>:<pealkiri>:<keel1>:<sisu>;
+<objekt1>:<tyyp>:<pealkiri>:<keel2>:<sisu>;
+....

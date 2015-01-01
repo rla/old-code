@@ -1,0 +1,8 @@
+# \section*{Draakonite "ulesanne}
+# \textbf{T~oestada:} iga roheline draakon on ~onnelik.
+
+Vx((D(x) & R(x)) => O(x))
+
+Vx((D(x) & Vy(L(y,x) & L(y))) => O(x))
+Vx(D(x) & R(x) => L(x))
+VxVy(L(x,y) & R(y) & D(y) => R(x) & D(x))

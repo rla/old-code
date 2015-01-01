@@ -1,0 +1,10 @@
+<h2>Add new stream</h2>
+
+<form id="stream">
+  <input type="hidden" name="state" value="save" />
+  <label for="name">Stream name</label><br />
+  <input type="text" name="name" /><br />
+  <label for="name">Stream url</label><br />
+  <input type="text" name="url" style="width: 300px" /><br /><br />
+  <a class="submit" onClick="save('stream', 'http://localhost:8000/stream/new')">Save</a>
+</form>

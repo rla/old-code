@@ -1,0 +1,4 @@
+<?
+  echo "posttest";
+  echo $kysimus;
+?>

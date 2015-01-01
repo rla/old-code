@@ -1,0 +1,5 @@
+= Project directory =
+
+* lib   - project libraries (both external and internal .jar files).
+* conf  - log4j configuration.
+* rules - wiki tokenizing and parsing rules.

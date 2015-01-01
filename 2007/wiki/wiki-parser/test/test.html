@@ -1,0 +1,41 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Wiki page</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="wiki.css" />
+</head>
+<body>
+
+<h1>Test document</h1>
+
+<h2>Introduction</h2>
+
+<p>This document describes <i>jWiki</i>  <a href="wiki">Wiki</a> markup parser. The parser
+uses deterministic finite state automata for tokenizing the markup
+and nondeterministic backtracking recursive top-down recursive parser
+to produce abstract syntax tree. The syntax tree is then transformed
+into xml and empty text nodes are removed. <img src="email.png" alt="Image" align="top"/> Hehe, tex code: <img src="585e0e0a1aa1f4b0e9877e6e105e288b.png" alt="Image" align="top"/> .</p>
+
+<h1>Processing Chain</h1>
+
+<p>The processing chain of wiki text follows:</p>
+
+<ul>
+	<li>Rewrite every line end to single n character.</li>
+	<li>Add some extra spaces at the end of file.</li>
+	<li>Tokenize text using the jwiki tokenizer.</li>
+	<li>Parse text using the jwiki parser.</li>
+	<li>Traverse abstract syntax tree and remove empty and meaningless
+	  nodes.</li>
+	<li>Transform tex code nodes into images.</li>
+	<li>Transform abstract syntax tree into xml dom.</li>
+	<li>Produce xml code from xml dom tree.</li>
+	<li>(Optional) use xsl to produce (x)html from xml code.</li>
+	<li> <i>haha</i> </li>
+<ul>
+
+</body>
+</html>

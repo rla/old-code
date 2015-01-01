@@ -1,0 +1,57 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Võimendi toitepinge kalkulaator</title>
+<style type="text/css">
+td, form, input, p, li { font-family:Helvetica }
+</style>
+</head>
+<body>
+<h1 style="font-family:Helvetica">Võimendi toitepinge kalkulaator</h1>
+<p style="margin-left:20px;width:500px">Antud vahend võimaldab
+arvutada võimendi vähima vajaliku toitepinge võimendiklass AB korral.
+Lisaks leitakse väljundtransistoritel hajuv võimsus selle toitepinge
+puhul. Arvutamiseks kasutatavad valemid on pärit L.Abo raamatust
+"Raadiolülitused".</p>
+<h2 style="font-family:Helvetica">Arvutamiseks vajalikud parameetrid:</h2>
+<ul>
+<li>Soovitud väljundvõimsus vattides(W).</li>
+<li>Kõlari takistus oomides. Tavaliselt on kõlari takistuseks
+4 või 8 oomi.</li>
+<li>Kas võimendi on sildvõimendi või mitte.</li>
+</ul>
+<form method="post" action="power.php">
+<table style="border:3px solid #cccccc;background-color:#eeeeee;margin:20px" cellspacing="0">
+<tr>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  Soovitud väljundvõimsus(W):
+  </td>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  <input type="text" name="P" maxlength="4" value="100">
+  </td>
+</tr>
+<tr>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  Kõlari takistus(oomi):
+  </td>
+  <td style="padding:20px;border-bottom:1px solid #cccccc">
+  <input type="text" name="R" maxlength="4" value="4">
+  </td>
+</tr>
+<tr>
+  <td style="padding:20px;border-bottom:1px solid #cccccc" colspan="2">
+  <input type="checkbox" name="sild" value="1">
+  Sildvõimendi
+  </td>
+</tr>
+<tr>
+  <td style="padding:20px" colspan="2">
+  <input type="submit" value="Arvuta">
+  </td>
+</tr>
+</table>
+</form>
+</body>
+</html>

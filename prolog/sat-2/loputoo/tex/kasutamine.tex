@@ -1,0 +1,121 @@
+\chapter{Programmi kasutamine}
+
+Programmi kasutamiseks on vajalik arvutisse paigaldatud Prologi interpretaator.
+Programm on küll kirjutatud Swi-Prologi realisatsioonile, kuid on lihtsalt
+porditav ka teistele populaarsetele Prologi implementatsioonidele.
+
+\section{Põhiprotseduurid}
+
+\subsection{Lahendite loendamine}
+
+Loendamiseks saab kasutada protseduuri \texttt{dpll\_loenda/2}, mis asub failis
+\textit{dpll\_loenda.pl}, ning mis võtab sisendargumendiks konjuktiivsel
+normaalkujul listiesituses valemi, kus muutujad on kodeeritud täisarvudena.
+Lahendite arv antakse väljundmuutujas, mis on
+protseduuri teiseks argumendiks.
+
+\textbf{Näide kasutamisest:}
+
+\begin{verbatim}
+?- dpll_loenda([[-1, 2, -3], [-2, -4], [4]], C).
+C = 3
+\end{verbatim}
+
+\subsection{Kehtestava väärtustuse leidmine}
+
+Valemi kehtestatavuse leidmise protseduur asub failis \textit{dpll.pl}.
+Põhiprotseduuriks on \texttt{dpll/2}, mis võtab sisendiks valemi samal
+kujul nagu loendamiseks kasutatav protseduur. Väljundiks antakse muutujate
+väärtustuse termi muutujate osa (andmestruktuuri kirjeldus on esitatud eespool).
+
+Kui mingi muutuja väärtustus pole vajalik kehtestatavuse jaoks, siis esineb
+termis sellel kohal Prologi muutuja, st. muutuja väärtust ei kitsendata.
+
+Tagurdamisel genereeritakse automaatselt järgmine väärtustus. Kui valem ei
+olnud kehtestatav, siis protseduuri kutse lõpetab negatiivse tulemusega.
+
+\textbf{Näited päringutest:}
+
+\begin{verbatim}
+?- dpll([[-1, 2, -3], [-2, -4], [4]], C).
+C = v(1, 0, 0, 1) ;
+C = v(0, 0, 1, 1) ;
+C = v(0, 0, 0, 1) ;
+
+?- dpll([[-1, 2, -3], [-2, -4]], C).
+C = v(1, 1, _G778, 0)
+
+?- dpll([[-1], [1]], C).
+No
+
+\end{verbatim}
+
+Teine võimalus on kasutada integratsioonimoodulit \texttt{dpllp/2} (failis
+\textit{dpllp.pl}), mis võimaldab muutujatena tarvitada Prologi muutujaid
+(\texttt{dpllk/2}). Sellisel viisil saab siduda lahendaja teiste Prologi
+programmidega. Lisaks sisaldab moodul võimalust kasutada mittekonjuktiivsel
+normaalkujul olevaid valemeid (\texttt{dpllp/2}). Kasutatavad operaatorid on
+prioriteedi kasvamise järjekorras: \texttt{<=>,=>,v,\&,-}.
+
+\textbf{Näited päringutest:}
+
+\begin{verbatim}
+?- dpllk([[-A, B, -C], [-B, -D], [D]]).
+A = 1,
+B = 0,
+C = 0,
+D = 1
+
+?- dpllp((-A v B v -C) & (B => -D) & D).
+
+A = 1,
+B = 0,
+C = 0,
+D = 1
+\end{verbatim}
+
+\section{cnf failide sisselugemine}
+
+Suuremate valemite (rohkem kui kümned muutujad) hoidmiseks on populaarsed
+\texttt{cnf} formaadis failid. \texttt{cnf} formaadis faile saab
+sisse lugeda päringuga \texttt{loe\_cnf}, mille esimeseks argumendiks on loetava
+faili nimi ning teiseks argumendiks saadav valem.
+
+\textbf{Näide kasutamisest:}
+
+\begin{verbatim}
+?- loe_cnf('../testid/ais/ais6.cnf', F), dpll_loenda(F, C).
+F = [[1, 2, 3, 4, 5, 6], [-1, -2], [-1, -3],
+  [-1, -4], [-1, -5], [-1, -6], [-2, -3], [-2|...], [...|...]|...],
+C = 24
+\end{verbatim}
+
+\section{Silumisvahend}
+
+Programmi koostamisel oli oluliseks abivahendiks silumismoodul \texttt{silur}.
+Silumismoodulit toetavad kõik eespool esitatud lahendus- ja
+loendamisprotseduurid. Kui silumine on sisse lülitatud (seda saab teha
+päringuga \texttt{silur:sisse.}), siis kirjutab programm kasutajale väljundisse
+infot teostatavate tegevuste kohta lahendussammude kaupa. Vaikimisi on
+silumisvahend välja lülitatud.
+
+\textbf{Näide siluri väljundist:}
+
+\begin{verbatim}
+?- dpll([[-1, 2, -3], [-2, -4], [4]], C).
+0 - Valem: [[2, -1, -3], [-2, -4], [4]]
+0 > Tõeseks valitud ühikliteraal 4
+|:
+1 - Valem: [[2, -1, -3], [-2]]
+1 > Tõeseks valitud ühikliteraal -2
+|:
+2 - Valem: [[-1, -3]]
+2 > Tõeseks valitud literaal 1
+|:
+3 - Valem: [[-3]]
+3 > Tõeseks valitud ühikliteraal -3
+|:
+4 - Valem: []
+C = v(1, 0, 0, 1)
+Yes
+\end{verbatim}

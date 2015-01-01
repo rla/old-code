@@ -1,0 +1,4 @@
+Testsuite: ee.pri.rl.tokenizer.reader.test.StringBuilderTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.003 sec
+
+Testcase: testStringBuilder took 0 sec

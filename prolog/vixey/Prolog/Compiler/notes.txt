@@ -1,0 +1,11 @@
+DCG on STREAMS
+
+ if I have like
+ t([2,5,6,3,8,5,4,65,5,513,135,354,435,...])
+ imagine lots of test data
+ ?- t(X), t(Y).
+ actually does two huge allocations
+ I'll need to fix that
+
+compile unification
+

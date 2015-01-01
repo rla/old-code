@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+  <TITLE>United</TITLE>
+</HEAD>
+<BODY>
+<?PHP
+   echo DATE('ymd');
+   $filename="text.txt";
+   $fp=fopen($filename, 'r');
+   if ($fp!=0) {
+      echo "file ok";
+      $count=fread($fp, 1);
+      echo $count;
+      fclose($fp);
+   }
+?>
+</BODY>
+</HTML>

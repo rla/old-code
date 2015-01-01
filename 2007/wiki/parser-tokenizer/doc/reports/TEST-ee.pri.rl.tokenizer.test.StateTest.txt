@@ -1,0 +1,5 @@
+Testsuite: ee.pri.rl.tokenizer.test.StateTest
+Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.013 sec
+
+Testcase: testState took 0 sec
+Testcase: testSerialization took 0.01 sec

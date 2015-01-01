@@ -1,0 +1,21 @@
+Testsuite: ee.pri.rl.indexer.model.logic.IndexerFacadeImplementationTest
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 6.845 sec
+------------- Standard Output ---------------
+EMMA: collecting runtime coverage data ...
+Hibernate: insert into word (word, id) values (?, ?)
+Hibernate: insert into indexedfile (name, id) values (?, ?)
+Hibernate: insert into indexedfile (name, id) values (?, ?)
+Hibernate: insert into indexedfile (name, id) values (?, ?)
+Hibernate: insert into word (word, id) values (?, ?)
+Hibernate: insert into word (word, id) values (?, ?)
+Hibernate: insert into file_word (file_id, word_id) values (?, ?)
+Hibernate: insert into file_word (file_id, word_id) values (?, ?)
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+log4j:WARN No appenders could be found for logger (org.hibernate.cfg.Environment).
+log4j:WARN Please initialize the log4j system properly.
+------------- ---------------- ---------------
+
+Testcase: testWordSave took 6.651 sec
+Testcase: testIndexedFileSave took 0.07 sec
+Testcase: testIndexedFileSaveWithWords took 0.121 sec

@@ -1,0 +1,83 @@
+<?xml-stylesheet type="text/xsl" href="wiki.xsl"?>
+
+<n_page>
+	<t_heading_1>Test document</t_heading_1>
+	<t_heading_2>Introduction</t_heading_2>
+	<n_paragraph>
+		<t_paragraph>
+
+			This document describes
+		</t_paragraph>
+		<n_italic>
+			<t_paragraph>jWiki</t_paragraph>
+		</n_italic>
+		<t_paragraph>
+			wiki markup parser. The parser uses deterministic finite
+			state automata for tokenizing the markup and
+			nondeterministic backtracking recursive top-down recursive
+			parser to produce abstract syntax tree. The syntax tree is
+			then transformed into xml and empty text nodes are removed.
+		</t_paragraph>
+	</n_paragraph>
+	<t_heading_1>Processing Chain</t_heading_1>
+	<n_paragraph>
+		<t_paragraph>
+
+			The processing chain of wiki text follows:
+		</t_paragraph>
+	</n_paragraph>
+	<n_list>
+		<n_list_item>
+			<t_list_item>
+				Rewrite every line end to single n character.
+			</t_list_item>
+		</n_list_item>
+		<n_list_item>
+			<t_list_item>
+				Add some extra spaces at the end of file.
+			</t_list_item>
+		</n_list_item>
+		<n_list_item>
+			<t_list_item>
+				Tokenize text using the jwiki tokenizer.
+			</t_list_item>
+		</n_list_item>
+		<n_list_item>
+			<t_list_item>
+				Parse text using the jwiki parser.
+			</t_list_item>
+		</n_list_item>
+		<n_list_item>
+			<t_list_item>
+				Traverse abstract syntax tree and remove empty and
+				meaningless nodes.
+			</t_list_item>
+		</n_list_item>
+		<n_list_item>
+			<t_list_item>
+				Transform tex code nodes into images.
+			</t_list_item>
+		</n_list_item>
+		<n_list_item>
+			<t_list_item>
+				Transform abstract syntax tree into xml dom.
+			</t_list_item>
+		</n_list_item>
+		<n_list_item>
+			<t_list_item>
+				Produce xml code from xml dom tree.
+			</t_list_item>
+		</n_list_item>
+		<n_list_item>
+			<t_list_item>
+				(Optional) use xsl to produce (x)html from xml code.
+			</t_list_item>
+		</n_list_item>
+		<n_list_item>
+			<t_list_item>haha</t_list_item>
+			<n_italic>
+				<t_list_item>haha</t_list_item>
+			</n_italic>
+		</n_list_item>
+	</n_list>
+</n_page>

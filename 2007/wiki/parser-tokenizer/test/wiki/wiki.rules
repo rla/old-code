@@ -1,0 +1,28 @@
+begin end
+begin            "* "         listBegin
+begin            "|"          tableBegin
+begin            [identifier] sectionBegin
+sectionBegin     ""           section
+section          "\n"         sectionEndOfLine
+sectionEndOfLine [identifier] section
+sectionEndOfLine "\n"         sectionEnd
+sectionEnd       !            end
+sectionEnd       ""           begin
+
+listBegin        ""           listItemBegin
+listItemBegin    ""           listItem
+listItem         "\n"         listItemEnd
+listItem         !            listItemEnd
+listItemEnd      !            listEnd
+listEnd          !            end
+
+
+
+S: section       text
+S: sectionBegin  sectionBegin
+S: sectionEnd    sectionEnd
+S: listBegin     listBegin
+S: listEnd       listEnd
+S: listItemBegin listItemBegin
+S: listItem      text
+S: listItemEnd   listItemEnd

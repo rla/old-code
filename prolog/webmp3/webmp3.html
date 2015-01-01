@@ -1,0 +1,68 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>WebMp3</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../../../laanemets.css" />
+  <style type="text/css">
+    .submit {
+      font-weight: bold;
+      content: block;
+      border: 1px solid #000000;
+      padding: 2px 30px 2px 30px;
+    }
+    td {
+      padding: 4px;
+      font-size: 10pt;
+    }
+    a:hover {
+      color: #ff0000;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<script language="javascript" src="webmp3.js"/>
+<body>
+<h1>WebMp3 user interface</h1>
+<div class="spacing"></div>
+
+<table border="0">
+  <tr>
+    <td style="vertical-align: top">
+      <div style="border-right: 4px solid #000000; padding: 20px; min-height: 300px">
+         <h2>Actions</h2>
+         <ul>
+           <li><a class="clickable" onClick="requestContent('http://localhost:8000/stream/show')">Streams</a><br />
+             <ul>
+               <li><a class="clickable" onClick="requestContent('http://localhost:8000/stream/new')">New</a></li>
+             </ul>
+           </li>
+           <li><a class="clickable" onClick="requestContent('http://localhost:8000/song/show')">Songs</a></li>
+           <li><a class="clickable" onClick="requestContent('http://localhost:8000/performer/show')">Performers</a></li>
+           <li><a class="clickable" onClick="requestContent('http://localhost:8000/album/show')">Albums</a></li>
+           <li><a class="clickable" onClick="requestContent('http://localhost:8000/file/show')">Files</a><br />
+             <ul>
+               <li><a class="clickable" onClick="requestContent('http://localhost:8000/file/show_lossless')">Lossless</a></li>
+             </ul>
+           </li>
+           <li><a class="clickable" onClick="requestContent('http://localhost:8000/playlist/show')">Playlists</a></li>
+         </ul>
+         <h2>Status</h2>
+      </div>
+    </td>
+    <td style="vertical-align: top; width: 700px">
+       <div id="content" style="padding: 20px">
+         <h2 style="color: #990000">Aken</h2>
+       </div>
+    </td>
+  </tr>
+</table>
+
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="../../../pictures/email.png" alt="email" align="top"/>, 11.11.06, <a href="../../../index.html">Index</a>
+
+</body>
+</html>

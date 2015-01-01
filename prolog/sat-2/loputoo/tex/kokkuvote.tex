@@ -1,0 +1,34 @@
+\chapter*{Kokkuvõte}
+\addcontentsline{toc}{chapter}{Kokkuvõte}
+
+Käesolevas bakalaureusetöös uurisime lausearvutusvalemi kehtestatavate
+lahendite loendamise probleemi. Kuna antud probleem on tihedalt seotud
+kehtestatavusprobleemiga ja kuivõrd töös vaadeldud algoritm
+\textit{DPLL} on aluseks nii loendamise kui kehtestatavuse lahendamiseks, oli
+mõistlik neid probleeme koos vaadelda.
+
+Töös esimeses osas esitasime \textit{DPLL} algoritmi üldisel kujul, nagu teda
+kasutatakse tänapäeval levinud kõrge efektiivsusega kehtestatavusalgoritmides.
+Natuke vaatlesime ka algoritmi originaalkuju ning mehaanilist teoreemide tõestamist -
+originaalülesannet, mille lahendamiseks \textit{DPLL} algoritm mõeldud oli.
+
+Töö teises osas andsime algoritmi realisatsiooni tehisintellekti
+programmeerimiskeeles Prolog, mis tänu sisseehitatud tagurdusalgoritmile ja
+hea sobivuse poolest sümbolarvutuse ülesannete jaoks, sobis suurepäraselt
+käesoleva probleemi lahendusalgoritmi implementeerimiseks.
+
+Realiseeritud algoritm on täielik ning seda saab kasutada ka samal otstarbel,
+milleks originaalalgoritmi, s.o. tõestusprotseduurides. Implementatsioon on
+hõlpsasti integreeritav teiste Prologi programmidega, ning tänu ülevaatlikule
+koodile ning realisatsiooniga kaasa tulevale silumisvahendile, kasutatav ka
+hariduslikel eesmärkidel \textit{DPLL}-tüüpi algoritmide tutvustamisel.
+
+Paraku ei võimaldanud töö piiratud maht esitada \textit{DPLL} algoritmi mitmeid
+edasiarendusi, mis tõstavad lahendusprotseduuri efektiivsust veelgi. Vaatluse
+alt jäi välja konfliktide analüüs ja muutuja valiku heuristika, mille abil saab
+algoritmi häälestada teatud valdkonnast (näiteks riistvara verifitseerimisega
+seotud ülesanded), kus valemid on teatud struktuuriga pärit valemite kiiremaks
+lahendamiseks, samuti mitmed võtted lahendite ligikaudseks loendamiseks. Selles
+valdkonnas on viimasel ajal toimunud eriti suur areng. Töös pole kajastatud ka
+olulisi lahendite loendamise rakendusi, näiteks kaalutud loendamist, mis vastab
+tuletusele Bayes'i võrgus, samuti Dedekindi arvude leidmist.

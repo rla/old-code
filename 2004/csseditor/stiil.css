@@ -1,0 +1,56 @@
+@import url("loudvoice.css") aural;
+@import url("loudvoice.css") test;
+ADDRESS,
+BLOCKQUOTE, 
+BODY, DD, DIV, 
+DL, DT, 
+FIELDSET, FORM,
+FRAME, FRAMESET,
+H1, H2, H3, H4, 
+H5, H6, IFRAME, 
+NOFRAMES, 
+OBJECT, OL, P, 
+UL, APPLET, 
+CENTER, DIR, 
+HR, MENU, PRE   { display: block }
+LI              { display: list-item }
+KBD, SAMP       { font-family: monospace }
+/* An example of style for HTML 4.0's ABBR/ACRONYM elements */
+
+ABBR, ACRONYM   { font-variant: small-caps; letter-spacing: 0.1em }
+A[href]         { text-decoration: underline }
+:focus          { outline: thin dotted invert }
+
+
+/* Begin bidirectionality settings (do not change) */
+BDO[DIR="ltr"]  { direction: ltr; unicode-bidi: bidi-override }
+BDO[DIR="rtl"]  { direction: rtl; unicode-bidi: bidi-override }
+
+*[DIR="ltr"]    { direction: ltr; unicode-bidi: embed }
+*[DIR="rtl"]    { direction: rtl; unicode-bidi: embed }
+
+/* Elements that are block-level in HTML4 */
+ADDRESS, BLOCKQUOTE, BODY, DD, DIV, DL, DT, FIELDSET, 
+FORM, FRAME, FRAMESET, H1, H2, H3, H4, H5, H6, IFRAME,
+NOSCRIPT, NOFRAMES, OBJECT, OL, P, UL, APPLET, CENTER, 
+DIR, HR, MENU, PRE, LI, TABLE, TR, THEAD, TBODY, TFOOT, 
+COL, COLGROUP, TD, TH, CAPTION 
+                { unicode-bidi: embed }
+/* End bidi settings */
+
+
+ @media print {
+  @page         { margin: 10% }
+  H1, H2, H3,
+  UL, OL, DL    { page-break-before: avoid }
+}
+
+@media speech {
+  H1, H2, H3, 
+  H4, H5, H6    { voice-family: paul, male; stress: 20; richness: 90 }
+  H4            { pitch: medium; pitch-range: 60 }
+  H5            { pitch: medium; pitch-range: 50 }
+}
+
+HEAD            { display: none }
+TABLE           { display: table }

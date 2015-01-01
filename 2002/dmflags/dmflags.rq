@@ -1,0 +1,509 @@
+$include "Rapidq.inc"
+$typecheck on
+$optimize on
+
+dim form as qform
+dim status as qstatusbar
+dim group as qgroupbox
+dim mainmenu as qmainmenu
+dim helpmenu as qmenuitem
+dim exitmenu as qmenuitem
+dim edit as qedit
+dim check1 as qcheckbox
+dim check2 as qcheckbox
+dim check3 as qcheckbox
+dim check4 as qcheckbox
+dim check5 as qcheckbox
+dim check6 as qcheckbox
+dim check7 as qcheckbox
+dim check8 as qcheckbox
+dim check9 as qcheckbox
+dim check10 as qcheckbox
+dim check11 as qcheckbox
+dim check12 as qcheckbox
+dim check13 as qcheckbox
+dim check14 as qcheckbox
+dim check15 as qcheckbox
+dim check16 as qcheckbox
+dim check17 as qcheckbox
+dim check18 as qcheckbox
+dim check19 as qcheckbox
+dim savebtn as qbutton
+dim exitbtn as qbutton
+dim flagnr as integer
+dim doomflags as qlabel
+
+declare sub 1_ok
+declare sub 2_ok
+declare sub 3_ok
+declare sub 4_ok
+declare sub 5_ok
+declare sub 6_ok
+declare sub 7_ok
+declare sub 8_ok
+declare sub 9_ok
+declare sub 10_ok
+declare sub 11_ok
+declare sub 12_ok
+declare sub 13_ok
+declare sub 14_ok
+declare sub 15_ok
+declare sub 16_ok
+declare sub 17_ok
+declare sub 18_ok
+declare sub 19_ok
+declare sub save
+declare sub valju
+declare sub abi
+
+mainmenu.parent=form
+exitmenu.caption="Exit"
+exitmenu.onclick=valju
+helpmenu.caption="Help"
+helpmenu.onclick=abi
+mainmenu.additems exitmenu, helpmenu
+
+form.caption="Doomflags calculator"
+form.height=525
+form.width=425
+form.BorderStyle=bsSingle
+form.center
+
+status.parent=form
+status.addpanels ""
+status.panel(0).caption="Made by Killer666"
+
+group.top=10
+group.caption="Flags"
+group.height=400
+group.width=395
+group.left=10
+group.parent=form
+
+doomflags.top=425
+doomflags.left=25
+doomflags.caption="Doomflags"
+doomflags.parent=form
+
+edit.left=100
+edit.top=425
+edit.text=0
+edit.parent=form
+edit.readonly=1
+
+savebtn.left=250
+savebtn.top=425
+savebtn.width=50
+savebtn.height=30
+savebtn.onclick=save
+savebtn.caption="&Save"
+savebtn.parent=form
+
+exitbtn.left=325
+exitbtn.top=425
+exitbtn.width=50
+exitbtn.height=30
+exitbtn.onclick=valju
+exitbtn.caption="&Exit"
+exitbtn.parent=form
+
+check19.top=385
+check19.left=25
+check19.width=300
+check19.caption="1048576 Multi-player weapons are spawned in Cooperative mode"
+check19.onclick=19_ok
+check19.parent=form
+
+sub 19_ok
+  if check19.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+1048576
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-1048576
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check18.top=365
+check18.left=25
+check18.width=300
+check18.caption="524288 Silent BFG (as in doom2.exe)"
+check18.onclick=18_ok
+check18.parent=form
+
+sub 18_ok
+  if check18.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+524288
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-524288
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check17.top=345
+check17.left=25
+check17.width=300
+check17.caption="262144 Invulnerability and invisibility respawn"
+check17.onclick=17_ok
+check17.parent=form
+
+sub 17_ok
+  if check17.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+262144
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-262144
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check16.top=325
+check16.left=25
+check16.width=300
+check16.caption="131072 Don't allow freelook"
+check16.onclick=16_ok
+check16.parent=form
+
+sub 16_ok
+  if check16.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+131072
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-131072
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check15.top=305
+check15.left=25
+check15.width=300
+check15.caption="65536 Don't allow jumping"
+check15.onclick=15_ok
+check15.parent=form
+
+sub 15_ok
+  if check15.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+65536
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-65536
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check14.top=285
+check14.left=25
+check14.width=300
+check14.caption="32768 Monsters are fast"
+check14.onclick=14_ok
+check14.parent=form
+
+sub 14_ok
+  if check14.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+32768
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-32768
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check13.top=265
+check13.left=25
+check13.width=375
+check13.caption="16384 Items and powerups other than invulnerability and invisibilty respawn"
+check13.onclick=13_ok
+check13.parent=form
+
+sub 13_ok
+  if check13.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+16384
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-16384
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check12.top=245
+check12.left=25
+check12.width=300
+check12.caption="8192 Monsters respawn sometime after their death"
+check12.onclick=12_ok
+check12.parent=form
+
+sub 12_ok
+  if check12.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+8192
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-8192
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check11.top=225
+check11.left=25
+check11.width=300
+check11.caption="4096 Don't spawn monsters"
+check11.onclick=11_ok
+check11.parent=form
+
+sub 11_ok
+  if check11.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+4096
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-4096
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check10.top=205
+check10.left=25
+check10.width=300
+check10.caption="2048 Don't use any ammo when firing"
+check10.onclick=10_ok
+check10.parent=form
+
+sub 10_ok
+  if check10.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+2048
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-2048
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check9.top=185
+check9.left=25
+check9.width=300
+check9.caption="1024 Kill anyone who tries to exit the level (DM)"
+check9.onclick=9_ok
+check9.parent=form
+
+sub 9_ok
+  if check9.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+1024
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-1024
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check8.top=165
+check8.left=25
+check8.width=300
+check8.caption="512 Do not spawn armor (DM)"
+check8.onclick=8_ok
+check8.parent=form
+
+sub 8_ok
+  if check8.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+512
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-512
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check7.top=145
+check7.left=25
+check7.width=300
+check7.caption="256 Automatically respawn dead players (DM)"
+check7.onclick=7_ok
+check7.parent=form
+
+sub 7_ok
+  if check7.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+256
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-256
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check6.top=125
+check6.left=25
+check6.width=325
+check6.caption="128 Spawn players as far as possible from other players (DM)"
+check6.onclick=6_ok
+check6.parent=form
+
+sub 6_ok
+  if check6.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+128
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-128
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check5.top=105
+check5.left=25
+check5.width=300
+check5.parent=form
+check5.onclick=5_ok
+check5.caption="64 Stay on the same map when someone exits (DM)"
+
+sub 5_ok
+  if check5.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+64
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-64
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check4.top=85
+check4.left=25
+check4.width=300
+check4.parent=form
+check4.onclick=4_ok
+check4.caption="16 Players cannot hurt teammates"
+
+sub 4_ok
+  if check4.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+16
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-16
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check3.top=65
+check3.left=25
+check3.width=300
+check3.parent=form
+check3.onclick=3_ok
+check3.caption="4 Leave weapons around after pickup (DM)"
+
+sub 3_ok
+  if check3.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+4
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-4
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+check2.top=45
+check2.left=25
+check2.width=300
+check2.parent=form
+check2.onclick=2_ok
+check2.caption="2 Do not spawn powerups (DM)"
+
+sub 2_ok
+  if check2.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+2
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-2
+    edit.text=str$(flagnr)
+  end if 
+end sub
+
+check1.top=25
+check1.left=25
+check1.width=300
+check1.parent=form
+check1.onclick=1_ok
+check1.caption="1 Do not spawn health items (DM)"
+
+sub 1_ok
+  if check1.checked then 
+    flagnr=val(edit.text)
+    flagnr=flagnr+1
+    edit.text=str$(flagnr)
+  else
+    flagnr=val(edit.text)
+    flagnr=flagnr-1
+    edit.text=str$(flagnr)
+  end if
+end sub
+
+sub save
+  dim file as qfilestream
+  dim temp as qmemorystream
+  dim rida as string
+  if fileexists("zserver.cfg")<>1 then
+    showmessage("File zserver.cfg doesn't exists in current directory")
+    exit sub
+  end if  
+  file.open("zserver.cfg", fmOpenReadWrite)
+  while file.position<file.size do
+    rida=file.readline
+    if left$(rida, 11)="set dmflags" then
+      temp.writeline("set dmflags " +chr$(34) +edit.text +chr$(34))
+    else
+      if len(rida)>5 then temp.writeline(rida)
+    end if    
+  wend 
+  temp.position=0
+  file.position=0
+  while temp.position<temp.size do
+    rida=temp.readline
+    if left$(rida, 3)="set" then 
+    file.writeline(rida)
+    end if
+  wend
+  file.close
+  temp.close
+  showmessage("Succesfully saved")
+end sub
+
+sub valju
+  form.close
+end sub
+
+sub abi
+  showmessage("Doomflags calculator made by R.Laanemets(Killer666) 2002. Dmflags descryptions are from Commands.txt that came with Zdaemon")
+end sub
+
+form.showmodal

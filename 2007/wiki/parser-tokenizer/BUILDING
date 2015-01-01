@@ -1,0 +1,9 @@
+Compile bootstrap classes and copy test files:
+
+	ant -f bootstrap.xml
+	
+Generate serialized form of tokenizer for parser specification
+file, run tests and create jar:
+
+	ant jar
+	

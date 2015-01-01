@@ -1,0 +1,137 @@
+`program'        -> #`family'#
+`family'         -> `metaformula'
+`metaformula'    -> `input' `bigformula' 
+                 -> `bigformula' 
+`input'          -> INPUT ( graph `graphnames' )
+                 -> INPUT ( var `varnames' )
+                 -> INPUT ( var `varnames' ; graph `graphnames' )
+`graphnames'     -> `graphnames1'
+`graphnames1'    -> `graphnames1' `grkoma' `graphname' 
+                 -> `graphname' 
+`graphname'      -> #i#
+`varnames'       -> `varnames1'
+`varnames1'      -> `varnames1' `varkoma' `variable' 
+                 -> `variable' 
+`variable'       -> #i#
+`bigformula'     -> \bigvee_{ `limits' `lbra' `bigformula' 
+                 -> \bigwedge_{ `limits' `lbra' `bigformula' 
+                 -> \bigoplus_{ `limits' `lbra' `bigformula' 
+                 -> odd `prefpar' `bigformula1' :`limits' )
+                 -> even `prefpar' `bigformula1' :`limits' )
+                 -> exactlyone `prefpar' `bigformula1' :`limits' )
+                 -> atmostone `prefpar' `bigformula1' :`limits' )
+                 -> atleastone `prefpar' `bigformula1' :`limits' )
+                 -> none `prefpar' `bigformula1' :`limits' )
+                 -> eq `prefpar' `bigformula1' :`limits' )
+                 -> `atmost' `prefpar' `bigformula1' :`limits' )
+                 -> `atleast' `prefpar' `bigformula1' :`limits' )
+                 -> `level' `prefpar' `bigformula1' :`limits' )
+                 -> `formula'
+`bigformula1'    -> `bigformula'                 
+`atmost'         -> atmost_{ `rate' `rbra'
+`atleast'        -> atleast_{ `rate' `rbra'
+`level'          -> level_{ `rate' `rbra'
+`rate'           -> `expression'  
+`limits'         -> `limit' ;`constraints1' 
+                 -> `limit' 
+`limit'          -> `metavariables' \in`set' 
+                 -> `metavariables' \in V(`graphname1' )
+                 -> `metavariables' \in E(`graphname1' )
+                 -> `metavariable' \leftarrow `arc' \in E(`graphname1' )
+                 -> `arc' \in E(`graphname1' )
+                 -> `limexpression' `lessrel' `metavariables' `lessrel' `expression' 
+`limexpression'  -> `expression'
+`graphname1'     -> `graphname'                  
+`arc'            -> `graphbra' `node' `nodekoma' `node' \}
+`metavariables'  -> `metavariables1'
+`metavariables1' -> `metavariables1' `metakoma' `metavariable' 
+                 -> `metavariable' 
+`metavariable'  -> #i#
+`set'            -> B^{ `length' } 
+`length'         -> `expression'
+`node'           -> `metavariable' 
+`lessrel'        -> <
+                 -> \leq
+                 -> \prec
+                 -> \prec^+
+                 -> \prec^*
+`constraints1'   -> `constraints'
+`constraints'    -> `constraints' `constrkoma' `constraint' 
+                 -> `constraint' 
+`constraint'     -> `conexpression' `relation' `expression' 
+`conexpression'  -> `expression'
+`relation'       -> <
+                 -> \leq
+                 -> \prec
+                 -> \prec^+
+                 -> \prec^*
+                 -> =
+                 -> \ne
+                 -> ' 
+                 -> \geq
+`expression'     -> `expression1'
+`expression1'    -> `expression1' +`term' 
+                 -> `expression1' -`term' 
+                 -> `term' 
+`term'           -> `factor' *`term' 
+                 -> `factor' /`term' 
+                 -> `factor' 
+`factor'         -> `factor1' } 
+                 -> `primary' 
+`factor1'        -> `factor' ^{ `primary' 
+`primary'        -> #c#
+                 -> `metavariable' 
+                 -> |V( `graphname' )|
+                 -> |E( `graphname' )|
+                 -> | `metavariable' |
+                 -> min `mmbra' `pexpression' `maxminkoma' `expression' \}
+                 -> max `mmbra' `pexpression' `maxminkoma' `expression' \}
+                 -> `aritmpar' `pexpression' )
+`pexpression'    -> `expression'                 
+`formula'        -> `leftpart' \sim `formula' 
+                 -> `leftpart' \oplus `formula' 
+                 -> `leftpart' \to `formula' 
+                 -> `leftpart' 
+`leftpart'       -> `leftpart' \vee `clause' 
+                 -> `clause' 
+`clause'         -> `logterm' \& `clause' 
+                 -> `logterm'        
+`logterm'        -> \neg `literal' 
+                 -> `literal' 
+`literal'        -> `logvar' 
+                 -> `logvar' _{ `indexes' }
+                 -> `prefixformula' 
+                 -> `logicpar' `bigformula1' )
+`logvar'         -> #i#
+`indexes'        -> `indexes1'
+`indexes1'       -> `index' `indexkoma' `indexes1' 
+                 -> `index' 
+`index'          -> `expression' 
+`prefixformula'  -> odd `prefpar' `formlist' )
+                 -> even `prefpar' `formlist' )
+                 ->  exactlyone `prefpar' `formlist' )
+                 ->  atmostone `prefpar' `formlist' )
+                 ->  atleastone `prefpar' `formlist' )
+                 ->  none `prefpar' `formlist' )
+                 ->  eq `prefpar' `formlist' )
+                 -> `atmost' `prefpar' `formlist' )
+                 -> `atleast' `prefpar' `formlist' )
+                 -> `level' `prefpar' `formlist' )
+`formlist'       -> `formlist1'
+`formlist1'      -> `formlist1' `formkoma'  `bigformula' 
+                 -> `bigformula' 
+`grkoma'         -> ,
+`varkoma'        -> ,
+`metakoma'       -> ,
+`nodekoma'       -> ,
+`constrkoma'     -> ,
+`maxminkoma'     -> ,
+`indexkoma'      -> ,
+`formkoma'       -> ,
+`graphbra'       -> \{
+`mmbra'          -> \{
+`logicpar'       -> (
+`aritmpar'       -> (
+`prefpar'        -> (
+`rbra'           -> }
+`lbra'           -> }

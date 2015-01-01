@@ -1,0 +1,36 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> Building Desktop Wiki </title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../wiki.css" />
+</head>
+<body>
+
+<h1> Building Desktop Wiki </h1>
+<h2> Requirements </h2>
+<ul><li> jdk 1.6 or newer (1.7 b24 tested) </li>
+<li>  ant (1.7.0 tested) </li>
+</ul>
+<h2> Build sequence </h2>
+<p> Correct order of compilation of sub-projects: </p>
+<ul><li> rl-common </li>
+<li>  nondet-java </li>
+<li>  parser-tokenizer </li>
+<li>  wiki-parser </li>
+<li>  text-template </li>
+<li>  desktop-wiki </li>
+</ul>
+<h2> Build scripts </h2>
+<h3> Local build skripts </h3>
+<p> In every subproject there is  <i>ant</i>  build script that can be used to build  the subproject locally. </p>
+<p>  <b>parser-tokenizer</b>  requires bootstrap libraries to build therefore  command  <i>ant -file bootstrap.xml</i>  must be run in the directory  of subproject. </p>
+<h3> Global build scripts </h3>
+<ul><li>  <i>build.sh</i>  - builds everything. </li>
+<li>   <i>build-clean.sh</i>  - cleans project and builds everything (compiling for different vm). </li>
+<li>   <i>build-dist.sh</i>  - cleans project before and after building, makes one large package. </li>
+</ul>
+</body>
+</html>

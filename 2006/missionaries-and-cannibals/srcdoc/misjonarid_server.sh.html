@@ -1,0 +1,36 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Veebiliidese käivitaja</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="http://www.rl.pri.ee/laanemets.css" />
+</head>
+<body>
+<h1>Veebiliidese käivitaja</h1>
+<div class="spacing"></div>
+<div style="border: 1px solid #000000; padding: 20px">
+<!-- Generator: GNU source-highlight 2.5
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><i><font color="#9A1900">#!/bin/sh</font></i>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># Shell script to start the server</font></i>
+<i><font color="#9A1900"># Raivo Laanemets, summer 2006</font></i>
+<i><font color="#9A1900">#</font></i>
+
+<b><font color="#0000FF">if</font></b> <font color="#990000">[</font> -f server<font color="#990000">.</font>log <font color="#990000">];</font> <b><font color="#0000FF">then</font></b>
+	rm -f server<font color="#990000">.</font>log
+<b><font color="#0000FF">fi</font></b>
+
+nohup pl -q -t start_server -s misjonarid_http<font color="#990000">.</font>pl <font color="#990000">&gt;</font> server<font color="#990000">.</font>log <font color="#990000">&amp;</font></tt></pre>
+
+</div>
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="http://www.rl.pri.ee/pictures/email.png" alt="email" align="top"/>, <a href="http://www.rl.pri.ee/index.html">Index</a>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sectors>
+  <sector name="room1">
+    <wall x="30" y="0" z="0" texture="wall2" length="4" orientation="1"/>
+    <wall x="30" y="0" z="40" texture="wall2" length="1" orientation="0"/>
+    <wall x="40" y="0" z="0" texture="wall2" length="4" orientation="1"/>
+    <wall x="0" y="0" z="0" texture="wall3" length="300" orientation="1"/>
+    <floor x="0" y="0" z="0" texture="floor" wx="3000" wz="3000"/>
+    <floor x="0" y="10" z="0" texture="ceil" wx="3000" wz="3000"/>
+    <wall x="0" y="0" z="0" texture="wall2" length="300" orientation="0"/>
+  </sector>
+</sectors>

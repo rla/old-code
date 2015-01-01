@@ -1,0 +1,8 @@
+Testsuite: ee.pri.rl.parser.reader.test.ReaderParserTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.047 sec
+------------- Standard Output ---------------
+Compiling took 0ms
+9ms
+------------- ---------------- ---------------
+
+Testcase: testReaderParser took 0.043 sec

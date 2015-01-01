@@ -1,0 +1,42 @@
+<?php
+
+//algväärtuste andmine
+if (!isset($mis)) $mis="algus";
+if (!isset($keel)) $keel="et";
+if (!isset($subid)) $subid="1";
+if (!isset($subsubid)) $subsubid="1";
+
+include($keel ."_main.php");    //põhimuutujad
+include($keel ."_menuu.php"); //menüü
+include($keel ."_teated.php"); //teated
+include("template.php");  //template funktsioonid
+
+//lehekülje sisu parsimine vastavalt muutujatele $mis ja $keel
+include($keel ."_" .$mis .".php");
+
+//järgnev sõltuv subid-st või selle puudumisest(1)
+if ($subid=="1") {
+	$sisu_tpl=read_template($mis .".tpl");
+} else {
+	$sisu_tpl=read_template($mis ."_" .$subid .".tpl");
+}
+
+$sisu_inc=parse_template($sisu_tpl, $sisu_array);
+
+$index_tpl=read_template("index.tpl");
+$menuu_tpl=read_template("menuu.tpl");
+$teated_tpl=read_template("teated.tpl");
+
+$teated_inc=parse_template($teated_tpl, $teated_array); //teadete osa
+$menuu_inc=parse_template($menuu_tpl, $menuu_array); //menüü osa
+
+$main_array["menuu"]=$menuu_inc;
+$main_array["sisu"]=$sisu_inc;
+$main_array["teated"]=$teated_inc;
+
+$leht=parse_template($index_tpl, $main_array);
+
+
+print $leht;
+
+?>

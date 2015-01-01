@@ -1,0 +1,5 @@
+<?php
+
+//Lehekülje kohalikud muutujad
+
+?>

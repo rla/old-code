@@ -1,0 +1,166 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Hyperlinks</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="http://www.rl.pri.ee/laanemets.css" />
+</head>
+<body>
+<h1>Hyperlinks</h1>
+<div class="spacing"></div>
+<div style="border: 1px solid #000000; padding: 20px">
+<!-- Generator: GNU source-highlight 2.5
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">Hyperlinks</font></i>
+<i><font color="#9A1900">Copyright (C) 2006 Raivo Laanemets</font></i>
+
+<i><font color="#9A1900">Contact: Raivo Laanemets, </font></i><u><font color="#0000FF">rlaanemt@ut.ee</font></u>
+
+<i><font color="#9A1900">This program is free software; you can redistribute it and/or</font></i>
+<i><font color="#9A1900">modify it under the terms of the GNU General Public License</font></i>
+<i><font color="#9A1900">as published by the Free Software Foundation; either version 2</font></i>
+<i><font color="#9A1900">of the License, or (at your option) any later version.</font></i>
+
+<i><font color="#9A1900">This program is distributed in the hope that it will be useful,</font></i>
+<i><font color="#9A1900">but WITHOUT ANY WARRANTY; without even the implied warranty of</font></i>
+<i><font color="#9A1900">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</font></i>
+<i><font color="#9A1900">GNU General Public License for more details.</font></i>
+
+<i><font color="#9A1900">You should have received a copy of the GNU General Public License</font></i>
+<i><font color="#9A1900">along with this program; if not, write to the Free Software</font></i>
+<i><font color="#9A1900">Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston</font></i>
+<i><font color="#9A1900">*/</font></i>
+
+<i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">Separates links from the stream of HTML code.</font></i>
+<i><font color="#9A1900">No error checking but the code works well</font></i>
+<i><font color="#9A1900">on correct HTML markup.</font></i>
+
+<i><font color="#9A1900">Raivo Laanemets, summer 2006</font></i>
+<i><font color="#9A1900">*/</font></i>
+
+<b><font color="#000080">#include</font></b> <font color="#FF0000">&lt;stdio.h&gt;</font>
+
+<i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">States for the parser.</font></i>
+<i><font color="#9A1900">*/</font></i>
+
+<b><font color="#000080">#define</font></b> STATE_A <font color="#993399">1</font>
+<b><font color="#000080">#define</font></b> STATE_TAG_START <font color="#993399">3</font>
+<b><font color="#000080">#define</font></b> STATE_TEXT <font color="#993399">4</font>
+<b><font color="#000080">#define</font></b> STATE_HREF <font color="#993399">5</font>
+<b><font color="#000080">#define</font></b> STATE_URL <font color="#993399">6</font>
+<b><font color="#000080">#define</font></b> STATE_HREF1 <font color="#993399">7</font>
+<b><font color="#000080">#define</font></b> STATE_ENC <font color="#993399">8</font>
+<b><font color="#000080">#define</font></b> STATE_ENC1 <font color="#993399">9</font>
+
+<i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">Finds code for numerical character. Used for</font></i>
+<i><font color="#9A1900">URL decoding.</font></i>
+<i><font color="#9A1900">*/</font></i>
+
+<font color="#009900">int</font> <b><font color="#000000">code</font></b><font color="#990000">(</font>c<font color="#990000">)</font> <font color="#FF0000">{</font>
+	<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">&gt;=</font> <font color="#FF0000">'0'</font> <font color="#990000">&amp;&amp;</font> c <font color="#990000">&lt;=</font> <font color="#FF0000">'9'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+		<b><font color="#0000FF">return</font></b> <font color="#990000">(</font>c<font color="#990000">-</font><font color="#993399">48</font><font color="#990000">);</font>
+	<font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">&gt;=</font> <font color="#FF0000">'a'</font> <font color="#990000">&amp;&amp;</font> c <font color="#990000">&lt;=</font> <font color="#FF0000">'f'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+		<b><font color="#0000FF">return</font></b> <font color="#990000">(</font>c<font color="#990000">-</font><font color="#993399">97</font><font color="#990000">+</font><font color="#993399">10</font><font color="#990000">);</font>
+	<font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">&gt;=</font> <font color="#FF0000">'A'</font> <font color="#990000">&amp;&amp;</font> c <font color="#990000">&lt;=</font> <font color="#FF0000">'F'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+		<b><font color="#0000FF">return</font></b> c<font color="#990000">-</font><font color="#FF0000">'A'</font><font color="#990000">+</font><font color="#993399">10</font><font color="#990000">;</font>
+	<font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+		<b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+
+<i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">The parser. Reads the stream from the standard input and writes</font></i>
+<i><font color="#9A1900">URL's to the standard output, appends line end to each URL.</font></i>
+<i><font color="#9A1900">*/</font></i>
+
+<font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">()</font> <font color="#FF0000">{</font>
+	<font color="#009900">int</font> c <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+	<font color="#009900">int</font> state <font color="#990000">=</font> STATE_TEXT<font color="#990000">;</font>
+	<font color="#009900">int</font> enc_x <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+	<font color="#009900">int</font> enc_y <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+	<font color="#009900">int</font> enc <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+	<b><font color="#0000FF">while</font></b><font color="#990000">((</font>c <font color="#990000">=</font> <b><font color="#000000">getchar</font></b><font color="#990000">())</font> <font color="#990000">!=</font> EOF<font color="#990000">)</font> <font color="#FF0000">{</font>
+		<b><font color="#0000FF">switch</font></b> <font color="#990000">(</font>state<font color="#990000">)</font> <font color="#FF0000">{</font>
+		<b><font color="#0000FF">case</font></b> STATE_TEXT<font color="#990000">:</font> <font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">==</font> <font color="#FF0000">'&lt;'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_TAG_START<font color="#990000">;</font>
+			<font color="#FF0000">}</font>
+			<b><font color="#0000FF">continue</font></b><font color="#990000">;</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">case</font></b> STATE_TAG_START<font color="#990000">:</font> <font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">==</font> <font color="#FF0000">'a'</font> <font color="#990000">||</font> c <font color="#990000">==</font> <font color="#FF0000">'A'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_A<font color="#990000">;</font>
+			<font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">==</font> <font color="#FF0000">'&gt;'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_TEXT<font color="#990000">;</font>
+			<font color="#FF0000">}</font>
+			<b><font color="#0000FF">continue</font></b><font color="#990000">;</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">case</font></b> STATE_A<font color="#990000">:</font> <font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">==</font> <font color="#FF0000">'&gt;'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_TEXT<font color="#990000">;</font>
+			<font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">==</font> <font color="#FF0000">'h'</font> <font color="#990000">||</font> c <font color="#990000">==</font> <font color="#FF0000">'H'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_HREF1<font color="#990000">;</font>
+			<font color="#FF0000">}</font>
+			<b><font color="#0000FF">continue</font></b><font color="#990000">;</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">case</font></b> STATE_HREF1<font color="#990000">:</font> <font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">==</font> <font color="#FF0000">'r'</font> <font color="#990000">||</font> c <font color="#990000">==</font> <font color="#FF0000">'R'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_HREF<font color="#990000">;</font>
+			<font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_A<font color="#990000">;</font>
+			<font color="#FF0000">}</font>
+			<b><font color="#0000FF">continue</font></b><font color="#990000">;</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">case</font></b> STATE_HREF<font color="#990000">:</font> <font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b> <font color="#990000">(</font> c <font color="#990000">==</font> <font color="#FF0000">'='</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_URL<font color="#990000">;</font>
+			<font color="#FF0000">}</font>
+			<b><font color="#0000FF">continue</font></b><font color="#990000">;</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">case</font></b> STATE_URL<font color="#990000">:</font> <font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">==</font> <font color="#FF0000">' '</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_A<font color="#990000">;</font>
+				<b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+			<font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">==</font> <font color="#FF0000">'&gt;'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_TEXT<font color="#990000">;</font>
+				<b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+			<font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">==</font> <font color="#FF0000">'%'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				state <font color="#990000">=</font> STATE_ENC<font color="#990000">;</font>
+			<font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">!=</font> <font color="#FF0000">'"'</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+				<b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"%c"</font><font color="#990000">,</font> c<font color="#990000">);</font>
+			<font color="#FF0000">}</font>
+			<b><font color="#0000FF">continue</font></b><font color="#990000">;</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">case</font></b> STATE_ENC<font color="#990000">:</font> <font color="#FF0000">{</font>
+			enc_x <font color="#990000">=</font> <b><font color="#000000">code</font></b><font color="#990000">(</font>c<font color="#990000">);</font>
+			state <font color="#990000">=</font> STATE_ENC1<font color="#990000">;</font>
+			<b><font color="#0000FF">continue</font></b><font color="#990000">;</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">case</font></b> STATE_ENC1<font color="#990000">:</font> <font color="#FF0000">{</font>
+			enc_y <font color="#990000">=</font> <b><font color="#000000">code</font></b><font color="#990000">(</font>c<font color="#990000">);</font>
+			enc <font color="#990000">=</font> enc_x <font color="#990000">*</font> <font color="#993399">16</font> <font color="#990000">+</font> enc_y<font color="#990000">;</font>
+			<b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"%c"</font><font color="#990000">,</font> enc<font color="#990000">);</font>
+			state <font color="#990000">=</font> STATE_URL<font color="#990000">;</font>
+			<b><font color="#0000FF">continue</font></b><font color="#990000">;</font>
+		<font color="#FF0000">}</font>
+		<font color="#FF0000">}</font>
+	<font color="#FF0000">}</font>
+	<b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+
+</div>
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="http://www.rl.pri.ee/pictures/email.png" alt="email" align="top"/>, <a href="http://www.rl.pri.ee/index.html">Index</a>
+
+</body>
+</html>

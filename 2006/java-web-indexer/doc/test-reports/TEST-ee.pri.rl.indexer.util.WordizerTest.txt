@@ -1,0 +1,8 @@
+Testsuite: ee.pri.rl.indexer.util.WordizerTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.018 sec
+------------- Standard Output ---------------
+EMMA: collecting runtime coverage data ...
+[Mina, Tere, olen, arvuti]
+------------- ---------------- ---------------
+
+Testcase: testWordizeTest took 0.016 sec

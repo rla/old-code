@@ -1,0 +1,30 @@
+Testsuite: ee.pri.rl.parser.test.NondetParserTest
+Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.009 sec
+------------- Standard Output ---------------
+Compiling took 0ms
+<nPage>
+	<nElement>
+		<tText>
+		my
+		</tText>
+	</nElement>
+	<nPage>
+		<nElement>
+			<tBold>
+			boldie
+			</tBold>
+		</nElement>
+		<nPage>
+			<nElement>
+				<tText>
+				thingie
+				</tText>
+			</nElement>
+		</nPage>
+	</nPage>
+</nPage>
+
+------------- ---------------- ---------------
+
+Testcase: testCompile took 0.003 sec
+Testcase: testParse took 0.003 sec

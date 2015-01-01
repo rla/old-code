@@ -1,0 +1,27 @@
+Misjonäride arv: 30
+Inimsööjate arv: 17
+Paadi mahutavus: 19
+Vajalik aerutajate arv: 4
+Lahend:
+
+1. Paati võtame 16 misjonäri ja 3 inimsööjat, paadiga sõidame paremale
+vasakul: 14 misjonäri ja 14 inimsööjat
+paremal: 16 misjonäri ja 3 inimsööjat
+
+2. Paati võtame 2 misjonäri ja 2 inimsööjat, paadiga sõidame vasakule
+vasakul: 16 misjonäri ja 16 inimsööjat
+paremal: 14 misjonäri ja 1 inimsööjat
+
+3. Paati võtame 16 misjonäri ja 3 inimsööjat, paadiga sõidame paremale
+vasakul: 0 misjonäri ja 13 inimsööjat
+paremal: 30 misjonäri ja 4 inimsööjat
+
+4. Paati võtame 0 misjonäri ja 4 inimsööjat, paadiga sõidame vasakule
+vasakul: 0 misjonäri ja 17 inimsööjat
+paremal: 30 misjonäri ja 0 inimsööjat
+
+5. Paati võtame 0 misjonäri ja 17 inimsööjat, paadiga sõidame paremale
+vasakul: 0 misjonäri ja 0 inimsööjat
+paremal: 30 misjonäri ja 17 inimsööjat
+
+Lõpp

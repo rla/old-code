@@ -1,0 +1,42 @@
+begin end
+
+begin                  "T:"         terminalWhitespace
+begin                  "N:"         nonterminalWhitespace
+begin                  "S:"         semanticsDescriptorWhitespace
+
+terminalWhitespace     [identifier] terminalName
+terminalName           [whitespace] terminalNameWhitespace
+terminalNameWhitespace [identifier] tokenName
+tokenName              [whitespace] tokenNameWhitespace
+tokenName              !            end
+tokenNameWhitespace    !            end
+tokenNameWhitespace    "T:"         terminalWhitespace
+tokenNameWhitespace    "S:"         semanticsDescriptorWhitespace
+tokenNameWhitespace    "N:"         nonterminalWhitespace
+
+nonterminalWhitespace           [identifier] nonterminalName
+nonterminalName                 [whitespace] nonterminalNameWhitespace
+nonterminalNameWhitespace       "{"          symbolListWhitespace
+symbolListWhitespace            [identifier] symbolName
+symbolName                      [whitespace] symbolNameWhitespace
+symbolName                      "}"          nonterminalDefinitionWhitespace
+symbolNameWhitespace            "}"          nonterminalDefinitionWhitespace
+symbolNameWhitespace            [identifier] symbolName
+nonterminalDefinitionWhitespace !            end
+nonterminalDefinitionWhitespace "S:"         semanticsDescriptorWhitespace
+nonterminalDefinitionWhitespace "T:"         terminalWhitespace
+nonterminalDefinitionWhitespace "N:"         nonterminalWhitespace
+
+semanticsDescriptorWhitespace   [identifier] semanticsIdentifier
+semanticsIdentifier             !            end
+semanticsIdentifier             [whitespace] semanticsIdentifierWhitespace
+semanticsIdentifierWhitespace   !            end
+semanticsIdentifierWhitespace   "S:"         semanticsDescriptorWhitespace
+semanticsIdentifierWhitespace   "T:"         terminalWhitespace
+semanticsIdentifierWhitespace   "N:"         nonterminalWhitespace
+
+S: terminalName terminalName
+S: tokenName tokenName
+S: nonterminalName nonterminalName
+S: symbolName symbolName
+S: semanticsIdentifier semanticsIdentifier

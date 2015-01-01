@@ -1,0 +1,86 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Wiki page</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="wiki.css" />
+</head>
+<body>
+
+<h1> Tokenizing and Parsing Framework </h1>
+<h2> Tokenizer Algorithm </h2>
+<p> The tokenizer takes input string  <img alt="image" src="5DBC98DCC983A70728BD082D1A47546E.png" class="image-tex" />  and splits it up into tokens  <img alt="image" src="B9ECE18C950AFBFA6B0FDBFA4FF731D3.png" class="image-tex" />  according  to tokenizing rules  <img alt="image" src="E1E1D3D40573127E9EE0480CAF1283D6.png" class="image-tex" /> . The tokenizer simulates deterministic finite state  machine where the states denote the tokens. The transitions in the machine  are defined by transition rules and input symbols. </p>
+<p> In the following algorithm we represent input string  <img alt="image" src="532A8F6A5667DDB954F28200A4521CA9.png" class="image-tex" />  as head-tail list where  <img alt="image" src="03C7C0ACE395D80182DB07AE2C30F034.png" class="image-tex" />   denotes the head symbol (list's first element) and  <img alt="image" src="5DBC98DCC983A70728BD082D1A47546E.png" class="image-tex" />  denotes list tail (remaining  symbols in the list). The rules are represented as ordered list of n-tuples  <img alt="image" src="B9ECE18C950AFBFA6B0FDBFA4FF731D3.png" class="image-tex" />  where  <img alt="image" src="B9ECE18C950AFBFA6B0FDBFA4FF731D3.png" class="image-tex" />   is one of the following:  <img alt="image" src="DF511A99DE10C9025D41EB09A4464863.png" class="image-tex" /> ,  <img alt="image" src="0D4F074FB314373C1C18A9F0C5F50B67.png" class="image-tex" /> ,  <img alt="image" src="DC36A5F02A6C1FEAEA0A33168D6285A5.png" class="image-tex" /> .  In transition rules  <img alt="image" src="40597E9090CCD2BD97ED66C0B35EE7AB.png" class="image-tex" />  is old state,  <img alt="image" src="DA2E497046CC543ED13A8D7C72D2D5BD.png" class="image-tex" />  is input symbol,  <img alt="image" src="EFFB8304D535BCB6E9E858A75593E93E.png" class="image-tex" />  is new state  and  <img alt="image" src="A914B4034B06FAD3600064D767C88190.png" class="image-tex" />  is character category. </p>
+<h2> Data structures </h2>
+<p> We start describing tokenizer algorithm by describing its data  structures first. </p>
+<pre>
+Token {
+  name,        <span style="color: blue">-</span><span style="color: blue">-</span> name of the token
+  contents,    <span style="color: blue">-</span><span style="color: blue">-</span> contents of the token
+  line number  <span style="color: blue">-</span><span style="color: blue">-</span> line number where the token starts
+}
+
+State {
+  name,     <span style="color: blue">-</span><span style="color: blue">-</span> name of the state
+  semantics <span style="color: blue">-</span><span style="color: blue">-</span> semantical name of the state
+}
+
+Abstract Rule {
+  old state             <span style="color: blue">-</span><span style="color: blue">-</span> name of the old state
+  new state             <span style="color: blue">-</span><span style="color: blue">-</span> name of the new state
+  applies(input, state) <span style="color: blue">-</span><span style="color: blue">-</span> <b>return</b>s true <b>if</b>f state <span style="color: green">==</span> old state and this
+                           rule applies to current input
+  eat(input)            <span style="color: blue">-</span><span style="color: blue">-</span> <b>return</b>s input string after applying this rule
+}
+</pre><p> Since we have three different kind of transition rules  we get the following concrete rules: </p>
+<pre>
+CharacterRule < Rule {
+  character class        <span style="color: blue">-</span><span style="color: blue">-</span> class of characters on which this rule is triggered
+  creedy                 <span style="color: blue">-</span><span style="color: blue">-</span> <b>if</b> set true <b>then</b> eat() method will remove head
+                            character of input string
+  applies(input, state)  <span style="color: blue">-</span><span style="color: blue">-</span> <b>return</b>s true <b>if</b>f state <span style="color: green">==</span> old state and
+                            the head character of input string
+                            is in spec<b>if</b>ied character class
+}
+
+EndRule < Rule {
+  applies(input, state)  <span style="color: blue">-</span><span style="color: blue">-</span> <b>return</b>s true <b>if</b>f state <span style="color: green">==</span> old state and input <span style="color: green">==</span> [] 
+}
+
+StringRule < Rule {
+  prefix                <span style="color: blue">-</span><span style="color: blue">-</span> string which must occur at the start of current input
+  applies(input, state) <span style="color: blue">-</span><span style="color: blue">-</span> <b>return</b>s true <b>if</b>f state <span style="color: green">==</span> old state and
+                           prefix is the prefix of input string
+}
+</pre><h2> Algorithm </h2>
+<p> The recursive tokenizing algorithm is sketched below. </p>
+<pre>
+
+<i>Input:</i>
+  rules Rs,
+  string S,
+  list of tokens Ts found this far (initially empty),
+  current state Tcurrent (initially start state),
+  final state Tfinal,
+  number of lines looked through N,
+  current token accumulator Acc (initially empty)
+<i>Output:</i> list of tokens Tout.
+
+<b>function</b> Tokenize(Rs, S, Ts, Tcurrent, Tfinal, N, Acc):
+<b>begin</b>
+  <b>if</b> (S <span style="color: green">==</span> []) <b>then</b> <b>begin</b>
+    <b>if</b> (exists final transition rule Tt(Tcurrent,Tnew)) <b>then</b> <b>begin</b>
+      <b>if</b> (Tnew <span style="color: green">==</span> Tfinal) <b>then</b> <b>return</b> Ts;
+      <b>else</b> <b>return</b> Tokenize(Rs, S, Ts <span style="color: blue">+</span> Tnew, Tnew, Tfinal, N, Acc);
+    <b>end;</b>
+    <b>else</b> <b>throw</b> <span style="color: red; font-weight: bold">error</span> "unexpected end of input near line N"
+  <b>end;</b>
+  <b>else</b> <b>begin</b>
+    
+  <b>end;</b>
+<b>end;</b>
+
+</pre></body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Solution for the 15-puzzle</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../../../laanemets.css" />
+</head>
+<body>
+<h1>Solution for the 15-puzzle</h1>
+<div class="spacing"></div>
+
+<h2>Description</h2>
+<ul>
+  <li><a href="http://en.wikipedia.org/wiki/N-puzzle">What is the 15-puzzle? [Wikipedia]</a></li>
+</ul>
+
+<h2>My algorithm</h2>
+<ul>
+  <li>Search in the state space</li>
+  <li>A* as the search algorithm: special data structure as the priority queue</li>
+  <li>Limited search depth</li>
+  <li>Sum of the Manhattan distances as the state goodness value</li>
+  <li>Unbalanced binary tree as the storage for moves</li>
+  <li>Written in C, <a href="15-mang.zip">[zipped source]</a></li>
+</ul>
+
+<h2>Links to resources that might help to solve 15-puzzle (mosty with A*)</h2>
+<ul>
+  <li><a href="http://en.wikipedia.org/wiki/A-star_search_algorithm">The A* Search Algorithm [Wikipedia]</a></li>
+  <li><a href="http://uhaweb.hartford.edu/compsci/ccli/NPuzzle/NPuzzle.pdf"><i>The N-puzzle Problem</i>, Z.Markov, I.Russell, T.Neller</a></li>
+  <li><a href="http://www.cs.tcd.ie/publications/tech-reports/reports.01/TCD-CS-2001-24.pdf"><i>The Sam Loyd 15-puzzle</i>, R.Hayes</a></li>
+  <li><a href="http://ist.ksc.kwansei.ac.jp/~kitamura/papers/src/ictai98.pdf"><i>The Multi Commitment Search</i>, Y.Kitamura, M.Yokoo, T.Miyaji, S.Tatsumi</a></li>
+  <li><a href="http://www.cs.ualberta.ca/~joe/Preprints/15puzz.ps.gz"><i>Searching with Pattern Databases</i>, J.C.Culberson, J.Schaeffer</a></li>
+  <li><a href="http://www.cse.msstate.edu/~hansen/papers/flairs02.pdf"><i>Memory Bounded A* Graph Search</i>, R.Zhou, E.A.Hansen</a></li>
+</ul>
+
+<h2>Some solvable states</h2>
+<p>The number of steps is approximated value.</p>
+
+<h3>Solvable in 5 moves</h3>
+<table cellpadding="4" border="1" cellspacing="0">
+<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+<tr><td>9</td><td>14</td><td>10</td><td>11</td></tr>
+<tr><td>13</td><td>&nbsp;</td><td>15</td><td>12</td></tr>
+</table>
+<p><a href="15-mang/5.txt">Solution</a></p>
+
+<h3>Solvable in 10 moves</h3>
+<table cellpadding="4" border="1" cellspacing="0">
+<tr><td>1</td><td>2</td><td>&nbsp;</td><td>4</td></tr>
+<tr><td>6</td><td>14</td><td>3</td><td>8</td></tr>
+<tr><td>5</td><td>10</td><td>7</td><td>11</td></tr>
+<tr><td>9</td><td>13</td><td>15</td><td>12</td></tr>
+</table>
+<p><a href="15-mang/10.txt">Solution</a></p>
+
+<h3>Solvable in 25 moves</h3>
+<table cellpadding="4" border="1" cellspacing="0">
+<tr><td>2</td><td>1</td><td>4</td><td>8</td></tr>
+<tr><td>14</td><td>3</td><td>11</td><td>15</td></tr>
+<tr><td>5</td><td>6</td><td>10</td><td>7</td></tr>
+<tr><td>9</td><td>13</td><td>12</td><td>&nbsp;</td></tr>
+</table>
+<p><a href="15-mang/25.txt">Solution</a></p>
+
+<h3>Solvable in 40 moves</h3>
+<table cellpadding="4" border="1" cellspacing="0">
+<tr><td>&nbsp;</td><td>1</td><td>4</td><td>8</td></tr>
+<tr><td>2</td><td>14</td><td>10</td><td>11</td></tr>
+<tr><td>5</td><td>3</td><td>6</td><td>15</td></tr>
+<tr><td>9</td><td>13</td><td>12</td><td>7</td></tr>
+</table>
+<p><a href="15-mang/40.txt">Solution</a></p>
+
+<h3>Solvable in 50 moves</h3>
+<table cellpadding="4" border="1" cellspacing="0">
+<tr><td>&nbsp;</td><td>14</td><td>10</td><td>1</td></tr>
+<tr><td>5</td><td>15</td><td>4</td><td>11</td></tr>
+<tr><td>3</td><td>6</td><td>2</td><td>13</td></tr>
+<tr><td>9</td><td>12</td><td>7</td><td>8</td></tr>
+</table>
+<p><a href="15-mang/50.txt">Solution</a></p>
+
+<h3>Solvable in 100 moves</h3>
+<table cellpadding="4" border="1" cellspacing="0">
+<tr><td>&nbsp;</td><td>15</td><td>14</td><td>13</td></tr>
+<tr><td>12</td><td>11</td><td>10</td><td>9</td></tr>
+<tr><td>8</td><td>7</td><td>6</td><td>5</td></tr>
+<tr><td>4</td><td>3</td><td>2</td><td>1</td></tr>
+</table>
+<p><a href="15-mang/100.txt">Solution</a></p>
+
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="../../../pictures/email.png" alt="email" align="top"/>, 05.10.06, <a href="../../../index.html">Index</a>
+
+</body>
+</html>

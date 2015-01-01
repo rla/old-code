@@ -1,0 +1,126 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Misjonäride ja inimsööjate probleem</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="laanemets.css" />
+</head>
+<body>
+<h1>Misjonäride ja inimsööjate probleem</h1>
+<div class="spacing"></div>
+
+<h2>Ülesande püstitus</h2>
+<p>
+m misjonäri ja n inimsööjat (m&gt;=n) tahavad pääseda jõe vasakult kaldalt paremale.
+Neil on paat, mis mahutab p isikut, kusjuures vähemalt r isikut (r&lt;=p)
+peavad sõudma. Kui inimsööjate arv kaldal või paadis ületab misjonäride arvu,
+siis süüakse viimased ära. 
+Kuidas korraldada vedusid, et kõik pääseksid õnnelikult üle jõe? 
+Kasutaja annab ette m, n, r, p väärtused. Programm peab näitama lahendust samm-haaval.
+<a href="http://www.cs.ut.ee/~koit/Tehisintellekt/kodyl06.html">[Originaalpüstitus]</a>
+</p>
+
+<h2>Lahendus</h2>
+<p>Kõik pääsevad õnnelikult üle jõe parajasti siis, kui
+<ul>
+  <li>Paremal ega vasakul kaldal ei teki olukorda, et sellel kaldal on vähemalt üks misjonär ja
+  inimsööjaid on samal kaldal rohkem kui misjonäre.</li>
+  <li>Ei teki olukorda, kus paadis on vähemalt üks misjonär ja inimsööjaid on paadis rohkem
+  kui misjonäre.</li>
+  <li>Paadis ei ole jõge ületades kunagi rohkem kui p inimest.</li>
+  <li>Paadis on jõge ületades alati vähemalt r inimest.</li>
+</ul>
+</p>
+<h3>Teadmuste esitus</h3>
+<p>
+Antud ülesande lahenduseks on sobiv kasutada produktsioonilist teadmuste esitust.
+Keeleks on valitud Prolog, kus produktsioonidel (A1,..,A2 -&gt; B)
+(Prologi süntaksiga B :- A1,..,A2) on kindel loogiline
+semantika: B on tõene, kui A1,..,A2 on tõesed. Produktsiooni kehas olevaid loogilisi
+avaldisi kasutame ülesandes antud kitsenduste määramiseks. Valitud realisatsiooniks
+on Swi-Prolog, mis juba sisaldab võimast tuletusmehhanismi sobivate produktsioonide
+rakendamiseks. Seega on ülesande lahendamine Prologi abil programmeerijale mõnus
+tegevus.
+</p>
+
+<h2>Veebipõhine kasutajaliides</h2>
+<h3>Sisesta algparameetrid</h3>
+<form method="get" action="http://ats.cs.ut.ee:8888">
+<label for="m">Misjonäride arv (M)</label><br />
+<input type="text" name="m" value="30"/><br />
+<label for="n">Inimsööjate arv (N)</label><br />
+<input type="text" name="n" value="17"/><br />
+<label for="p">Paadi mahutavus (P)</label><br />
+<input type="text" name="p" value="19"/><br />
+<label for="r">Minimaalne sõudjate arv (R)</label><br />
+<input type="text" name="r" value="4"/><br /><br />
+<input type="submit" value="Lahenda" />
+</form>
+
+<h2>Interpretaatori kasutamine</h2>
+<p>Ülesande lahedamiseks Swi-Prolog interpretaatoriga:
+<pre>
+1. Tõmmata alla misjonarid.zip:
+  wget http://www.rl.pri.ee/comp_sci/artifical_intelligence/misjonarid/misjonarid.zip
+2. See lahti pakkida:
+  unzip misjonarid.zip
+3. Minna kausta misjonarid:
+  cd misjonarid
+4. Käivitada interpretaator:
+  pl
+5. Laadida sisse lähtekood:
+  compile(misjonarid).
+6. lahendada ülesannet (näiteks):
+  lahenda(30, 17, 19, 4).
+  (väljastab lahendi)
+</pre>
+Kasutusjuhendit on testitud arvutiklassis 205. Arvutiklassis 203 on väga vana
+Prologi versioon ja seal kood ei tööta. ats.cs.ut serveris on ka veidi vana
+versioon, aga kood siiski töötab (võib hoiatusteadet saada). math.ut.ee serveris
+on samuti vana versioon (4.0), aga kood töötab, kuigi viskab ohutut veateadet.
+<a href="naide.txt">Siin on lahenda(30, 17, 19, 4) väljund.</a>
+</p>
+
+<h2>Lähtekood (Prolog)</h2>
+<p><a href="http://www.rl.pri.ee/comp_sci/artifical_intelligence/misjonarid/misjonarid.zip">misjonarid.zip</a></p>
+
+<h3>Koodiga kaasa tulevad failid</h3>
+<ul>
+  <li>naide.txt - näidislahendus</li>
+  <li>misjonarid.pl - ülesande lahendaja</li>
+  <li>index.html, misjonarid_http.pl - veebipõhine kasutajaliides</li>
+  <li>misjonarid_server.sh - serverit käivitav shelli skript</li>
+</ul>
+
+<h3>Ülesande lahendaja algoritmi üldine kirjeldus</h3>
+<ol>
+  <li>Saame lähteseisu A = (M, N, 0, 0, v)</li>
+  <li>Hetke seisuks S valime A, st. S := A</li>
+  <li>Lahendussammu rakendamine
+    <ul>
+      <li>Kui S on lõppseis, st S = (0, 0, M, N, p), siis lõpetame</li>
+      <li>Kui paat on seisus S vasakul, siis üritame paati paigutada <b>maksimaalse</b> hulga inimesi</li>
+      <li>Kui paat on seisus S paremal, siis üritame tagasi vasakule kaldale viia <b>minimaalse</b>
+      hulga inimesi</li>
+      <li>Kirjutame üles saadud uue seisu S' ja selle sooritamiseks tehtud käigu</li>
+    </ul>
+  </li>
+  <li>Hetke seisuks S valime S', st. S := S'</li>
+  <li>Läheme sammu (3)</li>
+</ol>
+<p>Lahendussammu leidmisel kontrollime loomulikult ka ülesande püstituses antud kitsendusi.
+Lõpmatute tsüklite vältimiseks kirjutame üles kõik juba leitud seisud. Uuesti samasse seisu
+me ei luba minna. Kui tingimustele vastavat lahendussammu ei leidu (3),
+siis läheme tagasi eelmise sammuni ja valime
+paati võetud inimeste arvuks midagi muud - selle eest hoolitseb Prologi otsingumehhanism.</p>
+
+<p>Lähtekoodist leiab detailsed produktsioonide/predikaatide kirjeldused.</p>
+
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="email.png" alt="email" align="top"/>, 29.10.06
+
+</body>
+</html>

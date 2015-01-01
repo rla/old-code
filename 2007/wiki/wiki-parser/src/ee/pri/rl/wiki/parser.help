@@ -1,0 +1,21 @@
+Wiki Parser
+
+Copyright (c) 2007 Raivo Laanemets <rlaanemt@ut.ee>
+
+wiki-parser.sh [-in <input-file>]
+               [-out <output-file>]
+               [-d <directory>]
+               [-pre <header-file>]
+               [-post <footer-file>]
+               
+input-file  - The file name where to read wiki page from. If it's not set the
+              input is read from the standard input.
+             
+output-file - The file into which is the resulting code written. If not set
+              the standard output is used.
+              
+directory   - The directory where metadata files and tex images are saved.
+
+header-file - The file whose contents is prependended to the output.
+
+footer-file - The file whose contents is appended to the output.

@@ -1,0 +1,17 @@
+INPUT, TEXTAREA{
+  border: 1px solid #6699cc;
+}
+TD{
+  font-family: monospace;
+  font-size: 10pt;
+  color: #333333;
+}
+TH{
+  font-family: monospace;
+  font-size: 10pt;
+  color: #333333;
+  text-align: left;
+}
+BODY{
+  margin: 0px;
+}

@@ -1,0 +1,994 @@
+#LyX 1.5.6 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{fancyvrb}
+\end_preamble
+\language estonian
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 3.5cm
+\topmargin 3cm
+\rightmargin 3.5cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\noindent
+\align center
+
+\series bold
+\size larger
+Puude teisenduskauguse arvutamine
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\series bold
+\size large
+Projekti raport aines 
+\begin_inset Quotes eld
+\end_inset
+
+Algoritmika
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+Raivo Laanemets
+\end_layout
+
+\begin_layout Section
+Probleemi kirjeldus
+\end_layout
+
+\begin_layout Standard
+Projekti eesmärgiks oli uurida puude optimaalse teisenduskauguse probleemi.
+ Kahe puu teisenduskaugus on operatsioonide arv või kogukaal, mille abil
+ saab ühe puu teisendada teiseks puuks.
+ Optimaalne teisenduskaugus on minimaalne kõikvõimalikest kaugustest või
+ kogukaaludest.
+\end_layout
+
+\begin_layout Standard
+Kui tegemist on märgendatud puudega, kus alamtippude järjestus on tähtis
+ (
+\emph on
+rooted-ordered tree
+\emph default
+), siis võib teisendusteks lugeda tipu lisamise/kustutamise ja tipu ümbernimetam
+ise.
+ Selliste puude jaoks on teada algoritmid keerukusega 
+\begin_inset Formula $O(n^{4})$
+\end_inset
+
+ ning need kasutavad dünaamilist programmeerimist 
+\begin_inset LatexCommand cite
+key "key-1"
+
+\end_inset
+
+.
+ Projekti alguses sai üks sellistest algoritmidest realiseeritud.
+\end_layout
+
+\begin_layout Standard
+Kui alamtippude järjestus ei ole tähtis (
+\emph on
+rooted-unordered tree
+\emph default
+), siis pole optimaalse teisenduskauguse lahendamiseks leitud veel polünomiaalse
+t algoritmi, sest probleem on NP-täielik 
+\begin_inset LatexCommand cite
+key "key-2"
+
+\end_inset
+
+.
+ Projektis sai vaadatud kitsendatud varianti, kus on tegemist täielike kahendpuu
+dega ja kus andmed asuvad ainult lehtedes ning ainsaks operatsiooniks on
+ sisuliselt kahe suvalise alampuu ümbervahetamine.
+ Tippude lisamist/kustutamist ei tehta, sest eeldatakse, et kahel võrreldaval
+ puul on samasugused lehed.
+ Sellisteks puudeks on näiteks fülogeneetilised puud 
+\begin_inset LatexCommand cite
+key "key-3"
+
+\end_inset
+
+.
+ Projektis sai põhiliselt uuritud teisenduskauguse leidmist just selliste
+ puude jaoks.
+\end_layout
+
+\begin_layout Subsection
+Näide
+\end_layout
+
+\begin_layout Standard
+Kahe alumise puu 
+\begin_inset Formula $T_{1}$
+\end_inset
+
+ ja 
+\begin_inset Formula $T_{2}$
+\end_inset
+
+ teisenduskaugus on 1.
+ Alampuude järjestus pole oluline.
+ Ükskõik kummas puus tuleb vahetada tipud 
+\begin_inset Formula $A$
+\end_inset
+
+ ja 
+\begin_inset Formula $C$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $T_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $T_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename puuA.ps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename puuB.ps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Algoritm
+\end_layout
+
+\begin_layout Standard
+Algoritm teisenduskauguse leidmiseks üritab ühendada lehtede paare, kus
+ mõlemas võrreldavas puus on sama vanem.
+ Sellise operatsiooni tulemuseks on uus leht, millega asendatakse ühendatud
+ lehtede vanem.
+ Kui selliseid paare ei leidu, tõstetakse lehti ümber, kuni selliseid paare
+ leidub.
+ Kuna kahe lehe ümbertõstmine võib mõjutada hilisemaid ümbertõstmiseid,
+ siis tuleb leida kõik sellised ümbertõstmised ja valida neist 
+\begin_inset Quotes eld
+\end_inset
+
+parimad
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Algoritm lõpetab töö, kui mõlemas puus on alles jäänud ainult üks leht,
+ mis algselt oli juur.
+\end_layout
+
+\begin_layout Standard
+Et leida parimad ümbertõstmised, kasutatakse prioriteeditega magasini (kuhja),
+ mille elementideks on puu teisenduste ahelad.
+ Elemendid on järjestatud ahela kaalu järgi.
+ Kui võtta ümbertõstmise kaaluks 
+\begin_inset Formula $1.0$
+\end_inset
+
+ ja ühendamise kaaluks 
+\begin_inset Formula $0.0$
+\end_inset
+
+, siis annab algoritm töö lõpus optimaalse teisenduskauguse, mis on võrdne
+ kuhjas esimese ahela kaaluga, mis teisendab esialgsed puud ühe lehega puudeks.
+\end_layout
+
+\begin_layout Subsection
+Algoritmi üldskeem
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="right" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\emph on
+Sisend:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+puud 
+\begin_inset Formula $A$
+\end_inset
+
+ ja 
+\begin_inset Formula $B$
+\end_inset
+
+, alampuude ühendamise kaal 
+\begin_inset Formula $w_{1}$
+\end_inset
+
+, ümbertõstmise kaal 
+\begin_inset Formula $w_{2}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\emph on
+Väljund:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+teisendusoperatsioonide jada 
+\begin_inset Formula $c$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{enumerate}
+\backslash
+addtolength{
+\backslash
+itemsep}{-0.5
+\backslash
+baselineskip}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Prioriteetidega magasini $Q$ initsialiseerimine.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Lisa magasini $Q$ puu samasusteisendus (kaal 0.0).
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Võta teisenduste jada $c$ magasinist $Q$.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Leia puude $A$ ja $B$ lehed arvestades teisendusi jadas $c$.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Kui lehtede arv on 1, väljasta $c$ ja lõpeta.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Leia ühendavad teisendused $t_1,
+\backslash
+dots,t_n$.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Lisa magasini $Q$ $c$-st ja $t_i$-dest saadud jadad
+\end_layout
+
+\begin_layout Standard
+
+$c_i=c+t_i$ arvestades nende kaalusid $w(c_i)=w_1 + w(c)$, $i=1,
+\backslash
+dots, n$.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Leia kõik lehti ümbervahetavad teisendused $t'_1,
+\backslash
+dots,t'_m$.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Lisa magasini $Q$ $c$-st ja $t'_i$-dest saadud jadad
+\end_layout
+
+\begin_layout Standard
+
+$c'_i=c+t'_i$ arvestades nende kaalusid $w(c'_i)=w_2 + w(c)$, $i=1,
+\backslash
+dots, m$.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item Mine sammu 3.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+end{enumerate}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Algoritmi realisatsioon
+\end_layout
+
+\begin_layout Standard
+Programm, mis realiseerib kirjeldatud algoritmi, on kirjutatud keeles Java.
+ Programm võtab sisendiks võrreldavate puude failinimed ja väljastab leitud
+ sobiva teisenduste jada töö lõpus.
+ Programmile saab käsurealt ette anda järgmised parameetrid:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{itemize}
+\backslash
+addtolength{
+\backslash
+itemsep}{-0.5
+\backslash
+baselineskip}
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item 
+\backslash
+texttt{-in1}: esimese puu failinimi.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item 
+\backslash
+texttt{-in2}: teise puu failinimi.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item 
+\backslash
+texttt{-ms}: maksimaalne iteratsioonide arv sammudes 3-10.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item 
+\backslash
+texttt{-r}: randomiseeritud ümbertõstmiste kasutamine.
+ Kui on käsureal
+\end_layout
+
+\begin_layout Standard
+
+määratud, siis sammus 8 valitakse $r*n$ teisendust, kus $n$ on hetkel
+\end_layout
+
+\begin_layout Standard
+
+vaadeldavate lehtede arv.
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item 
+\backslash
+texttt{-uw}: lehtede ühendamise kaal ($w_1$).
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+item 
+\backslash
+texttt{-sw}: alampuude ümbervahetamise kaal ($w_2$).
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Realisatsiooni kriitiline osa on sammus 4 tehtava tegevuse võimaldamine.
+ Programm üritab hoida mälus puude teisendusi ja mitte täielikke puid, et
+ mälu kokku hoida.
+ Hetkel töötav realisatsioon kasutab primitiivset lähenemist ja seetõttu
+ suudab keskmisel lauaarvutil läbi vaadata umbes 20000 puud sekundis.
+\end_layout
+
+\begin_layout Standard
+Programmi saab käivitada skriptist 
+\family typewriter
+td.sh
+\family default
+, mis käivitab Java-keelse koodi koos vajalike teekidega.
+ Programm sisaldab kokku umbes 1200 rida koodi.
+ Enne kasutamist tuleb programm kompileerida käsuga 
+\family typewriter
+ant jar
+\family default
+.
+\end_layout
+
+\begin_layout Section
+Tulemused
+\end_layout
+
+\begin_layout Standard
+Algoritmi sai katsetatud fülogenetiliste puude võrdlemisel.
+ Erinevate meetoditega genereeritud puud on mõnevõrra erinevad ja projekti
+ raames realiseeritud algoritm annab puude sarnasuse teisenduskauguse abil.
+ Programm väljastab ka puude ühildamiseks vajalikud sammud.
+\end_layout
+
+\begin_layout Standard
+Programm loeb puud sisse NHX formaadis 
+\begin_inset LatexCommand cite
+key "key-5"
+
+\end_inset
+
+ faili seest, mis on lihtne ja levinud formaat bioloogiliste puude esitamiseks.
+ Kuna erinevate meetodite saadud puud ei ole 
+\emph on
+TreeFam
+\emph default
+ lehelt otse saadaval, tuli alla tõmmata algkujul andmete kollektsioon (5GB)
+ ja genereerida puud kasutades 
+\emph on
+TreeBest
+\emph default
+ vahendit 
+\begin_inset LatexCommand cite
+key "key-6"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Näide sisendist
+\end_layout
+
+\begin_layout Standard
+Sisendpuu 
+\begin_inset Formula $T_{1}$
+\end_inset
+
+ on genereeritud käsuga
+\family typewriter
+
+\newline
+treebest nj -t dm align/families_work/00/TF105200/full.nucl.mfa > tf105200.dm.nhx
+\family default
+.
+\newline
+Sisendpuu 
+\begin_inset Formula $T_{2}$
+\end_inset
+
+ on genereeritud käsuga
+\family typewriter
+
+\newline
+treebest nj -t ds align/families_work/00/TF105200/full.nucl.mfa > tf105200.ds.nhx
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $T_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $T_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/raivo/workspace/treedistance/data/tf105200.dm.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/raivo/workspace/treedistance/data/tf105200.ds.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Näide väljundist
+\end_layout
+
+\begin_layout Standard
+Programmi sisendiks sai antud ülalolevad puud.
+ Optimaalset teisenduskaugust ei õnnestunud leida.
+ Seetõttu tuli häälestada ühendamisoperatsiooni kaalu, et algoritm valiks
+ ahnemalt väikeseid puid (rohkem ühendamisi ära tehtud).
+ Lisaks tuli sisse lülitada randomiseeritud vahetuste geneerimine.
+\end_layout
+
+\begin_layout Standard
+Programmi käivitamiseks vajalik käsk on järgmine:
+\newline
+
+\family typewriter
+./td.sh -in1 data/tf105200.ds.nhx -in2 data/tf105200.dm.nhx -uw -0.5 -ms 100000
+ -r 1.5
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{Verbatim}[fontsize=
+\backslash
+scriptsize]
+\end_layout
+
+\begin_layout Standard
+
+Merge Cftr_MOUSE and Cftr_RAT in both trees into L0
+\end_layout
+
+\begin_layout Standard
+
+Merge CFTR_HUMAN and CFTR_PANTR in both trees into L7
+\end_layout
+
+\begin_layout Standard
+
+Merge L7 and CFTR_PONPY in both trees into L13
+\end_layout
+
+\begin_layout Standard
+
+Merge CFTR_MACMU and L13 in both trees into L19
+\end_layout
+
+\begin_layout Standard
+
+Merge CFTR_OTOGA and CFTR_MICMU in both trees into L25
+\end_layout
+
+\begin_layout Standard
+
+Merge L19 and L25 in both trees into L30
+\end_layout
+
+\begin_layout Standard
+
+Merge CFTR_ECHTE and CFTR_LOXAF in both trees into L36
+\end_layout
+
+\begin_layout Standard
+
+Merge CFTR_TETNG and CFTR_GASAC in both trees into L1446
+\end_layout
+
+\begin_layout Standard
+
+Merge CFTR_CANFA and Q9N1D7_FELCA in both trees into L1645
+\end_layout
+
+\begin_layout Standard
+
+Merge L1446 and CFTR_ORYLA in both trees into L1651
+\end_layout
+
+\begin_layout Standard
+
+Merge si_dkey-270i2_F3_BRARE and L1651 in both trees into L1670
+\end_layout
+
+\begin_layout Standard
+
+Merge CFTR_SORAR and CFTR_ERIEU in both trees into L1680
+\end_layout
+
+\begin_layout Standard
+
+Merge L36 and CFTR_DASNO in both trees into L1682
+\end_layout
+
+\begin_layout Standard
+
+Swap L0 and CFTR_ORNAN in first tree
+\end_layout
+
+\begin_layout Standard
+
+Swap L0 and CFTR_ORNAN in first tree
+\end_layout
+
+\begin_layout Standard
+
+Merge L0 and L0 in both trees into L1871
+\end_layout
+
+\begin_layout Standard
+
+Merge L1871 and Q2QL94_MONDO in both trees into L1872
+\end_layout
+
+\begin_layout Standard
+
+Swap CFTR_ORNAN and CFTR_XENTR in first tree
+\end_layout
+
+\begin_layout Standard
+
+Merge L1872 and CFTR_ORNAN in both trees into L2259
+\end_layout
+
+\begin_layout Standard
+
+Merge L2259 and A0M8U4_CHICK in both trees into L2260
+\end_layout
+
+\begin_layout Standard
+
+Merge L2260 and CFTR_XENTR in both trees into L2261
+\end_layout
+
+\begin_layout Standard
+
+Merge L2261 and L1670 in both trees into L2262
+\end_layout
+
+\begin_layout Standard
+
+Swaps: 3
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+end{Verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Väljundis väljastatakse info tehtud sammude kohta.
+ Väljundi viimasel real väljastatakse kokku tehtud alampuude ümbervahetuse
+ arv, mis näitabki tegelikku teisenduskaugust.
+ Antud väljundini jõudis programm umbes 10 sekundi töötamise järel.
+\end_layout
+
+\begin_layout Section
+Kokkuvõte
+\end_layout
+
+\begin_layout Standard
+Projektis sai põhiliselt uuritud puude teisenduskaugust ja koostatud Java-keelne
+ programm optimaalse teisenduskauguse leidmiseks fülogeneetiliste puude
+ jaoks.
+ Algoritmi realisatsioon on paraku aeglane ja suudab töötada kuni paarikümne
+ tipuga puude peal.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+Serge Dulucq; Hélène Touzet.
+ Analysis of tree edit distance algorithms.
+ 
+\emph on
+In Proceedings of the 14th annual symposium on Combinatorial Pattern Matching
+\emph default
+.
+ 2003
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "key-2"
+
+\end_inset
+
+Horesh Yair; Mehr Ramit; Unger Ron.
+ Designing an A* algorithm for calculating edit distance between rooted-unordere
+d trees.
+ 
+\emph on
+Journal of computational biology : a journal of computational molecular
+ cell biology 2006;13(6):1165-76
+\emph default
+.
+ 2006
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "key-3"
+
+\end_inset
+
+Tree families database.
+ http://www.treefam.org/, 20.05.2009
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "key-5"
+
+\end_inset
+
+Christian M.
+ Zmasek.
+ NHX formaadi spetsifikatsioon.
+ http://phylosoft.org/NHX/, 20.05.2009
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "key-6"
+
+\end_inset
+
+TreeSoft: TreeBest.
+ http://treesoft.sourceforge.net/treebest.shtml, 20.05.2009
+\end_layout
+
+\end_body
+\end_document

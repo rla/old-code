@@ -1,0 +1,35 @@
+= Desktop Wiki =
+
+== About ==
+
+Desktop Wiki is wiki editor/compiler for desktop platform.
+It is meant to be personal note taking system. It is written
+in Java but it is not platform independent. Only unix-like
+systems are currently supported.
+
+== Resources ==
+
+To see screenshots click [[screenshots.html|here]].
+
+=== Download ===
+
+* [[desktop-wiki-bin-1.0.zip|Binary distribution]].
+* [[desktop-wiki-src-1.0.zip|Source distribution]].
+
+=== Manual ===
+
+* [[editor_keys.html|Editor quick keys]]
+
+=== TODO ===
+
+* Add support for batch converting.
+* Variables (title, author) for header and footer.
+* User settings for configuration.
+* Full support for Windows platform.
+* User-definable macros.
+
+=== Known bugs ===
+
+----
+
+__Raivo Laanemets__ [[mailto:rl@starline.ee|rl@starline.ee]]

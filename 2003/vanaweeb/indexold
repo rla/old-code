@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Untitled</title>
+</head>
+
+<script language="Javascript">
+
+var URL   = "index.php"
+var speed = 1000
+
+function reload() {
+location = URL
+}
+
+setTimeout("reload()", speed);
+
+</script>
+
+<body>
+
+</body>
+</html>

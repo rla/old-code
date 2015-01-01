@@ -1,0 +1,6 @@
+Ez(T(z)&M(z))
+
+Vx(S(x)->Ey(T(y)&P(x,y)))
+Vx(W(x)->S(x))
+ExW(x)&D(x)
+Vz(T(z)&Ey(D(y)&P(y,z))->M(z))

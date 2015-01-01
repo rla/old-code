@@ -1,0 +1,141 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Misjonäride probleemi lahendaja</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="http://www.rl.pri.ee/laanemets.css" />
+</head>
+<body>
+<h1>Misjonäride probleemi lahendaja</h1>
+<div class="spacing"></div>
+<div style="border: 1px solid #000000; padding: 20px">
+<!-- Generator: GNU source-highlight 2.5
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><i><font color="#9A1900">% Misjonäride ja inimsööjate probleem</font></i>
+<i><font color="#9A1900">% Tehisintellekt I</font></i>
+<i><font color="#9A1900">% Raivo Laanemets, rlaanemt@ut.ee, 29.10.06</font></i>
+
+<font color="#990000">:-</font><b><font color="#000000">module</font></b><font color="#990000">(</font>misjonarid<font color="#990000">,</font> <font color="#990000">[</font>
+	lahenda<font color="#990000">/</font><font color="#993399">4</font><font color="#990000">,</font>
+	lahenda<font color="#990000">/</font><font color="#993399">5</font>
+<font color="#990000">]).</font>
+
+<font color="#990000">:-</font><b><font color="#000000">encoding</font></b><font color="#990000">(</font>utf8<font color="#990000">).</font>
+
+<i><font color="#9A1900">% Korduvate seisude tõttu tekkivate</font></i>
+<i><font color="#9A1900">% lõpmatute tsüklite vältimiseks.</font></i>
+<font color="#990000">:-</font><b><font color="#000000">dynamic</font></b><font color="#990000">(</font>proovitud<font color="#990000">/</font><font color="#993399">5</font><font color="#990000">).</font>
+
+<i><font color="#9A1900">% Lõppseis - vasakule kaldale on jäänud 0 misjonäri ja inimsööjat ning paat on paremal kaldal.</font></i>
+<b><font color="#000000">loppseis</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#009900">_</font><font color="#990000">,</font> <font color="#009900">_</font><font color="#990000">,</font> p<font color="#990000">).</font>
+
+<i><font color="#9A1900">% Lahenduse leidmine, ette antakse</font></i>
+<i><font color="#9A1900">% M - misjonäride arv</font></i>
+<i><font color="#9A1900">% N - inimsööjate arv</font></i>
+<i><font color="#9A1900">% P - paadi mahutavus</font></i>
+<i><font color="#9A1900">% R - sõudjate arv</font></i>
+<i><font color="#9A1900">% lahendi leidumise korral saame käikude loendi Ks.</font></i>
+<b><font color="#000000">lahenda</font></b><font color="#990000">(</font><font color="#009900">M</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> <font color="#009900">Ks</font><font color="#990000">):-</font>
+	<b><font color="#0000FF">retractall</font></b><font color="#990000">(</font><b><font color="#000000">proovitud</font></b><font color="#990000">(</font><font color="#009900">_</font><font color="#990000">,</font><font color="#009900">_</font><font color="#990000">,</font><font color="#009900">_</font><font color="#990000">,</font><font color="#009900">_</font><font color="#990000">,</font><font color="#009900">_</font><font color="#990000">)),</font>
+	<b><font color="#000000">lahenda</font></b><font color="#990000">(</font><font color="#009900">M</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> <font color="#009900">Ks</font><font color="#990000">,</font> v<font color="#990000">).</font>
+
+<b><font color="#000000">lahenda</font></b><font color="#990000">(</font><font color="#009900">M</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">):-</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'Misjonäride arv: ~a\n'</font><font color="#990000">,</font> <font color="#009900">M</font><font color="#990000">),</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'Inimsööjate arv: ~a\n'</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">),</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'Paadi mahutavus: ~a\n'</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">),</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'Vajalik aerutajate arv: ~a\n'</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">),</font>
+	<font color="#990000">(</font><b><font color="#000000">lahenda</font></b><font color="#990000">(</font><font color="#009900">M</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> <font color="#009900">Ks</font><font color="#990000">)</font> <font color="#990000">-&gt;</font> 
+		<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'Lahend:\n\n'</font><font color="#990000">),</font>
+		<b><font color="#000000">valjasta_lahend</font></b><font color="#990000">(</font><font color="#009900">Ks</font><font color="#990000">)</font>
+		<font color="#990000">;</font>
+		<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'Lahendit ei leidu.\n'</font><font color="#990000">)</font>
+	<font color="#990000">).</font>
+
+<i><font color="#9A1900">% Lahendamise põhiprotseduur</font></i>
+<i><font color="#9A1900">% Saame ette hetke seisu (Lm, Li, Rm, Ri), kus</font></i>
+<i><font color="#9A1900">% Lm - vasakul kaldal olevate misjonäride arv</font></i>
+<i><font color="#9A1900">% Li - vasakul kaldal olevate inimsööjate arv</font></i>
+<i><font color="#9A1900">% Rm - paremal kaldal olevate misjonäride arv</font></i>
+<i><font color="#9A1900">% Ri - paremal kaldal olevate inimsööjate arv</font></i>
+<i><font color="#9A1900">% Algoritm:</font></i>
+<i><font color="#9A1900">% 1. kui seis (Lm, Li, Rm, Ri) on lõppseis, siis lõpeta ja peatu</font></i>
+<i><font color="#9A1900">% 2. genereeri uus seis ja vastav käik (Lm1, Li1, Rm1, Ri1),</font></i>
+<i><font color="#9A1900">% 3. rekursiivselt proovi lahendada uus seis</font></i>
+<i><font color="#9A1900">% 4. uus seis viis lõppseisuni? jah -&gt; lõpeta, ei -&gt; mine tagasi punkti 2 </font></i>
+<b><font color="#000000">lahenda</font></b><font color="#990000">(</font><font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> <font color="#009900">Ks</font><font color="#990000">,</font> <font color="#009900">Pt</font><font color="#990000">):-</font>
+	<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">proovitud</font></b><font color="#990000">(</font><font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">,</font> <font color="#009900">Pt</font><font color="#990000">)),</font>
+	<font color="#990000">(</font><b><font color="#000000">loppseis</font></b><font color="#990000">(</font><font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">,</font> <font color="#009900">Pt</font><font color="#990000">)</font> <font color="#990000">-&gt;</font>
+		<font color="#009900">Ks</font> <font color="#990000">=</font> <font color="#990000">[]</font>
+		<font color="#990000">;</font>
+		<b><font color="#000000">kaik</font></b><font color="#990000">(</font><font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> <font color="#009900">Pt</font><font color="#990000">,</font> <font color="#009900">Lm1</font><font color="#990000">,</font> <font color="#009900">Li1</font><font color="#990000">,</font> <font color="#009900">Rm1</font><font color="#990000">,</font> <font color="#009900">Ri1</font><font color="#990000">,</font> <font color="#009900">Pt1</font><font color="#990000">,</font> <font color="#009900">Pm</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">),</font>
+		<b><font color="#000000">lahenda</font></b><font color="#990000">(</font><font color="#009900">Lm1</font><font color="#990000">,</font> <font color="#009900">Li1</font><font color="#990000">,</font> <font color="#009900">Rm1</font><font color="#990000">,</font> <font color="#009900">Ri1</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> <font color="#009900">Ks1</font><font color="#990000">,</font> <font color="#009900">Pt1</font><font color="#990000">),</font>
+		<font color="#009900">Ks</font> <font color="#990000">=</font> <font color="#990000">[(</font><font color="#009900">Pm</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">,</font> <font color="#009900">Pt1</font><font color="#990000">,</font> <font color="#009900">Lm1</font><font color="#990000">,</font> <font color="#009900">Li1</font><font color="#990000">,</font> <font color="#009900">Rm1</font><font color="#990000">,</font> <font color="#009900">Ri1</font><font color="#990000">)|</font><font color="#009900">Ks1</font><font color="#990000">]</font>
+	<font color="#990000">).</font>
+
+<i><font color="#9A1900">% Kaigu genereerimine</font></i>
+<b><font color="#000000">kaik</font></b><font color="#990000">(</font><font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> <font color="#009900">Pt</font><font color="#990000">,</font> <font color="#009900">Lm1</font><font color="#990000">,</font> <font color="#009900">Li1</font><font color="#990000">,</font> <font color="#009900">Rm1</font><font color="#990000">,</font> <font color="#009900">Ri1</font><font color="#990000">,</font> <font color="#009900">Pt1</font><font color="#990000">,</font> <font color="#009900">Pm</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">):-</font>
+	<b><font color="#000000">paadi_suund</font></b><font color="#990000">(</font><font color="#009900">Pt</font><font color="#990000">,</font> <font color="#009900">Pt1</font><font color="#990000">),</font>
+	<b><font color="#000000">uus_seis</font></b><font color="#990000">(</font><font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> <font color="#009900">Pt1</font><font color="#990000">,</font> <font color="#009900">Lm1</font><font color="#990000">,</font> <font color="#009900">Li1</font><font color="#990000">,</font> <font color="#009900">Rm1</font><font color="#990000">,</font> <font color="#009900">Ri1</font><font color="#990000">,</font> <font color="#009900">Pm</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">),</font>
+	<font color="#990000">\+</font> <b><font color="#000000">proovitud</font></b><font color="#990000">(</font><font color="#009900">Lm1</font><font color="#990000">,</font> <font color="#009900">Li1</font><font color="#990000">,</font> <font color="#009900">Rm1</font><font color="#990000">,</font> <font color="#009900">Ri1</font><font color="#990000">,</font> <font color="#009900">Pt1</font><font color="#990000">).</font>
+
+<i><font color="#9A1900">% Uue seisu genereerimine</font></i>
+<i><font color="#9A1900">% Paat liigub vasakule (tagasi)</font></i>
+<b><font color="#000000">uus_seis</font></b><font color="#990000">(</font><font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> v<font color="#990000">,</font> <font color="#009900">Lm1</font><font color="#990000">,</font> <font color="#009900">Li1</font><font color="#990000">,</font> <font color="#009900">Rm1</font><font color="#990000">,</font> <font color="#009900">Ri1</font><font color="#990000">,</font> <font color="#009900">Pm</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">):-</font>
+	<b><font color="#000000">between</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Pm</font><font color="#990000">),</font>          <i><font color="#9A1900">% paremalt Pm tükki misjonäre paati (alustame 0-st)</font></i>
+	<b><font color="#000000">between</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">),</font>          <i><font color="#9A1900">% paremalt Pi tükki inimsööjaid paati (alustame 0-st)</font></i>
+	<font color="#990000">(</font><font color="#009900">Pm</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">-&gt;</font> true<font color="#990000">;</font> <font color="#009900">Pm</font> <font color="#990000">&gt;=</font> <font color="#009900">Pi</font><font color="#990000">),</font> <i><font color="#9A1900">% paadis on misjonäre vähemalt sama palju kui inimsööjaid, kui seal on üldse misjonäre</font></i>
+	<font color="#009900">Pm</font> <font color="#990000">+</font> <font color="#009900">Pi</font> <font color="#990000">=&lt;</font> <font color="#009900">P</font><font color="#990000">,</font>                <i><font color="#9A1900">% paat kannatab kuni P inimest</font></i>
+	<font color="#009900">Pm</font> <font color="#990000">+</font> <font color="#009900">Pi</font> <font color="#990000">&gt;=</font> <font color="#009900">R</font><font color="#990000">,</font>                <i><font color="#9A1900">% paat nõuab vähemalt R sõudjat</font></i>
+	<font color="#009900">Lm1</font> is <font color="#009900">Lm</font> <font color="#990000">+</font> <font color="#009900">Pm</font><font color="#990000">,</font>              <i><font color="#9A1900">% arvutame uue seisu vastavalt paadisõidule</font></i>
+	<font color="#009900">Li1</font> is <font color="#009900">Li</font> <font color="#990000">+</font> <font color="#009900">Pi</font><font color="#990000">,</font>
+	<font color="#009900">Rm1</font> is <font color="#009900">Rm</font> <font color="#990000">-</font> <font color="#009900">Pm</font><font color="#990000">,</font>
+	<font color="#009900">Ri1</font> is <font color="#009900">Ri</font> <font color="#990000">-</font> <font color="#009900">Pi</font><font color="#990000">,</font>
+	<font color="#990000">(</font><font color="#009900">Lm1</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">-&gt;</font> true<font color="#990000">;</font> <font color="#009900">Lm1</font> <font color="#990000">&gt;=</font> <font color="#009900">Li1</font><font color="#990000">),</font>  <i><font color="#9A1900">% vasakul pool on misjonäre vähemalt sama palju kui inimsööjaid, kui seal on üldse misjonäre</font></i>
+	<font color="#990000">(</font><font color="#009900">Rm1</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">-&gt;</font> true<font color="#990000">;</font> <font color="#009900">Rm1</font> <font color="#990000">&gt;=</font> <font color="#009900">Ri1</font><font color="#990000">).</font>  <i><font color="#9A1900">% paremal pool on misjonäre vähemalt sama palju kui inimsööjaid, kui seal on üldse misjonäre</font></i>
+
+<i><font color="#9A1900">% Paat liigub paremale</font></i>
+<b><font color="#000000">uus_seis</font></b><font color="#990000">(</font><font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">,</font> p<font color="#990000">,</font> <font color="#009900">Lm1</font><font color="#990000">,</font> <font color="#009900">Li1</font><font color="#990000">,</font> <font color="#009900">Rm1</font><font color="#990000">,</font> <font color="#009900">Ri1</font><font color="#990000">,</font> <font color="#009900">Pm</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">):-</font>
+	<b><font color="#000000">between_rev</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Pm</font><font color="#990000">),</font>      <i><font color="#9A1900">% vasakult Pm tükki misjonäre paati (alustame Lm-st)</font></i>
+	<b><font color="#000000">between_rev</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">),</font>      <i><font color="#9A1900">% vasakult Pi tükki misjonäre paati (alustame Pi-st)</font></i>
+	<font color="#990000">(</font><font color="#009900">Pm</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">-&gt;</font> true<font color="#990000">;</font> <font color="#009900">Pm</font> <font color="#990000">&gt;=</font> <font color="#009900">Pi</font><font color="#990000">),</font>
+	<font color="#009900">Pm</font> <font color="#990000">+</font> <font color="#009900">Pi</font> <font color="#990000">=&lt;</font> <font color="#009900">P</font><font color="#990000">,</font>
+	<font color="#009900">Pm</font> <font color="#990000">+</font> <font color="#009900">Pi</font> <font color="#990000">&gt;=</font> <font color="#009900">R</font><font color="#990000">,</font>
+	<font color="#009900">Lm1</font> is <font color="#009900">Lm</font> <font color="#990000">-</font> <font color="#009900">Pm</font><font color="#990000">,</font>
+	<font color="#009900">Li1</font> is <font color="#009900">Li</font> <font color="#990000">-</font> <font color="#009900">Pi</font><font color="#990000">,</font>
+	<font color="#009900">Rm1</font> is <font color="#009900">Rm</font> <font color="#990000">+</font> <font color="#009900">Pm</font><font color="#990000">,</font>
+	<font color="#009900">Ri1</font> is <font color="#009900">Ri</font> <font color="#990000">+</font> <font color="#009900">Pi</font><font color="#990000">,</font>
+	<font color="#990000">(</font><font color="#009900">Lm1</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">-&gt;</font> true<font color="#990000">;</font> <font color="#009900">Lm1</font> <font color="#990000">&gt;=</font> <font color="#009900">Li1</font><font color="#990000">),</font>
+	<font color="#990000">(</font><font color="#009900">Rm1</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">-&gt;</font> true<font color="#990000">;</font> <font color="#009900">Rm1</font> <font color="#990000">&gt;=</font> <font color="#009900">Ri1</font><font color="#990000">).</font>
+
+<i><font color="#9A1900">% Tagurpidi genereeriv täisarvude generaator</font></i>
+<b><font color="#000000">between_rev</font></b><font color="#990000">(</font><font color="#009900">LB</font><font color="#990000">,</font> <font color="#009900">UB</font><font color="#990000">,</font> <font color="#009900">X</font><font color="#990000">):-</font> <b><font color="#000000">between</font></b><font color="#990000">(</font><font color="#009900">LB</font><font color="#990000">,</font> <font color="#009900">UB</font><font color="#990000">,</font> <font color="#009900">X1</font><font color="#990000">),</font> <font color="#009900">X</font> is <font color="#009900">UB</font> <font color="#990000">-</font> <font color="#009900">X1</font><font color="#990000">.</font>
+
+<i><font color="#9A1900">% Paadi suuna muutmine</font></i>
+<b><font color="#000000">paadi_suund</font></b><font color="#990000">(</font>v<font color="#990000">,</font> p<font color="#990000">).</font>
+<b><font color="#000000">paadi_suund</font></b><font color="#990000">(</font>p<font color="#990000">,</font> v<font color="#990000">).</font>
+
+<i><font color="#9A1900">% Lahendi väljastamine</font></i>
+<b><font color="#000000">valjasta_lahend</font></b><font color="#990000">(</font><font color="#009900">Ks</font><font color="#990000">):-</font> <b><font color="#000000">valjasta_lahend</font></b><font color="#990000">(</font><font color="#009900">Ks</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">).</font>
+<b><font color="#000000">valjasta_lahend</font></b><font color="#990000">([],</font> <font color="#009900">_</font><font color="#990000">):-</font> <b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'Lõpp\n'</font><font color="#990000">).</font>
+<b><font color="#000000">valjasta_lahend</font></b><font color="#990000">([(</font><font color="#009900">Pm</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">,</font> <font color="#009900">Pt</font><font color="#990000">,</font> <font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">,</font> <font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">)|</font><font color="#009900">Ks</font><font color="#990000">],</font> <font color="#009900">C</font><font color="#990000">):-</font>
+	<b><font color="#000000">kuhu</font></b><font color="#990000">(</font><font color="#009900">Pt</font><font color="#990000">,</font> <font color="#009900">K</font><font color="#990000">),</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'~a. Paati võtame ~a misjonäri ja ~a inimsööjat, paadiga sõidame ~a\n'</font><font color="#990000">,</font> <font color="#990000">[</font><font color="#009900">C</font><font color="#990000">,</font> <font color="#009900">Pm</font><font color="#990000">,</font> <font color="#009900">Pi</font><font color="#990000">,</font> <font color="#009900">K</font><font color="#990000">]),</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'vasakul: ~a misjonäri ja ~a inimsööjat\n'</font><font color="#990000">,</font> <font color="#990000">[</font><font color="#009900">Lm</font><font color="#990000">,</font> <font color="#009900">Li</font><font color="#990000">]),</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'paremal: ~a misjonäri ja ~a inimsööjat\n\n'</font><font color="#990000">,</font> <font color="#990000">[</font><font color="#009900">Rm</font><font color="#990000">,</font> <font color="#009900">Ri</font><font color="#990000">]),</font>
+	<font color="#009900">C1</font> is <font color="#009900">C</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">,</font>
+	<b><font color="#000000">valjasta_lahend</font></b><font color="#990000">(</font><font color="#009900">Ks</font><font color="#990000">,</font> <font color="#009900">C1</font><font color="#990000">).</font>
+
+<b><font color="#000000">kuhu</font></b><font color="#990000">(</font>v<font color="#990000">,</font> <font color="#FF0000">'vasakule'</font><font color="#990000">).</font>
+<b><font color="#000000">kuhu</font></b><font color="#990000">(</font>p<font color="#990000">,</font> <font color="#FF0000">'paremale'</font><font color="#990000">).</font></tt></pre>
+
+</div>
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="http://www.rl.pri.ee/pictures/email.png" alt="email" align="top"/>, <a href="http://www.rl.pri.ee/index.html">Index</a>
+
+</body>
+</html>

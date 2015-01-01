@@ -1,0 +1,7 @@
+Testsuite: ee.pri.rl.tokenizer.reader.test.ReaderTokenizerTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.02 sec
+------------- Standard Output ---------------
+Tokenizing took 15ms
+------------- ---------------- ---------------
+
+Testcase: testReaderTokenizerRules took 0.017 sec

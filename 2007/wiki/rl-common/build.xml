@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<project name="rl-common" default="jar">
+	<property name="src" value="src" />
+	<property name="build" value="build" />
+	<property name="jar" value="rl-common.jar" />
+	<property name="rep.jar" value="../lib/${jar}" />
+	
+	<path id="compile.classpath">
+		<pathelement path="${build}" />
+	</path>
+	
+	<target name="compile" description="Compile the project">
+		<mkdir dir="${build}" />
+		<javac destdir="${build}" >
+			<src path="${src}" />
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+	
+	<target name="clean" description="Clean the project">
+		<delete dir="${build}" />
+		<delete file="${jar}" />
+	</target>
+	
+	<target name="jar" depends="compile" description="Package the project into jar">
+		<jar destfile="${jar}" basedir="${build}" />
+	</target>
+	
+	<target name="copy-jar" description="Copy jar to upper project repository" depends="jar">
+		<copy file="${jar}" tofile="${rep.jar}" />
+	</target>
+
+</project>

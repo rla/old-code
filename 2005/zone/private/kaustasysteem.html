@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+  <title>Siseveeb</title>
+  <meta name="Description" content="Siseveeb">
+  <meta name="Author" content="Raivo Laanemets">
+  <meta name="Copyright" content="(c) 2005 Raivo Laanemets">
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-13">
+  <style type="text/css">
+  body, li, i, h1, h2, h3, h4, h5, p {
+    font-family: Helvetica, sans-serif;
+  }
+  p, pre {
+    padding-left: 20px;
+  }
+  
+  .code {
+  
+    background-color: #eeeeee;
+    padding: 15px;
+    font-family: Courier, serif;
+    margin: 10px;
+  
+  }
+  </style>
+  </head>
+<body style="width:600px">
+<h1>Siseveeb</h1>
+<h2>Kaustasüsteem</h2>
+<p>Antud süsteem kehtib ainult unix tüüpi operatsioonisüsteemide
+kasutamisel. Kaustade juur on kodukaust, seda tähistatakse tildega(<b>~</b>).</p>
+<ol>
+  <li>Kodukaustas on alamkaustad jagatud vastavalt teemale, näiteks kaustas
+  <i>~/asm</i> on assembleriga seotud materjal.
+  </li>
+  <li>Igas alamkaustas on olemas eraldi alamkaust arhiiv, st. eksisteerib kaust <i>~/asm/arhiiv</i>.
+  </li>
+  <li>Arhiiv ise on jagatud alamkaustadeks, millest igaüks sisaldab oma nimele
+  vastaval aastal lõpetatud projektidega alamkausta sisu. Näide: <i>~/asm/arhiiv/2004</i>.
+  </li>
+</ol>
+<h3>Avalik publitseerimine</h3>
+<p>Dokumente saab lugeda igaüks, kellel on juurdepääs internetile.</p>
+<ol>
+  <li>Unix tüüpi süsteemidel on kodukaustas tavaliselt alamkaust(<b>~/public_html</b>), mille sisu
+  on võimalik vaadelda võrgust aadressil <b>http://&lt;host&gt;/~&lt;kasutaja&gt;</b>.
+  Antud alamkaust sisaldab indeksit(index.html või index.php) ja sama struktuuri kui kodukausta
+  alamkaustad, ainult et valminud projektide publikatsioone ei liigutata arhiivi kausta.
+  </li>
+</ol>
+<h3>Privaatne publitseerimine</h3>
+<p>Dokumente saab lugeda vaid valitud alamhulk interneti kasutajatest(<u>autentimist nõudev
+juurdepääs vms.</u>).</p>
+<ol>
+  <li>Dokumendid asuvad kaustas <b>~/public_html/private</b>, näiteks assembleri alamteemad/projektid vastavalt
+  kaustas <i>~/public_html/private/asm/&lt;alamteema või projekt&gt;</i>.
+  </li>
+  <li>Alamteema võib olla eraldi kaitstud
+  autentimisega(näiteks .htaccess faili kasutades).
+  </li>
+</ol>
+<h3>Personaalne publitseerimine</h3>
+<p>Dokumente saab lugeda vaid autor ja/või süsteemi haldaja.</p>
+<ol>
+  <li>Dokumendid asuvad kaustas <b>~/public_html/personal</b> ja on kaitstud <u>autentimisega(.htaccess)</u>.
+  </li>
+  <li>Turvalisuse huvides on soovitatav personaalne materjal luua puhtas HTML-s.
+  </li>
+</ol>
+<h3>Publitseerimine virtuaalserveril</h3>
+<p>Kehtib hostingupakkuja kohta, kes ei võimalda
+traditsioonilist unixi kodukaustaga süsteemi.</p>
+<ol>
+  <li>Avalik materjal hoitakse mitteturvalise http kaustas. Struktuur on sama, mis
+  eespool seletatud, vaid public_html asemel on http dokumentide juurkaust.
+  </li>
+  <li>Privaatne, personaalne materjal ja sisuhaldus asuvad võimalusel
+  turvalise http (https) kaustas. Struktuur on sama, mis eespool vastava
+  materjali hoidmise kirjelduses, vaid public_html tuleb asendada https dokumentide
+  juurkaustaga.
+  </li>
+</ol>
+
+<p><i>Lehte viimati muudetud:
+<script type="text/javascript">document.write(new Date(document.lastModified));</script>.</i></p>
+</body>
+</html>

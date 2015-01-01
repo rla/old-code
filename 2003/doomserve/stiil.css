@@ -1,0 +1,25 @@
+	.hmenuu {
+	text-align:center;
+    background-color:#9933cc }
+	.vmenuu {
+	text-align:center;
+    background-color:#cccc99 }
+	.lingid {
+	font-family: arial;
+	font-size: 8pt;
+    font-color:#cccc99 }
+	A:link {
+    color: #ffffff;
+    font-size: 9pt;
+    text-decoration: none;
+    font-family: arial }
+    A:visited {
+    color: #ffffff;
+    font-size: 9pt;
+    text-decoration: none;
+    font-family: arial }
+    A:hover {
+    color: #ffffff;
+    font-size: 9pt;
+    text-decoration: none;
+    font-family: arial }

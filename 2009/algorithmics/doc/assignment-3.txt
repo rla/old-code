@@ -1,0 +1,25 @@
+Assignment 3, week Mar 04,05
+
+1. Design a data structure (node-representing record, links/pointers, etc) for
+general trees and a respective non-recursive (i.e. iterative) depth-first tree
+traversal algorithm using your data structure.
+
+2. Describe the deletion and the necessary re-balancing operations for the
+red-black trees. 
+
+3. Describe the deletion from the kd-trees. What are the problems/issues and
+how to possibly overcome those? Use simple 2-d examples for illustrating the
+problems. 
+
+4. Describe how the size of the B-tree with max 4, min 2-element nodes (3-5
+children, min 2 in the root) changes after the insertion of 1, 2, ... , n
+elements. 
+
+5. Implement heap-sort and evaluate it's speed - comparing to sorting methods
+from previous week and/or standard sorting from programming language libraries
+(qsort for C/C++, sort in perl, etc).
+
+6. Bonus (2p) Program a recursive traversal algorithm for your file directory
+system (starting from current working directory) that outputs the largest directory
+(measured by the nr of subdirectories and files in that directory) and the "width"
+of the whole system at all it's levels (i.e. all directories/files at any depth).

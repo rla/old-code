@@ -1,0 +1,39 @@
+import java.io.File;
+class Puhasta {
+	
+	
+	public static void main(String[] args) {
+	
+		if (args.length==0) {
+		
+			System.out.println();
+			return;
+			
+		}
+		
+		
+		
+		File kaust=new File(args[0]);
+		String failid[]=kaust.list();
+		String fail;
+ 
+		for (int i=0; i<failid.length; i++) {
+		
+			fail=failid[i];
+			
+			
+			
+			if (fail.endsWith()) {
+			
+				fail=fail.substring(0, fail.indexOf('.'));
+				System.out.println(fail);
+				
+				if (PuhastaFail.Fail(kaust.getAbsolutePath() +  + fail))
+					System.out.println( +fail +);
+			
+			}
+     
+		}
+	
+	}
+}

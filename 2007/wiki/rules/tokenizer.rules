@@ -1,0 +1,204 @@
+begin end
+
+begin            "<<"          include
+begin            "----"        horisontalLine
+begin            "--pre:begin" preformatted
+begin            "* "          listBegin
+begin            "|"           tableBegin
+begin            "==="         heading3Begin
+begin            "=="          heading2Begin
+begin            "="           heading1Begin
+begin            [!whitespace] sectionBegin
+begin            !             end
+
+include           ">>"         begin
+include           "|"          includeMode
+includeMode       ">>"         begin
+
+horisontalLine    "\n"         begin
+
+preformatted      "--pre:end"  begin
+
+sectionBegin      ""           section
+section           "\n"         sectionEndOfLine
+section           "$$"         sectionTex
+sectionTex        "$$"         section
+section           "''"         sectionItalic
+sectionItalic     "''"         section
+section           "[["         sectionLink
+sectionLink       "|"          sectionLinkLabel
+sectionLink       "]]"         section
+sectionLinkLabel  "]]"         section
+section           "{{"         sectionImage
+sectionImage      "|"          sectionImageAlign
+sectionImage      "}}"         section
+sectionImageAlign "}}"         section
+section           "**"         sectionBold
+sectionBold       "**"         section
+section           "\n%%"       sectionComment
+sectionComment    "\n"         sectionEndOfLine
+section           "__"         sectionUnderlined
+sectionUnderlined "__"         section
+section           "--"         sectionStrike
+sectionStrike     "--"         section
+section           !            sectionEnd
+sectionEndOfLine  "**"         sectionBold
+sectionEndOfLine  "*"          sectionEnd1
+sectionEndOfLine  [!whitespace] section
+sectionEndOfLine  "\n"         sectionEnd
+sectionEnd        !            end
+sectionEnd        ""           begin
+sectionEnd1       ""           listBegin
+
+listBegin        ""           listItemBegin
+listItemBegin    ""           listItem
+listItem         "$$"         listItemTex
+listItemTex      "$$"         listItem
+listItem         "''"         listItemItalic
+listItemItalic   "''"         listItem
+listItem         "[["         listItemLink
+listItemLink     "]]"         listItem
+listItemLink     "|"          listItemLinkLabel
+listItemLinkLabel "]]"        listItem
+listItem         "--"         listItemStrike
+listItemStrike   "--"         listItem
+listItem         "\n%%"       listItemComment
+listItem         "\n**"       list2Begin
+listItemComment  "\n"         listItemLineEnd
+listItem         "\n"         listItemLineEnd
+listItemLineEnd  !            listItemEnd
+listItemLineEnd  "\n"         listItemEnd
+listItemLineEnd  "*"          listItemEnd1
+listItemLineEnd  "%%"         listItemComment
+listItemLineEnd  [!whitespace] listItem
+listItem         !            listItemEnd
+listItemEnd      ""           listEnd
+listItemEnd1     ""           listItemBegin
+listItemEnd2     ""           listItemBegin2
+listItemBegin2   ""           list2Begin
+listEnd          !            end
+listEnd          ""           begin
+
+list2Begin       ""           list2ItemBegin
+list2ItemBegin   ""           list2Item
+list2Item        "--"         list2ItemStrike
+list2ItemStrike  "--"         list2Item
+list2Item        "\n"         list2ItemLineEnd
+list2ItemLineEnd !            list2ItemEnd
+list2ItemLineEnd "\n"         list2ItemEnd3
+list2ItemLineEnd "**"         list2ItemEnd2
+list2ItemLineEnd "*"          list2ItemEnd1
+list2ItemEnd3    ""           list2End3
+list2End3        ""           listItemEnd
+list2ItemEnd2    ""           list2ItemBegin
+list2ItemEnd     ""           list2End
+list2End         ""           listItem
+list2ItemEnd1    ""           list2End1
+list2End1        ""           listItemEnd1
+
+heading1Begin    ""           heading1
+heading1         "\n"         heading1End
+heading1         "="          heading1End
+heading1         !            end
+heading1End      "\n"         begin
+heading1End      !            end
+
+heading2Begin    ""           heading2
+heading2         "\n"         heading2End
+heading2         "="          heading2End
+heading2         !            end
+heading2End      "\n"         begin
+heading2End      !            end
+
+heading3Begin    ""           heading3
+heading3         "\n"         heading3End
+heading3         "="          heading3End
+heading3         !            end
+heading3End      "\n"         begin
+heading3End      !            end
+
+tableBegin          ""            tableRowBegin
+tableRowBegin       ""            tableCellBegin
+tableCellBegin      ""            tableCell
+tableCell           "|"           tableCellEnd
+tableCellEnd        ""            tableCellWhitespace
+tableCellWhitespace [!whitespace] tableCellBegin
+tableCellWhitespace !             tableRowEnd
+tableCell           "**"          tableCellBold
+tableCellBold       "**"          tableCell
+tableCell           "''"          tableCellItalic
+tableCellItalic     "''"          tableCell
+tableCellWhitespace "\n"          tableRowEnd
+tableCellWhitespace "|"           tableCell
+tableRowEnd         "\n"          tableEnd
+tableRowEnd         "|"           tableRowBegin
+tableRowEnd         !             tableEnd
+tableEnd            !             end
+tableEnd            ""            begin     
+
+S: section       text
+S: sectionBegin  sectionBegin
+S: sectionBegin1 sectionBegin
+S: sectionEnd    sectionEnd
+S: sectionEnd1   sectionEnd
+S: listBegin     listBegin
+S: listEnd       listEnd
+S: listItemBegin  listItemBegin
+S: listItemBegin2 listItemBegin
+S: listItem      text
+S: listItemEnd   listItemEnd
+S: listItemEnd1  listItemEnd
+S: listItemEnd2  listItemEnd
+S: heading1      heading1
+S: heading2      heading2
+S: heading3      heading3
+
+S: list2Begin     list2Begin
+S: list2ItemBegin list2ItemBegin
+S: list2Item      text
+S: list2ItemEnd   list2ItemEnd
+S: list2ItemEnd1  list2ItemEnd
+S: list2ItemEnd2  list2ItemEnd
+S: list2ItemEnd3  list2ItemEnd
+S: list2End       list2End
+S: list2End1      list2End
+S: list2End3      list2End
+
+S: sectionTex    tex
+S: listItemTex   tex
+
+S: sectionItalic  italic
+S: listItemItalic italic
+
+S: sectionLink      link
+S: sectionLinkLabel linkLabel
+S: listItemLink     link
+S: listItemLinkLabel linkLabel
+
+S: sectionImage      image
+S: sectionImageAlign imageAlign
+
+S: sectionBold       bold
+
+S: horisontalLine    horisontalLine
+S: preformatted      preformatted
+
+S: tableBegin        tableBegin
+S: tableRowBegin     tableRowBegin
+S: tableCellBegin    tableCellBegin
+S: tableCell         text
+S: tableCellEnd      tableCellEnd
+S: tableRowEnd       tableRowEnd
+S: tableEnd          tableEnd
+S: tableCellBold     bold
+
+S: sectionUnderlined underlined
+
+S: tableCellItalic   italic
+
+S: include           include
+S: includeMode       includeMode
+
+S: sectionStrike     strike
+S: listItemStrike    strike
+S: list2ItemStrike    strike

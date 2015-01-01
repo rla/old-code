@@ -1,0 +1,44 @@
+%% LyX 1.4.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[estonian]{article}
+\usepackage[latin1]{inputenc}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Bold symbol macro for standard LaTeX users
+\providecommand{\boldsymbol}[1]{\mbox{\boldmath $#1$}}
+
+
+\usepackage{babel}
+\makeatother
+\begin{document}
+\begin{enumerate}
+\item Kui $F=\emptyset$, siis tagasta $2^{n}$.
+\item Kui $\emptyset\in F$, siis tagasta $0$.
+\item Kui leidub ühikliteraaliga klausel $C_{i}=l$ valemis $F$, siis
+
+\begin{enumerate}
+\item Kui $l\equiv x$, siis rakenda valemile teisendust \emph{R4p}, saades
+valemi $F|_{x=1}$. Sellele valemile rakenda järjest lihtsustavaid
+teisendusi \emph{R1p} ja \emph{R2n}, kuni neid rohkem rakendada ei
+saa. Lihtsustamiste tulemusena saadi valem $F'$. Tagasta \mbox{\proc{LP}$(F',n-1)$}
+tulemus.
+\item Kui $l\equiv-x$, siis rakenda valemile teisendust \emph{R4n}, saades
+valemi $F|_{x=0}$. Sellele valemile rakenda järjest lihtsustavaid
+teisendusi \emph{R1n} ja \emph{R2p}, kuni neid rohkem rakendada ei
+saa. Lihtsustamiste tulemusena saadi valem $F'$. Tagasta \mbox{\proc{LP}$(F',n-1)$}
+tulemus.
+\end{enumerate}
+\item Kui kolmandas sammus ei leidunud ühe literaaliga klauslit, siis valime
+kõigepealt muutuja $x$, \mbox{$x=$\prox{VM}$(F)$}. Seejärel rakenda
+reegleid \emph{R3p} ja \emph{R3n}, saades vastavad valemid $F|_{x=1}$
+ja $F|_{x=0}$. Valemile $F|_{x=1}$ rakenda lihtsustavaid teisendusi
+\emph{R1p} ja \emph{R2n}, kuni neid enam rakendada ei saa. Selle tulemusena
+saame valemi $F_{p}$. Valemile $F|_{x=0}$ rakenda aga lihtsustavaid
+teisendusi \emph{R1n} ja \emph{R2p}, kuni neid enam rakendada ei saa.
+Selle tulemusena saame valemi $F_{n}$. Tagasta \mbox{\proc{LP}$(F_p, n-1)$}
+$+$ \mbox{\proc{LP}$(F_n, n-1)$}.
+\end{enumerate}
+
+\end{document}

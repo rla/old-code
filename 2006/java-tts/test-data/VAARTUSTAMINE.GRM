@@ -1,0 +1,24 @@
+`G'        ->    #`Väärtustamine'#
+
+`Väärtustamine' -> `Identifikaator'=`Konstant';
+
+`Konstant' ->    `Arv'
+`Arv'      ->    `Täisarv'
+`Täisarv'  ->    `Number'
+`Täisarv'  ->    `Täisarv'`Number'
+
+
+
+`Number'   -> 0
+           -> 1
+           -> 2
+           
+           
+`Identifikaator' -> `Täht'
+`Identifikaator' -> `Identifikaator'`Täht'
+`Identifikaator' -> `Identifikaator'`Number'
+
+
+`Täht'      -> a
+`Täht'      -> b
+`Täht'      -> c

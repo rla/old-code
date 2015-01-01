@@ -1,0 +1,121 @@
+********************************************************************************
+***                                                                          ***
+*** SIMetrix Intro Version 5.1a - 06/18/2005 10:47:00 PM                     ***
+*** Platform: GNU/Linux                                                      ***
+***                                                                          ***
+*** TITLE:   * /var/www/htdocs/zone/audio/misc/hv_psu.sxsch                  ***
+*** NETLIST: /var/www/htdocs/zone/audio/misc/design.net                      ***
+***                                                                          ***
+********************************************************************************
+
+********************************************************************************
+***                                                                          ***
+***                                Input Deck                                ***
+***                                                                          ***
+********************************************************************************
+
+V1 V1_P V1_N SIN 500m 100 50 -20m 0
+V2 Q1_G Q1_S PULSE -4.5 5.5 0 1u 1u 100u 1m
+R1 L1_N 0 10
+L1 Q1_S L1_N 100m  
+D1 D1_P V1_P BYW80-200
+D2 V1_P 0 BYW80-200
+D3 V1_N 0 BYW80-200
+D4 D1_P V1_N BYW80-200
+X$Q1 V1_P Q1_G Q1_S IRF530 pinnames: D G S
+C1 D1_P 0 10m  
+C2 L1_N 0 1m  
+.GRAPH D1_P curveLabel="D1-anode" nowarn=true ylog=auto xlog=auto
+.GRAPH L1_N curveLabel="Probe2-NODE" nowarn=true ylog=auto xlog=auto
+.TRAN 100m
+.subckt IRF530 D G S
+.model mosfet NMOS( LEVEL=7 VTO=3.705 RS=0.05585 KP=4.543 RD=0.0492 TC1RD=0.031 RG=7.5 IS=1e-36
++ CGDMAX=1.70E-09 CGDMIN=3.00E-11 XG2CGD=0.5 XG1CGD=0.1 CBD=2.61E-10 VTCGD=0.9)
+.model diode D( IS=1.62e-12 RS=0.0147 TT=1.929e-07)
+M1 D G S S mosfet
+D1 S D Diode
+Cgs G S 6.17E-10
+.ends
+.model BYW80-200 D(
++	IS=2.11528e-09 ISR=3.42818e-07 RS=0.0173464 TT=3.69946e-08 
++	CJO=4.80801e-11 VJ=0.7 M=0.0674441 BV=220 )
+
+********************************************************************************
+***                                                                          ***
+*** Starting Transient analysis at 10:47:00 PM                               ***
+***                                                                          ***
+*** Analysis card: .TRAN 100m                                                ***
+***                                                                          ***
+********************************************************************************
+
+********************************************************************************
+***                                                                          ***
+***                             Device parameters                            ***
+***                                                                          ***
+********************************************************************************
+Model parameters for devices of type VMOS
+=========================================
+Model:       Q1.mosfet    
+
+cbd          261p         
+cgdmax       1.7n         
+cgdmin       30p          
+is           1000E-39     
+kp           4.543        
+rd           49.2m        
+rg           7.5          
+rs           55.85m       
+tc1rd        31m          
+vt0          3.705        
+vtcgd        900m         
+xg1cgd       100m         
+xg2cgd       500m         
+
+
+Model parameters for devices of type Diode
+==========================================
+Model:       BYW80-200    Q1.Diode     
+
+bv           220          0            
+cjo          48.0801p     0            
+is           2.11528n     1.62p        
+isr          342.818n     0            
+m            67.4441m     0            
+rs           17.3464m     14.7m        
+tt           36.9946n     192.9n       
+vj           700m         0            
+
+
+Analysis statistics
+===================
+
+Nominal temperature = 27
+Operating temperature = 27
+Total iterations = 20973
+Transient iterations = 20953
+Transient timepoints = 7066
+Accepted timepoints = 6607
+Total analysis time = 2.483
+Transient time = 0
+Matrix reordering time = 0
+L-U decomposition time = 0
+Matrix solve time = 0
+Load time = 0
+Transient L-U decomp time = 0
+Transient solve time = 0
+Circuit build time = 0.024
+Simulator initialise time = 0.002
+JI2 Iterations = 20
+Diag. GMIN stepping iterations = 0
+Junc. GMIN stepping iterations = 0
+Source stepping iterations = 0
+PTA iterations = 0
+Number of matrix fill ins = 11
+Circuit equations = 18
+
+Run statistics
+==============
+
+Netlist read in time = 0.04
+Total run time = 2.742 seconds
+Analysis concluded 06/18/2005 10:47:02 PM

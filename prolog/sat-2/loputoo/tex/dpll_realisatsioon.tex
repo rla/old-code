@@ -1,0 +1,285 @@
+\chapter{Loendamisalgoritmi realisatsioon}
+
+Selles töö osas anname eespool kirjeldatud algoritmi realisatsiooni
+keeles Prolog. Prolog sai valitud tema mitmete heade omaduste
+tõttu, mida saab edukalt ära kasutada sellist tüüpi ülesannete lahendamisel.
+Prolog baseerub ise tagurdusalgoritmil ja see vähendab algoritmi
+kirjapanekul tööd oluliselt, sest programmeerija ise ei pea
+tegelema selle keerulise osaga, mida on tagurdamisel muutujate
+väärtuste efektiivne taastamine. Lisaks on Prolog tuntud kui
+sümbolmanipuleerimise keel, peale selle ei ole vaja Prologis
+programmeerijal muretseda korrektse mäluhalduse pärast, sest Prolog
+sisaldab automaatset mälukoristust. Need omadused teevad Prologist keele,
+mis on vägagi sobiv keeruliste algoritmide
+realiseerimiseks või prototüüpimiseks. Samuti on oluline mainida, et
+Prolog on populaarne keel tehisintellekti valdkonda kuuluvate ülesannete
+lahendamiseks. See muudab parajasti lihtsaks antud algoritmi integreerimise ja
+laiendamise teiste tehisintellekti probleemide jaoks.
+
+Käesoleva töö praktilise osa täielikuks mõistmiseks on tarvis osata lugeda
+Prologi programme. Väga heaks sissejuhatavaks materjaliks (millest ka täiesti
+piisab töö mõistmiseks), on allikas \cite{tamme03}.
+
+Realisatsiooni kirjeldust alustame programmi üldise struktuuri esitamisega,
+kusjuures ei ole isegi olulised kasutatavad andmestruktuurid, mille
+kirjelduse anname alles mõnevõrra hiljem.
+
+Selles töös esitatud viis \textit{DPLL} kehtestatavus- ja loendamisalgoritmi
+jaoks ei ole loomulikult ainuõige võimalus programmi realiseerimiseks. Samas on
+see lähenemine töö autori arvates sobiv Prolog-tüüpi keeles algoritmi
+implementeerimiseks. Imperatiivses programmeerimiskeeles, näiteks C
+keeles, on märksa levinum kasutada lähenemist, mille pseudokood on toodud
+artiklis \cite{silva96}.
+
+\newpage
+
+\section{Realisatsiooni ülesehitus}
+
+Algoritmi realiseerimisel sai koostatud lihtne tagurdusel põhinev
+programm. Kasutatud andmestruktuurid seletatakse põhjalikumalt lahti selleks
+pühendatud töö sektsioonis pärast algoritmi kirjeldust.
+
+\subsection{Muutujate kodeerimine}
+
+Programmis esitame lahendatava valemi muutujad täisarvudena 1,2,\ldots. See on
+levinud viis, kuna võimaldab mugavat indekseerimist lineaarsetes andmestruktuurides,
+näiteks massiivides. Samuti saame kompaktselt ja elegantselt esitada literaale.
+Muutuja positiivse esinemise tähistamiseks tuleb kasutada lihtsalt
+muutujale vastavat täisarvu, negatiivse esinemise tarvis aga vastandarvu.
+
+See kodeerimismeetod pakub triviaalsed lahendused operatsioonidele nagu
+literaali komplementaari leidmine jt. Olgugi et Prolog kui predikaatarvutust
+põhjana kasutav keel otseselt massiive andmestruktuuridena ei paku, leidub
+alternatiivne lähenemine termide inspekteerimise vahendite näol. 
+
+\subsection{Põhiprotseduur}
+
+Eespool esitatud algoritm \proc{DPLLSAT} on kirja pandud
+kahe protseduuri järjest rakendamisel saadava rekursiivse programmi abil:
+
+\begin{lstlisting}[numbers=left,xleftmargin=1cm,basicstyle=\tt]
+dpll(L, F, S, Ct, D, Ys):-
+	kontrolli(O, L, F, S, Ct, Ys),
+	samm(O, F, S, Ct, D).
+\end{lstlisting}
+
+Selles protseduuris on muutujate kirjeldused järgmised (kõik muutujad on
+sisendparameetrid):
+
+\begin{itemize}
+  \setlength{\itemsep}{1mm}
+  \item [\texttt{L} -] viimati tõeseks valitud literaal;
+  \item [\texttt{F} -] lahendatav valem;
+  \item [\texttt{S} -] hetkel kehtiv muutujate ja klauslite väärtustus;
+  \item [\texttt{Ct} -] hetkel tõeste klauslite arv;
+  \item [\texttt{D} -] seni sooritatud lahendussammude arv, võrdne seni
+  väärtustatud muutujate arvuga;
+  \item [\texttt{Ys} -] ühikliteraalide vahepinu (sisaldab literaale, mis on
+  programmi töö käigus ühikliteraalideks muutunud ja tuleks deskompositsiooni
+  rakendades esmajärjekorras ära kasutada);
+  \item [\texttt{O} -] protseduuri \texttt{kontrolli/6} rakendamisel saadav
+  väärtus, mille põhjal tehakse järgmine lahendussamm.
+\end{itemize}
+
+Protseduur \texttt{kontrolli/6} sisuliselt vaatab järgi, kas hetkel kehtiva
+väärtustuse piires on valem \texttt{F} juba tõeseks muutunud või mitte.
+Põhimõtteliselt on võimalikud kolm olukorda:
+
+\begin{enumerate}
+  \item Valem \texttt{F} on tõeseks muutunud, st. kõik tema klauslid sisaldavad
+  vähemalt ühte tõest literaali. Sellisel juhul on leitud kehtestav väärtustus
+  ja programm lõpetab oma töö ära. \texttt{kontrolli/6} väljund on siis
+  \texttt{O = sat}.
+  \item Valemis \texttt{F} leiduvad ühikklauslid ning sooritada tuleb
+  dekompositsioon nende järgi. Sellele olukorrale vastab \texttt{kontrolli/6}
+  väljund \texttt{O = yhik(Ls)}, kus \texttt{Ls} on list literaalidest, mis
+  ühikklauslitena esinevad. \texttt{kontrolli/6} on koostatud niimoodi, et see
+  list ei saa kunagi tühi olla. Kui protseduuri \texttt{dpll/6} kutsudes
+  sisaldas loend \texttt{Ys} mõnd elementi, siis täitub alati
+  \texttt{kontrolli/6} praegune tulemus ja \texttt{Ls} sisaldab vähemalt neid
+  elemente, mida sisaldab \texttt{Ys}.
+  \item Valem \texttt{F} ei ole veel tõene, aga temas puuduvad hetkel
+  ühikklauslid, mistõttu tuleb valida suvaline muutuja dekompositsiooni
+  rakendamiseks. Siin on erijuhuks olukord, kus kõik muutujad on juba varem ära
+  valitud ja antud sammus ei ole see enam võimalik. Programm tagurdab
+  automaatselt viimase valikupunktini, milleks on eelmine
+  rekursioonisamm, kus valiti küll muutuja, aga pole veel läbi proovitud tema
+  mõlemat väärtustust. Kui selliseid valikupunkte ei ole, siis lõpetab programm
+  töö negatiivse tulemusega. Olukorrale, kus järgmises sammus tuleks teha
+  muutuja valik, vastab \texttt{kontrolli/6} väljund \texttt{O = vali}.
+\end{enumerate}
+
+Järgnevalt esitame protseduuri \texttt{samm/5} ülalkirjeldatud juhtudele. On
+selge, et ei ole tähtis definitsioonide järjekorral, sest nad on üksteist
+välistavad \texttt{samm/5} esimese sisendargumendi järgi (mis samal ajal on ka
+\texttt{kontrolli/6} väljundiks).
+
+\textbf{Juht 1:}
+
+Kuivõrd on leitud kehtestav väärtustus, siis ei pea enam midagi edasi arvutama
+ja samal ajal ei ole tarvis hoolida muutujate \texttt{F, S, Ct, D} väärtustest,
+mida võime ignoreerida. Seega sobib järgmine definitsioon:
+
+\begin{lstlisting}[numbers=left,xleftmargin=1cm,basicstyle=\tt]
+samm(sat, _, _, _, _).
+\end{lstlisting}
+
+\textbf{Juht 2:}
+
+Valemis esinesid ühikklauslid, võtame esimese vastava literaali tõeseks ja
+rakendame väärtustusprotseduuri \texttt{propageeri/5}, mille väljundina saame
+tekkinud väärade klauslite arvu \texttt{Cf} ja tõeste klauslite arvu
+\texttt{Ct1}. Loomulikult on tarvis kontrollida ega vääri klausleid
+ei saadud, mida tehakse real (3). Kui saadi, lõpetatakse selles harus
+arvutamine ära ja tagurdatakse, muidu arvutatakse tõeste klauslite koguarv
+\texttt{Ct2} ja rekursioonisügavus \texttt{D1} ning sooritatakse
+päring \texttt{dpll/6}.
+
+\begin{lstlisting}[numbers=left,xleftmargin=1cm,basicstyle=\tt]
+samm(yhik([Y|Ys]), F, S, Ct, D):-
+	propageeri(Y, F, S, Cf, Ct1),
+	(Cf > 0 ->
+		fail
+		;
+		Ct2 is Ct + Ct1,
+		D1 is D + 1,
+		dpll(Y, F, S, Ct2, D1, Ys)
+	).
+\end{lstlisting}
+
+\textbf{Juht 3:}
+
+Viimases võimalikus olukorras toimetetakse sarnaselt eelmise juhuga. Erinev on
+vaid see, et siin tuleb muutuja valida eraldi päringuga \texttt{vali\_muutuja(F,
+S, L)}. See protseduur teostab valiku valemi \texttt{F} ja hetkel kehtiva
+väärtustuse \texttt{S} põhjal. Tema väljundiks on literaal \texttt{L}, mis
+tähistab, kas vastav muutuja tuleb valida tõeseks või vääraks. Ülejäänud osas
+toimitakse samamoodi kui juhul (2), ainult et ühikliteraalide vahepinu võetakse
+võrdseks tühja listiga. 
+
+\begin{lstlisting}[numbers=left,xleftmargin=1cm,basicstyle=\tt]
+samm(vali, F, S, Ct, D):-
+	vali_muutuja(F, S, L),
+	propageeri(L, F, S, Cf, Ct1),
+	(Cf > 0 ->
+		fail
+		;
+		Ct2 is Ct + Ct1,
+		D1 is D + 1,
+		dpll(L, F, S, Ct2, D1, [])
+	).
+\end{lstlisting}
+
+Kehtestatavusprogramm koos silumismooduli kutsetega, mis selguse huvides jäeti
+välja siin esitatud kirjeldusest, on realiseeritud programmimoodulis
+\texttt{dpll} ja asub failis \textit{dpll.pl}.
+
+\section{Lahendite loendamine}
+
+Lahendite loendamise jaoks tuleb programmi täiustada
+tõeste väärtustuste loenduriga (lisa-sisendparameeter predikaatidele
+\texttt{dpll} ja \texttt{samm}) ja asendada sammu sooritamise protseduuri
+\texttt{samm} definitsioon ülalkirjeldatud juhule (1) järgmisega:
+
+\begin{lstlisting}[numbers=left,xleftmargin=1cm,basicstyle=\tt]
+samm(sat, F, _, _, D, Lo):-
+	muutujate_arv(F, N),
+	nb_getval(Lo, C),
+	C1 is C + integer(2^(N-D)),
+	nb_setval(Lo, C1),
+	fail.
+\end{lstlisting}
+
+Protseduuris tähistab \texttt{Lo} loendurit, millest küsitakse kõigepealt seni
+saadud lahendite arv \texttt{C} (rida 3), millele liidetakse juurde hetkel
+leitud lahendite arv (rida 4). Saadud tulemus \texttt{C1} salvestatakse tagasi
+loendurisse \texttt{Lo} (rida 5). Protseduuri lõpus teostatakse
+pseudopäring \texttt{fail} (rida 6), mis programselt kutsub esile tagurdamise.
+Loenduri kui globaalse muutuja kasutamiseks tarvitatakse ekstraloogilisi predikaate
+\texttt{nb\_getval/2} ning \texttt{nb\_setval/2}, mille tulemus ei sõltu
+üldisest Prologi virtuaalmasina käitumisest tagurdusoperatsiooni käigus.
+
+\section{Põhiandmestruktuurid}
+
+Eespool esitatud programmi selgitusest on välja jäetud valemi andmestruktuuri
+kirjeldus (\texttt{F} struktuur protseduurides \texttt{dpll} ja \texttt{samm}),
+samuti hetkel lahendatava valemi lausearvutusmuutujate väärtuse talletamine
+(\texttt{S} struktuur). Programmi üldisel kirjeldamisel on nad ebaolulised,
+kuid siiski vajalikud kasutatud abipredikaatide \texttt{kontrolli/6},
+\texttt{propageeri/5} ja \texttt{muutujate\_arv/2} implementeerimisel.
+
+\subsection{Valem}
+
+Valemit käsitletakse programmis kui staatilist struktuuri. Eespool kirjeldatud
+lihtsustusteisendused on lahendatud klauslite vaheväärtuste hoidmisega ning
+efektiivse muutujate-klauslite indekseerimispõhimõttega.
+
+Valemit säilitatakse termis kujul
+{\tt valem(n,m,vc(C1,...,Cn),cv(V1,...,Vm))}, kus {\tt n} on valemi muutujate
+arv, {\tt m} on valemi klauslite arv ning termid {\tt vc} ja {\tt cv} on kasutusel järgmisel
+otstarbel:
+
+\begin{itemize}
+	\item Termis {\tt vc(C1,...,Cn)} hoitakse muutuja indeksi {\tt i} järgi
+	klausleid, kuhu antud muutuja kuulub. Iga {\tt Ci} on omakorda term {\tt
+	c(Cip, Cin)}, kus {\tt Cip} tähistab nende klauslite listi, kus muutuja
+	indeksiga {\tt i} positiivselt esineb ja {\tt Cin} nende klauslite listi, kus
+	see muutuja negatiivselt esineb.
+	\item Termis {\tt cv(V1,...,Vm)} seevastu hoitakse klausli indeksi {\tt j}
+	järgi muutujaid, mis sellesse klauslisse kuuluvad. Siin tuleb sammuti vahet
+	teha positiivse ja negatiivse esinemise vahel. Selletõttu oleks sobiv {\tt Vj}
+	struktuur {\tt v(Vjp, Vjn)}, kus list {\tt Vjp}({\tt Vjn}) tähistab muutujate
+	indekseid, mis esinevad klauslis indeksiga {\tt j} positiivselt(negatiivselt).
+\end{itemize}
+
+\textbf{Näide valemi teisendamisest sisekujule:}
+
+\begin{verbatim}
+?- teisenda([[-1, 2, -3], [-2, -4], [4]], T).
+T = valem(
+    4,
+    3,
+    vc(c([], [1]), c([1], [2]), c([], [1]), c([3], [2])),
+    cv(v([2], [1, 3]), v([], [2, 4]), v([4], []))
+)
+\end{verbatim}
+
+Selline andmestruktuur võimaldab leida konstantse ajaga kõik klauslid, mis
+sisaldavad etteantud literaali, samuti mingi kindla klausli (teades klausli
+indeksit) kõik literaalid, kuna termi argumendi inspekteerimine protseduuri
+\texttt{arg/3} abil on konstantse keerukusega \cite{swi}.
+
+\subsection{Väärtustus}
+
+Programmis hetkel kehtivat väärtustust hoiame struktuuris \\
+{\tt olek(v(X1,...,Xn), c(Y1,...,Ym))}, kus
+{\tt X1,...,Xn} on vastavate muutujate väärtused ja {\tt Y1,...,Ym} klauslite
+väärtused. Tõest väärtust tähistame täisarvuga 1 ja väära täisarvuga 0. Kui
+muutujal väärtust ei ole, siis on vastav koht termis lihtsalt tühi. Kuna
+korraga saab ühel kohal asuda ainult üks väärtus, siis garanteerib selline
+andmestruktuur muutujate oleku ühesuse. Klauslite väärtustamist kasutatakse ära
+programmi efektiivsuse tõstmiseks, sest siis ei ole tarvis pidevalt uuesti
+välja arvutada klauslite väärtuseid.
+
+\textbf{Näide tühja väärtustuse koostamisest valemi jaoks, milles on 4 muutujat
+ja 3 klauslit:}
+
+\begin{verbatim}
+?- tyhi_olek(4, 3, S).
+S = olek(v(_G256, _G259, _G262, _G265), v(_G276, _G279, _G282))
+\end{verbatim}
+
+Kasutades algoritmis ära teadmist viimati väärtustatud muutuja kohta
+(\texttt{L} - viimati tõeseks valitud literaal protseduurides
+\texttt{kontrolli/6} ja \texttt{propageeri/5}), on selge, et saab praktiliselt
+konstantses ajas teha järgmisi operatsioone:
+
+\begin{enumerate}
+  \item Ühikklauslite leidmine - vaadata läbi ainult need klauslid, mis
+  sisaldasid literaali \texttt{L} komplementaari \texttt{-L}, sest ainult
+  sellistes klauslites vähenes esinevate muutujate arv.
+  \item Tõeste klauslite leidmine - tõeseks märkida kõik
+  klauslid, milles esines \texttt{L}.
+  \item Väärade klauslite leidmine - vääraks saavad muutuda ainult klauslid,
+  mis sisaldasid \texttt{L} komplementaari \texttt{-L}.
+\end{enumerate}

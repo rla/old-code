@@ -1,0 +1,60 @@
+T: tStartState startState
+T: tEndState endState
+T: tStringTransition stringTransition
+T: tEscapeEscape escapeEscape
+T: tEscapeQuote escapeQuote
+T: tEscapeNewline escapeNewline
+T: tEscapeTab escapeTab
+T: tEscapeReturn escapeReturn
+T: tNextState nextState
+T: tSemanticsIdentifier semanticsIdentifier
+T: tSemanticsSemantics semanticsSemantics
+T: tOldState oldState
+T: tCharTransition charTransition
+T: tEndTransition endTransition
+
+N: nRuleCollection {tStateStart tEndState nRules}
+
+N: nRules {nRule nRules}
+N: nRules {nRule}
+
+N: nRule {nTransitionRule}
+N: nRule {nSemanticsDescriptor}
+
+N: nTransitionRule {tOldState nTransition tNextState}
+N: nTransition {nStringTransition}
+N: nTransition {tCharTransition}
+N: nTransition {tEndTransition}
+
+N: nStringTransition {nStringTransitionBody}
+N: nStringTransitionBody {nStringTransitionElement nStringTransitionBody}
+N: nStringTransitionBody {nStringTransitionElement}
+
+N: nStringTransitionElement {tStringTransition}
+N: nStringTransitionElement {tEscapeEscape}
+N: nStringTransitionElement {tEscapeQuote}
+N: nStringTransitionElement {tEscapeNewline}
+N: nStringTransitionElement {tEscapeTab}
+N: nStringTransitionElement {tEscapeReturn}
+
+N: nSemanticsDescriptor {tSemanticsIdentifier tSemanticsSemantics}
+
+S: nRuleCollection
+S: nTransitionRule
+S: nSemanticsDescriptor
+S: nStringTransition
+S: tStartState
+S: tEndState
+S: tStringTransition
+S: tEscapeEscape
+S: tEscapeQuote
+S: tEscapeNewline
+S: tEscapeTab
+S: tEscapeReturn
+S: tNextState
+S: tSemanticsIdentifier
+S: tSemanticsSemantics
+S: tOldState oldState
+S: tCharTransition
+S: tEndTransition
+

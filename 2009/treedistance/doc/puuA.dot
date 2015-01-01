@@ -1,0 +1,9 @@
+digraph "G" {
+	"r" -> "b"
+	"r" -> "A"
+	"b" -> "B"
+	"b" -> "C"
+
+	"r" [ label="" ]
+	"b" [ label="" ]
+}

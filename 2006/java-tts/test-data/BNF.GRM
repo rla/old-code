@@ -1,0 +1,9 @@
+`produktsioonid' -> #`produktsioonide_hulk'#
+`produktsioonide_hulk' -> `produktsioon'
+`produktsioon' -> `mõiste'::=`definitsioon'
+`definitsioon' -> `definitsioon'|`definitsioon'
+`definitsioon' -> `number'
+`number1' -> 0
+`number2' -> 1
+`number' -> `number'`number1'
+

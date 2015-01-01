@@ -1,0 +1,15 @@
+ee.pri.rl.parser
+ee.pri.rl.parser.reader
+ee.pri.rl.parser.reader.test
+ee.pri.rl.parser.serialization
+ee.pri.rl.parser.serialization.test
+ee.pri.rl.parser.support.ant
+ee.pri.rl.parser.support.xml
+ee.pri.rl.parser.test
+ee.pri.rl.tokenizer
+ee.pri.rl.tokenizer.reader
+ee.pri.rl.tokenizer.reader.test
+ee.pri.rl.tokenizer.serialization
+ee.pri.rl.tokenizer.serialization.test
+ee.pri.rl.tokenizer.support.ant
+ee.pri.rl.tokenizer.test

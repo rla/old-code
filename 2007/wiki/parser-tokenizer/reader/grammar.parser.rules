@@ -1,0 +1,34 @@
+T: tTerminalName terminalName
+T: tTokenName tokenName
+T: tNonterminalName nonterminalName
+T: tSymbolName symbolName
+T: tSemanticsIdentifier semanticsIdentifier
+
+N: nGrammar {nGrammarElements}
+
+N: nGrammarElements {nGrammarElement, nGrammarElements}
+N: nGrammarElements {nGrammarElement}
+
+N: nGrammarElement {nTerminalSpec}
+N: nGrammarElement {nNonterminalSpec}
+N: nGrammarElement {nSemanticsSpec}
+
+N: nTerminalSpec {tTerminalName tTokenName}
+N: nNonterminalSpec {tNonterminalName nDefinition}
+
+N: nDefinition {nSymbols}
+N: nSymbols {tSymbolName nSymbols}
+N: nSymbols {tSymbolName}
+
+N: nSemanticsSpec {tSemanticsIdentifier}
+
+S: tTerminalName terminalName
+S: tTokenName tokenName
+S: tNonterminalName nonterminalName
+S: tSymbolName symbolName
+S: tSemanticsIdentifier semanticsIdentifier
+S: nGrammar
+S: nTerminalSpec
+S: nNonterminalSpec
+S: nSemanticsSpec
+S: nDefinition

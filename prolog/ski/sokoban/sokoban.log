@@ -1,0 +1,687 @@
+2008-07-30 #prolog
+05:58 -!- SpiderByte77 [n=SpiderBy@h168.176.117.75.dynamic.ip.windstream.net] has joined #prolog
+05:58 < SpiderByte77> anyone use Ciao in here?
+06:35 -!- AtnNn [n=welcome@74.56.56.230] has quit ["strawberries"]
+06:49 < vixey> no
+06:49 < vixey> nobody uses cia
+07:05 < SpiderByte77> vixey: really?
+07:05 < SpiderByte77> heh heh
+07:05 < SpiderByte77> i've just installed it. i have gnu prolog too
+07:05 < SpiderByte77> just comparing them
+07:05 < vixey> I like SWI a lot more
+07:05 < SpiderByte77> do you dislike ciao?
+07:05 < vixey> I dislike GNU prolog
+07:06 < vixey> never tried ciau
+07:06 < SpiderByte77> so far ciao is looking to be my personal favorite
+07:06 < SpiderByte77> though i must say mercury has my attention for large development applications
+07:07 < vixey> that's what it was designed for, I guess, they say
+07:07 < SpiderByte77> i had a stupid ciao question when i logged in to the channel, but i solved it on my onesies ;P
+07:08 < SpiderByte77> (i can never remember that it is "halt." and not "exit.", for some reason)
+07:08 < SpiderByte77> heh heh
+07:08 < SpiderByte77> vixey: what OS do you run SWI on?
+08:49 < SpiderByte77> i just installed SWI via the macports standalone installer, and i see swipl in opt local bin
+08:49 < SpiderByte77> but i *also* see pl in /usr/bin
+08:50 < SpiderByte77> and i was just trying to track down how that got there
+08:50 < SpiderByte77> was it installed with SWI?
+08:50 < SpiderByte77> did it come with my mac in OSX Tiger?
+08:50 < SpiderByte77> did i install it a few months ago and forget about it?
+08:50 < SpiderByte77> anyone have any clues you can offer me?
+09:12 < SpiderByte77> aHA! as it turns out, it's a native OSX app for dealing with Property Lists (hence, "pl")
+09:12 < SpiderByte77> in case that helps anyone... heh heh.
+09:12 < SpiderByte77> thanks all the same. ;]
+09:12 < vixey> hi
+09:14 < SpiderByte77> hi vixey
+09:14 < SpiderByte77> are you on a mac?
+09:14 < SpiderByte77> i came across a strange naming conflict in osx, per my above entries there
+09:14 < vixey> why
+09:14 < SpiderByte77> i was just trying out SWI, per your recommendation
+09:14 < vixey> yeah swi is cool
+09:15 < vixey> maybe I'll write a puzzle game
+09:15 < SpiderByte77> and upon searching for the top level environment binary, i found a "pl" in /usr/bin, but it wasn't SWI! heh heh
+09:15 < SpiderByte77> it confused me at first, because the SWI docs say its binary is called pl
+09:15 < SpiderByte77> but via macports, it is named swipl
+09:15 < vixey> You should probably email the SWI people about that
+09:15 < SpiderByte77> yes, i think i shall
+09:15 < vixey> because it really is called swipl
+09:16 < vixey> if you are in SWI pl try this
+09:16 < vixey> ?- help.
+09:16 < vixey> you might have to open X11
+09:18 < SpiderByte77> i haven't finished installing it. well i have, but not yet updated in .bashrc
+09:19 < vixey> dunno why you are putting crap in .bashrc instead of .profile
+09:19 < SpiderByte77> so x11 will see it
+09:19 < SpiderByte77> for some reason, that's what xterm loads in x11, not .profile
+09:19 < vixey> oh
+09:19 < vixey> you can run swi from terminal
+09:20 < vixey> but have X11 open because help will open some windows in there
+09:20 < SpiderByte77> yeah, the mac is wonderful, but sometimes a bit confusing on its terminal stuff, how they've chosen to work thru things
+09:20 < SpiderByte77> ah, ok
+09:20 < SpiderByte77> i'll give that a try once its ready
+09:20 < vixey> all software and OSs and build systems is completely screwed
+09:20 < vixey> there's no hope
+09:21 < SpiderByte77> (multi-tasking some other work just at the moment)
+09:21 < SpiderByte77> haha. that's a bit fatalistic, don't you think?
+09:21  * vixey to
+09:22 < SpiderByte77> to?
+09:55 -!- prunedtree [i=Aozaru@195.140.142.184] has joined #prolog
+10:00 -!- borism [n=boris@195-50-204-235-dsl.krw.estpak.ee] has joined #prolog
+10:07 -!- Aozaru` [i=Aozaru@195.140.142.184] has joined #prolog
+10:14 -!- schme_ [n=marcus@82.209.153.47] has quit [Read error: 60 (Operation timed out)]
+10:18 -!- schme [n=marcus@82.209.153.47] has joined #prolog
+10:19 -!- prunedtree [i=Aozaru@195.140.142.184] has quit [Read error: 110 (Connection timed out)]
+10:22 -!- Aozaru` is now known as prunedtree
+10:35 -!- schme [n=marcus@82.209.153.47] has quit [Read error: 104 (Connection reset by peer)]
+10:37 -!- RLa [n=rlaanemt@90-190-52-138-dsl.rgu.estpak.ee] has joined #prolog
+10:37 -!- schme [n=marcus@82.209.153.47] has joined #prolog
+10:39 -!- borism_ [n=boris@195-50-201-225-dsl.krw.estpak.ee] has joined #prolog
+10:44 -!- borism [n=boris@195-50-204-235-dsl.krw.estpak.ee] has quit [Read error: 145 (Connection timed out)]
+11:09 -!- prunedtree [i=Aozaru@195.140.142.184] has quit [Read error: 110 (Connection timed out)]
+11:25 -!- ohcibi [n=ohcibi@dslb-088-077-101-148.pools.arcor-ip.net] has joined #prolog
+11:50 -!- lleksah [n=lleksah@204.177-247-81.adsl-dyn.isp.belgacom.be] has joined #prolog
+11:53 -!- lowki_ [n=loki@209-161-213-104.dsl.look.ca] has quit [Read error: 60 (Operation timed out)]
+11:57 -!- lowki_ [n=loki@209-161-213-104.dsl.look.ca] has joined #prolog
+12:26 < vixey> ok
+12:26 < vixey> SpiderByte77: Are you still here?
+12:27 < RLa> hey vixey
+12:27 < vixey> hi RLa!
+12:35 < vixey> Do you want to try my game? :)
+12:36 < vixey> http://rafb.net/p/hJA1MN58.html
+12:38 < vixey> sokoban
+12:39 < vixey> would be very nice actually to know better ways to write index and edit and display
+12:39 < vixey> other than that it's fine
+12:41 < vixey> going to do it in XPCE once I get SWI reinstalled..
+12:43 < RLa> sokoban
+12:46 < RLa> it's np-hard i see
+12:46 < SpiderByte77> vixey: yes, i'm back now
+12:46 < vixey> yaa
+12:46 < vixey> SpiderByte  I wanted you to try my game
+12:47 < SpiderByte77> will do
+12:47 < SpiderByte77> haven't yet finished my install
+12:47 < SpiderByte77> heh heh. i'm trying to do way too much at once
+12:47 < SpiderByte77> ;P
+12:48 < SpiderByte77> i've downloaded the source from that link though
+12:48 < SpiderByte77> give me a few minutes
+12:48 < SpiderByte77> vixey: are you m/f?
+12:49 < SpiderByte77> out of random curiousity.
+12:49 < vixey> f
+12:51 -!- prunedtree [i=Aozaru@195.140.142.184] has joined #prolog
+12:51 < SpiderByte77> ahHA, i was right
+12:51 < SpiderByte77> =)
+12:53 -!- hukolele [n=hukolele@134.Red-83-61-90.dynamicIP.rima-tde.net] has joined #prolog
+12:54 < SpiderByte77> also, and again just out of curiousity (am i spelling that word right?), what is the filename you saved your game under?
+12:54 < SpiderByte77> so i get the *official* experience ;]
+12:54 < vixey> sokoban.pl
+12:54 < SpiderByte77> cool
+12:54 < SpiderByte77> i should be able to fire it up in about 30 minutes
+12:56 < SpiderByte77> actually, i dropped what i was doing and have it up and running right now
+12:57 < SpiderByte77> just one problem... i don't know how to play sokoban! ;P
+12:57 < SpiderByte77> i got the ! to move right
+12:57 < SpiderByte77> what is my goal?
+12:57 < vixey> hehe
+12:57 < vixey> you can try to push the $'s onto the _'s to win
+12:57 < vixey> @ is what it looks like when you put a gold into a space
+12:58 < SpiderByte77> ooh, wow! i like this =)
+12:59 < SpiderByte77> but i'm not very good at it yet. heh heh. can't figure out how to get the $ out of the lower part just yet
+13:01 < SpiderByte77> i'm chalking that up to user error though. ;]
+13:01 < SpiderByte77> this is a very nice bit of code!
+13:01 < vixey> thank you
+13:01 < SpiderByte77> how long did it take you?
+13:01 < vixey> about 5 mins
+13:01 < vixey> I am kind of thinking about writing a kit for kids to make puzzle games with
+13:02 < SpiderByte77> like an api?
+13:02 < vixey> well a GUI to make tiles and levels and a kind of IDE that helps you code it
+13:02 < SpiderByte77> wow, that sounds excellent!
+13:03 < SpiderByte77> i'm all about kids and programming
+13:03 < RLa> i modified controls a bit
+13:03 < SpiderByte77> i started when i was 8 years old, and found my calling early in life as a result ;]
+13:03 < RLa> u,d,l,r and no dot required
+13:04 < SpiderByte77> nice! same paste address?
+13:04 < vixey> yeah and if I get them started on Prolog ... can't be a bad thing
+13:04 < SpiderByte77> true - there's a decided lack of Prolog-for-youngsters from what i can see
+13:05 < SpiderByte77> Logo, yes. Java, Basic, Smalltalk even
+13:05 < SpiderByte77> but i haven't seen a project yet to take them the "logical" route
+13:05 < SpiderByte77> i'm actually writing a course in programming right now, working with Scratch from MIT
+13:05 < SpiderByte77> (for kids, as well)
+13:06 < SpiderByte77> i've got the first two chapters done
+13:06 < vixey> oh cool
+13:06 < SpiderByte77> i'm including real world activities like making tools and primitive machines in clay
+13:06 < vixey> what sort of things do you cover?
+13:06 < vixey> wow
+13:06 < SpiderByte77> i'm going from pre-computer history all the way up through 26 languages in practical use
+13:07 < SpiderByte77> with major stops in Scratch and Basic for theory
+13:07 < SpiderByte77> Chipmunk Basic, to be precise
+13:08 < SpiderByte77> i don't anticipate student fluency in all 26 languages, but they'll be familiar with why there are different ones available
+13:08  * vixey nod
+13:09 < vixey> when we had computing in school, we got a pretty wide range of languages. that was certainly a good way to start out
+13:09 < vixey> getting locked into one mindset isn't helpful
+13:09 < SpiderByte77> i think it expands the creativity of the mind so much simply to be made aware of other ways of thinking, even if they aren't put to
+                      lucrative use in a person's life
+13:10 < SpiderByte77> very true
+13:10 < SpiderByte77> i love catalyzing epiphanies. ;]
+13:12 < SpiderByte77> would your Prolog kit for kids be oriented towards education, play/exploration, or both?
+13:12 < vixey> just for fun
+13:13 < SpiderByte77> i would love to have something like that for my daughter when she is old enough
+13:14 < RLa> http://rafb.net/p/CGm0ir18.html
+13:14 < RLa> <- only u,d,l,r needs to enter, no separate 'enter' is required
+13:15 < vixey> ty RLa
+13:15 < vixey> hows your system coming? have you added to it?
+13:16 < SpiderByte77> which one?
+13:16 < vixey> RLa's Prolog
+13:16 < vixey> (implementation)
+13:17 < RLa> oh, havn't released last version
+13:17 < RLa> added some garbage collection
+13:17 < RLa> but i will redesign it a bit
+13:18  * SpiderByte77 's dumb self didn't see the different nickname was typing
+13:18 < RLa> no caching of functors and atoms, that causes garbage problems
+13:18 < RLa> otherwise i use it already in my declarative web crawler
+13:18 < SpiderByte77> would it be possible to repaint characters in the same screen region?
+13:18 < SpiderByte77> (vixey?)
+13:19 < RLa> it works etremely well, allowing me to replace crawling rules at runtime
+13:19 < RLa> generally it allows any code to be replace while program is running
+13:19 < vixey> SpiderByte77: I think so (I think SWI comes with ncurses bindings) but I would like to have real graphics (bitmaps)
+13:19 < vixey> RLa: ahh cool
+13:20 < RLa> already running query will still use last version of code for consistency
+13:20 < RLa> also improved java side, classpath can be modified at runtime
+13:20 < RLa> that's something that jpl cannot do easily
+13:21 < SpiderByte77> RLa: what is this you're working on? a webcrawler?
+13:21 < SpiderByte77> oh - *reads up a few lines* - an entire prolog version?
+13:21 < RLa> yes, i use for making offline copies of important sites
+13:22 < RLa> SpiderByte77, it's not iso-prolog compatible
+13:22 < vixey> who cares about iso :p
+13:22 < RLa> since it's missing dynamic operators
+13:22 < RLa> yes
+13:22 < RLa> i even thought about giving up cut
+13:22 < vixey> replacing with ifte and once?
+13:22 < vixey> or what?
+13:22 < SpiderByte77> RLa: wait, so - it *is* a webcrawler, but to achieve it you are creating your own Prolog implementation?
+13:23 < RLa> i have recently studied mercury system, and yes, it can be done without cut
+13:23 < RLa> yes, if-then-else or more general 'switch' that mercury uses
+13:24 < RLa> SpiderByte77, i needed prolog->java->prolog->java interface (bidirection inerface)
+13:24 < RLa> swi's jpl can do it but after two runs it segfaults
+13:24 < SpiderByte77> ah
+13:25 < RLa> SpiderByte77, i did not write it from scratch, i took w-prolog as base
+13:25 < dmiles_afk> RLa, out of local trail ?
+13:25 < SpiderByte77> still.. wow, that is one way to really, *really* get the job done in prolog
+13:25 < dmiles_afk> RLa, JPL: out of local trail ?
+13:25 < SpiderByte77> heh heh
+13:25 < RLa> http://www.rl.pri.ee/rl-prolog/
+13:26 < RLa> dmiles_afk, you had similar problem but got it fixed?
+13:26 < dmiles_afk> RLa, yes, the fix wasonly commited last week
+13:26 < RLa> oh
+13:27 < RLa> well, at least i have pure java implementation
+13:27 < RLa> and it's faster than other java implementations that use interpretation not compilation
+13:29 < SpiderByte77> RLa: so you're writing in Java, and then coding the webcrawler in RL-Prolog?
+13:29 < SpiderByte77> (writing RL-Prolog in Java?)
+13:29 < vixey> where is mercurys switch described?
+13:30 < vixey> http://www.mercury.csse.unimelb.edu.au/information/documentation.html somewhere in here?
+13:30 < RLa> a sec
+13:30 < SpiderByte77> strange, i was just on that very page, but at a different URL
+13:31 < SpiderByte77> http://www.cs.mu.oz.au/research/mercury/information/documentation.html
+13:31 < vixey> I'm trying to decide what language and implementation to use
+13:31 < SpiderByte77> and i still haven't beaten your game yet, vixey
+13:31 < SpiderByte77> heh heh
+13:32 < SpiderByte77> is there a trick to getting something away from a wall?
+13:32 < vixey> it's a tricky one :)
+13:32 < RLa> mercury tutorial
+13:32 < RLa> it was described there
+13:34 < vixey> ok I get it
+13:34 < SpiderByte77> vixey: join #mercury; they could use some more nicks logged in there
+13:34 < SpiderByte77> i haven't seen a room so empty in a long while
+13:34 < SpiderByte77> ;P
+13:35 < RLa> (X = 1, do_stuff; X = 2, do_else, ...)
+13:37 < RLa> SpiderByte77, the plumbing stuff (http requests, queues, threads, link extraction) is written in Java but the rules what to crawl are written as
+             Prolog program
+13:38 < SpiderByte77> i like the sokoban game with get_key
+13:38 < SpiderByte77> RLa: ah, very cool.
+13:39 < RLa> there are only three rules: preprocessing, saving and expanding rule
+13:39 < SpiderByte77> what is the performance like, as compared to what it would-have/may be in all-java?
+13:39 < RLa> preprocessing rules cut off most crap by url patterns, others my look at http headers or/and contents
+13:40 < RLa> SpiderByte77, performance is network io bound
+13:40 < SpiderByte77> i knew that.
+13:40 < SpiderByte77> haha
+13:40 < SpiderByte77> what was i thinking?
+13:40 < SpiderByte77> webcrawling...network.
+13:40  * SpiderByte77 has been up working too long
+13:41 < RLa> the prolog implementation can do about 3M inferences per sec
+13:42 < SpiderByte77> do you have a metric on a java equivalent in comparison?
+13:42 < RLa> metrics about relevance or performance or throughput?
+13:43 < SpiderByte77> performance
+13:43 < SpiderByte77> compared to the prolog inferences per sec
+13:43 < RLa> depends on rules, again
+13:44 < RLa> for total crawling, it will always be network that's bottleneck
+13:44 < SpiderByte77> well, for the rest of this decade at least ;P
+13:45 < SpiderByte77> quantum physics may deprecate even fiber before we know it. heh heh.
+13:45 < RLa> previosly i have coded up some learing algorithms, one that propagated page goodness around link graph was slow
+13:45 < RLa> it was only able to propagate up to depth 8
+13:46 < RLa> since some pages contained hundreds of links
+13:46 < RLa> most of cpu was probably wasted in synchronization
+13:46 < RLa> since many threads worked on the graph
+13:47 < SpiderByte77> would it choke up, or did it crash it?
+13:47 < SpiderByte77> (going past 8 levels)
+13:47 < RLa> later i made it adaptive for cpu usage by propagation time, if time > 1sec it decreased depth, similar with lower bound
+13:47 < RLa> choke up
+13:48 < RLa> memory problems as well
+13:48 < SpiderByte77> sort of like nice'ing the well-behaved threads?
+13:48 < SpiderByte77> was it leaking memory?
+13:49 < RLa> since whole graph was kept in memory and for some pages the contents was also kept in memory through the links for lazy content download
+13:49 < RLa> yes, it was 'leaking'
+13:51 < RLa> the algorithm was not very efficient in relevance wise compared to depth-first search with hand coded hack-rules
+13:52 < SpiderByte77> how often do you run the crawls?
+13:52 < RLa> some rules were in the form: "if this url page lead to 100 useless pages, do not search any link from this page anymore"
+13:52 < RLa> depends what i wanted to download
+13:53 < SpiderByte77> so you must be pulling these results into a DB, yes?
+13:53 < RLa> most of time, text files were sufficient
+13:54 < SpiderByte77> csv? custom?
+13:54 < RLa> and of course, downloaded pages wnt directly into disk and links were rewritten for easy browsing
+13:54 < RLa> depends what information was needed to save
+13:54 < RLa> most of time it was url-filename correspondence
+13:55 < SpiderByte77> oh, wow, so it is not just crawling - you're recreating link networks on a local machine, eh?
+13:55 < RLa> some later time i added jdbc interface to it
+13:55 < RLa> yes
+13:55 < RLa> and incremental crawling and rewriting of links
+13:55 < SpiderByte77> is this for something like a search engine?
+13:55 < RLa> and of course the software became more and more complex
+13:56 < RLa> no
+13:56 < SpiderByte77> are you an engineer at cuil.com? ;P
+13:56 < SpiderByte77> heh heh
+13:56 < RLa> no
+13:56 < RLa> for creating offline high-quality copies
+13:56 < RLa> i have written it couple of times from cratch
+13:57 < RLa> first version was in php
+13:57 < RLa> next one was bunch of shell scripts
+13:57 < RLa> then first version in java
+13:57 < RLa> then second one
+13:58 < RLa> and i have studied many other implementations of such software
+13:58 < SpiderByte77> that's really cool
+13:58 < RLa> like heritrix (used for archive.org)
+13:58 < RLa> and many eperimental tools
+13:58 < vixey> yeah very cool
+13:59 < vixey> I think that lots of people could use your system for other things
+14:00 < RLa> hm, maybe i should realease current version
+14:01 < RLa> i have already written simple general rulesets for downloading directory listings etc
+14:01 < RLa> the largest dataset i have crawled is estonian largest online social network
+14:02 < RLa> it produced 29GB data
+14:02 < RLa> and took two months to crawl
+14:03 < RLa> it was crawled with php version :)
+14:03 < SpiderByte77> yowza.
+14:03 < RLa> yes, it never needed restart
+14:03 < SpiderByte77> PHP5?
+14:03 < RLa> and was run on p3 with 256MB memory
+14:03 < RLa> php4
+14:04 < SpiderByte77> what OS?
+14:04 < RLa> slackware 10 :)
+14:05 < SpiderByte77> nice
+14:05 < RLa> the files were saved in one directory
+14:05 < RLa> it contained more than 1M of files
+14:05 < SpiderByte77> ouch
+14:05 < RLa> fs was reiser :)
+14:05 < SpiderByte77> even typing "ls" would take a while
+14:05 < RLa> yes, dir listing was slow
+14:06 < RLa> for later versions i added directory partition
+14:06 < SpiderByte77> i think if i had a data set like that, i would manually disable the "locate" command for safety. haha.
+14:07 < RLa> hehe
+14:07 < SpiderByte77> now, is this a commercial pursuit, or a personal project?
+14:07 < RLa> purely personal
+14:07 < SpiderByte77> hardcore, man
+14:07 < SpiderByte77> wow
+14:08 < RLa> it was very interesting
+14:08 < RLa> most version of crawlers were quite small in code lines #
+14:09 < RLa> 200-300 lines, except the first java version
+14:09 -!- borism_ [n=boris@195-50-201-225-dsl.krw.estpak.ee] has quit [Read error: 145 (Connection timed out)]
+14:09 < SpiderByte77> yeah. 6,000 is quite a difference
+14:09 < RLa> current version w/o prolog is about 1-2k lines
+14:10 -!- hukolele_ [n=hukolele@108.Red-83-58-244.dynamicIP.rima-tde.net] has joined #prolog
+14:10 < RLa> current prolog implementation is 9k :)
+14:10 < SpiderByte77> heh heh
+14:10 < vixey> mm
+14:10 < vixey> I'm very unsure what to do
+14:10 -!- hukolele [n=hukolele@134.Red-83-61-90.dynamicIP.rima-tde.net] has quit [Read error: 104 (Connection reset by peer)]
+14:11 < vixey> I could try to use SWI, or mercury, or add enough bits to my compiler as I go..
+14:11 < SpiderByte77> vixey: for your puzzle kit?
+14:11 < vixey> yes
+14:12 < SpiderByte77> the kids will be working with their own source code, in addition to the gui, yes?
+14:12 < SpiderByte77> (or IDE, if i recall)
+14:12 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has joined #prolog
+14:13 < vixey> I'm not very sure yet
+14:18 < SpiderByte77> well, if the kids do use an IDE to work on a language directly, i'd imagine you would want to choose a language that you would like for
+                      the kids to know
+14:18 < SpiderByte77> ;]
+14:19 < SpiderByte77> i can relate though; i'm unsure as to which language to use for Project D
+14:19 < SpiderByte77> it may be largely driven by the team that is assembling
+14:19 < SpiderByte77> experience / preference among the members
+14:20 < SpiderByte77> but i would likely press towards mercury out of interest in seeing it put to use
+14:23 < RLa> mercury is not very good for experimental stuff
+14:23 < RLa> too verbose :)
+14:23 < vixey> I'm kind of scared to use mercury
+14:24 < vixey> I am guessing that a lot of techniques I do might be rejected
+14:24 < RLa> kids might like dataflow-based programming
+14:25 < RLa> i think i have seen some interactive enviroments
+14:25 < RLa> for 'programming'
+14:28 < vixey> oh
+14:28 < vixey> "Mercury does not (yet) allow users to define their own operators."
+14:28  * vixey wont be using that then ........
+14:28 < SpiderByte77> heh heh
+14:29 < SpiderByte77> i had to ask them over there
+14:29 < SpiderByte77> hee hee hee
+14:30 < SpiderByte77> (in #mercury)
+14:31 < SpiderByte77> huh?! i was expecting an awkward silence.. guess they've added it in?
+14:31 < SpiderByte77> bonus? heh heh
+14:32 < vixey> mistake
+14:32 < SpiderByte77> heh heh. thought you were giving him a hard time, too
+14:35 -!- hukolele_ [n=hukolele@108.Red-83-58-244.dynamicIP.rima-tde.net] has quit [Read error: 110 (Connection timed out)]
+14:39 -!- hukolele [n=hukolele@136.Red-79-144-250.staticIP.rima-tde.net] has joined #prolog
+14:41 -!- schasi [n=schasi@p54A26A66.dip.t-dialin.net] has joined #prolog
+14:45 < SpiderByte77> vixey && RLa: http://rafb.net/p/eOP9hq29.html
+14:45 < vixey> what's new?
+14:45 < SpiderByte77> changed a couple chars, and keys to asdw (gamer keys)
+14:46 < vixey> :D
+14:46  * vixey wsad is a bit awkward for dvorak..
+14:47 < SpiderByte77> haha
+14:47 < SpiderByte77> what gamer uses dvorak, tho?
+14:47 < SpiderByte77> ;P
+14:47 < SpiderByte77> hmm, well - what are the codes for the arrow keys?
+14:48 < SpiderByte77> i'd have to look that up...
+14:48 < vixey> get_single_char/1 doesn't like arrow keys much
+14:48 < SpiderByte77> what keys are in the QWERTY-equivalent w, asd positions on dvorak?
+14:48 -!- schme [n=marcus@82.209.153.47] has quit [Read error: 110 (Connection timed out)]
+14:48 < SpiderByte77> because of commandline history?
+14:48 < vixey> ,aoe
+14:49 < SpiderByte77> so, comma is where 'w' goes?
+14:49 < vixey> yes
+14:49 < SpiderByte77> then aoe where asd go?
+14:49 < SpiderByte77> give me two seconds ;P
+14:52 < SpiderByte77> darn. "e" is also exit.
+14:53 < SpiderByte77> and i'm not sure if putting ',' is right
+14:53 < vixey> I think that is correct
+14:53 < vixey> you don't need to though
+14:53 < vixey> i.e. foo(x,,,y) works
+14:54 < SpiderByte77> wowzers
+14:54 < SpiderByte77> k
+14:56 < SpiderByte77> http://rafb.net/p/du7IKW16.html
+14:56 < SpiderByte77> yay!
+14:56 < SpiderByte77> exit is now q
+14:56 < SpiderByte77> and it works with both dvorak and qwerty game keys ;]
+14:57 < vixey> ahh nice :)
+14:58 < vixey> ski, wow I just discovered pure io
+14:58 < vixey> ski, it turns out that SWI already has support for DCG on streams
+15:02 < SpiderByte77> vixey: i just won! haha. took me long enough. ;P
+15:03 < vixey> :))
+15:03 < SpiderByte77> i like that a lot - thank you for sharing it!
+15:03 < SpiderByte77> well, we vampires don't do well in sunlight. i'd better wrap things up for the day
+15:04 < SpiderByte77> laterz, all
+15:04 < vixey> bye, was fun chatting :)
+15:04 < ski> vixey : oh
+15:05 < ski> (you mean pure io in mercury ?)
+15:05 < vixey> no it's a library in SWI
+15:05 < ski> ok
+15:05 < ski> well i didn't know about that one
+15:05 < ski> ty
+15:08  * ski has fun playing sokoban
+15:10 < RLa> is the solvable at all?
+15:10 < RLa> that*
+15:10 < ski> SpiderByte77 claimed so
+15:11  * ski wants to backtrack ;)
+15:12 < vixey> wow my game was a hit :D
+15:13 < ski> You have won!?-
+15:13 < ski> :D
+15:14 < ski> ty vixey
+15:16 < ski> RLa : if you can't figure out how to solve it, make a prolog program that solves it !
+15:16 < RLa> :)
+15:22 < RLa> heh, you can move @ too
+15:22 < RLa> it becomes $
+15:24 < RLa> ok, moved it temporaly up then moved right $ up and previous $ back again
+15:24 < RLa> You have won!
+15:31 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has quit []
+15:34 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has joined #prolog
+16:00 -!- MaNI [n=malcolm@41.247.108.219] has quit [Remote closed the connection]
+16:01 -!- MaNI [n=malcolm@41.247.108.219] has joined #prolog
+16:02 -!- MaNI [n=malcolm@41.247.108.219] has quit [Read error: 54 (Connection reset by peer)]
+16:04 -!- MaNI [n=malcolm@41.247.108.219] has joined #prolog
+16:29 -!- MaNI [n=malcolm@41.247.108.219] has quit [Connection timed out]
+16:31 < ski> RLa : how many moves ?
+16:32 < RLa> quite many
+16:32 < RLa> hm, we should add move counter to it
+16:33 -!- MaNI [n=malcolm@41.247.108.219] has joined #prolog
+16:33 < ski> iirc, i had 35
+16:38 < RLa> You have won!
+16:38 < RLa> 33 moves
+16:38 < RLa> sec, i upload it
+16:38 < RLa> it can be done with less moves
+16:39 < ski> *nod*, i had 35 right
+16:39 < RLa> http://pastebin.com/m7d2b5d9f
+16:40 < RLa> 31 moves
+16:42 < RLa> 30 moves
+16:43 < ski> (hm, you didn't extend SpiderByte77's version)
+16:46 < RLa> ok, i think i can't do in less
+16:46 < RLa> no wasd keys?
+16:47 < RLa> oh damn
+16:47 < RLa> line 31 is only difference for move counting
+16:47 < RLa> i wonder how you got 35 moves
+16:53 < ski> ok, 30 moves now
+16:53 < ski> for some reason i moved one block i a slightly more roundabout way than needed
+16:53 < ski> s/i a/in a/
+16:54 < RLa> i wonder if there is an easy way to generate solvable boards
+16:54 < ski> would you like too compare with my moves ?
+16:54 < ski> RLa : interesting idea
+16:55 < RLa> for some reason i think you have same moves
+16:56 < ski> quite possible :)
+16:57 < RLa> what was your 6th move?
+16:57 < RLa> down?
+16:57 < ski> counting from 0 or 1 ?
+16:57 < RLa> 1
+16:58 < ski> left
+17:01 < ski> hm, strange ..
+17:01 < ski> echoing the move sequence into the program got me
+17:01 < ski> ERROR: Prolog initialisation failed:
+17:01 < ski> ERROR: char_code/2: Cannot represent due to `character_code'
+17:02 < ski> .. but pasting it into worked o-k
+17:03 < ski> (well, echoing worked for first move .. second gave the error)
+17:06 -!- ohcibi [n=ohcibi@dslb-088-077-101-148.pools.arcor-ip.net] has quit [Read error: 110 (Connection timed out)]
+17:06 < RLa> 30 moves:[up, right, right, right, down, left, up, left, left, down, down, right, up, left, up, right, up, up, left, down, right, down, down,
+             right, right, up, left, down, left, up]
+17:07 < RLa> eh, 6th was left
+17:07 -!- ohcibi [n=ohcibi@dslb-088-077-026-171.pools.arcor-ip.net] has joined #prolog
+17:16 < ski> RLa : hrm .. are you sure you aren't missing a last `up' move ?
+17:17 < ski> (possibly you have an offby1 error in the presentation of the final count ?)
+17:17 < RLa> no
+17:17 < RLa> i'm not sure
+17:17 < RLa> indeed, it's missing
+17:17 < ski> since i have the same sequence as you, except i had a final `up' (and when i was counting for myself now, i got 31 moves)
+17:18 < RLa> hm, indeed, last count it not accounted :D
+17:18 < ski> you should have hired an accountant :)
+17:20 < RLa> should have format the code, i have large load of { and } here :)
+17:38 -!- mathrick [n=mathrick@users177.kollegienet.dk] has quit [Read error: 104 (Connection reset by peer)]
+17:39 -!- mathrick [n=mathrick@users177.kollegienet.dk] has joined #prolog
+19:08 -!- ohcibi [n=ohcibi@dslb-088-077-026-171.pools.arcor-ip.net] has quit [Read error: 60 (Operation timed out)]
+19:24 -!- ohcibi [n=ohcibi@dslb-088-077-026-171.pools.arcor-ip.net] has joined #prolog
+19:36 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has joined #prolog
+20:14 -!- prunedtree [i=Aozaru@195.140.142.184] has quit [Read error: 110 (Connection timed out)]
+20:18 -!- RLa [n=rlaanemt@90-190-52-138-dsl.rgu.estpak.ee] has quit [Remote closed the connection]
+20:26 -!- RLa [n=rlaanemt@90-190-52-138-dsl.rgu.estpak.ee] has joined #prolog
+20:40 -!- borism [n=boris@195-50-201-200-dsl.krw.estpak.ee] has joined #prolog
+21:03 -!- borism [n=boris@195-50-201-200-dsl.krw.estpak.ee] has quit [Read error: 145 (Connection timed out)]
+21:43 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has quit []
+22:22 -!- prunedtree [i=Aozaru@195.140.142.184] has joined #prolog
+22:33 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has joined #prolog
+22:44 -!- schme [n=marcus@82.209.153.47] has joined #prolog
+22:46 -!- schme [n=marcus@82.209.153.47] has quit [Read error: 104 (Connection reset by peer)]
+22:47 -!- lleksah [n=lleksah@204.177-247-81.adsl-dyn.isp.belgacom.be] has quit [Read error: 110 (Connection timed out)]
+22:47 -!- benny99 [n=bebenny@p5486E6B9.dip.t-dialin.net] has joined #prolog
+22:50 -!- lleksah [n=lleksah@72.167-247-81.adsl-dyn.isp.belgacom.be] has joined #prolog
+23:03 -!- schme [n=marcus@82.209.153.47] has joined #prolog
+23:16 -!- benny99 [n=bebenny@p5486E6B9.dip.t-dialin.net] has quit ["Ex-Chat"]
+23:41 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has quit []
+23:58 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has joined #prolog
+Day changed to 31 Jul 2008
+00:04 -!- RLa [n=rlaanemt@90-190-52-138-dsl.rgu.estpak.ee] has quit ["Leaving"]
+00:13 -!- Netsplit kubrick.freenode.net <-> irc.freenode.net quits: lowki_, loebster
+00:15 -!- Netsplit over, joins: lowki_, loebster
+00:32 -!- schasi [n=schasi@p54A26A66.dip.t-dialin.net] has quit ["Verlassend"]
+01:10 -!- lleksah [n=lleksah@72.167-247-81.adsl-dyn.isp.belgacom.be] has quit ["Leaving"]
+01:12 -!- hukolele [n=hukolele@136.Red-79-144-250.staticIP.rima-tde.net] has quit [Read error: 110 (Connection timed out)]
+01:18 -!- mjrosenb [n=mjrosenb@pool-96-224-234-87.nycmny.fios.verizon.net] has quit ["leaving"]
+01:19 -!- spx2 [n=spx2@89.37.70.170] has quit [Remote closed the connection]
+01:19 -!- spx2 [n=spx2@89.37.70.170] has joined #prolog
+01:42 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has quit []
+01:59 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has joined #prolog
+02:00 -!- ohcibi [n=ohcibi@dslb-088-077-026-171.pools.arcor-ip.net] has quit [Read error: 110 (Connection timed out)]
+02:02 -!- ohcibi [n=ohcibi@dslb-088-077-026-171.pools.arcor-ip.net] has joined #prolog
+03:50 -!- vixey [n=nono@amcant.demon.co.uk] has quit []
+03:59 -!- vixey [n=nono@amcant.demon.co.uk] has joined #PROLOG
+04:02 -!- vixey [n=nono@amcant.demon.co.uk] has quit [No route to host]
+04:03 -!- vixey [n=nono@amcant.demon.co.uk] has joined #PROLOG
+05:17 -!- syamajala2 [n=syamajal@c-24-61-31-104.hsd1.ma.comcast.net] has quit []
+05:20 -!- tabe [n=tabe@210.188.204.133] has quit ["Riece/5.0.0 Emacs/22.2 (berkeley-unix)"]
+05:20 -!- tabe [n=tabe@210.188.204.133] has joined #prolog
+06:07 < vixey> emacs prolog mode sucks :/
+06:43 < SpiderByte77> really?
+06:43 < SpiderByte77> haven't tried it yet.. i've been using Textmate in plain text mode
+06:43 < SpiderByte77> Ciao came with a .el I wanted to fire up though
+06:43 < vixey> it can't do 0'
+06:44 < SpiderByte77> do you know much elisp?
+06:44 < vixey> yeah I am waiting for that to download now
+06:44 < SpiderByte77> for what to download?
+06:44 < vixey> n
+06:44 < vixey> no
+06:44 < SpiderByte77> oh, for Ciao?
+06:44 < vixey> ciao
+06:44 < SpiderByte77> cool
+06:44 < SpiderByte77> i like it a lot
+06:45 < SpiderByte77> but i'm also glad you turned me on to SWI - i like its speed and tiny sizee
+06:45 < SpiderByte77> size*
+06:46 < SpiderByte77> did you catch the banter between ski and RLa about counting moves in your game? it was cool to watch two minds dig into a problem like
+                      that ;]
+06:46 < SpiderByte77> when i came back and scrolled through, i was wishing i could have played along
+06:46 < SpiderByte77> heh heh
+06:47 < SpiderByte77> vixey: what is your profession?
+06:47 < vixey> yeah I snapped up the code
+06:48 < SpiderByte77> oh, i emailed the SWI guys. an auto-reply message told me the recipient was out of the office on wednesdays... curious if they were
+                      previously aware of the /usr/bin/pl in OSX
+06:49 < SpiderByte77> guess i'll find out tomorrow
+06:49 < vixey> I'm doing maths
+06:50 < SpiderByte77> doing maths?
+07:04 < vixey> strange
+07:04 < vixey> I had to remove a ' for it to work but ciao mode seems better than the others
+09:12 -!- RLa [n=rlaanemt@90-190-52-138-dsl.rgu.estpak.ee] has joined #prolog
+09:16 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has quit [Remote closed the connection]
+09:17 < SpiderByte77> hi, RLa!
+09:18 < RLa> hey
+09:18 < SpiderByte77> i enjoyed reading your discussion with ski about counting moves in vixey's game when i returned to the screen
+09:18 < SpiderByte77> =)
+09:18 < RLa> btw, i'm porting it to mercury
+09:18 < SpiderByte77> i SO want a copy!
+09:19 < SpiderByte77> how's your ROTD compile going with that?
+09:19 < SpiderByte77> did it finish?
+09:20 < RLa> no, compiling the compiler segfaults
+09:21 < RLa> i think it's broken environment ( debian)
+09:21 < RLa> but 0.13 install went well
+09:21 < RLa> and yes, compiling for single grade is much much faster
+09:22 < SpiderByte77> heh heh
+09:22 < RLa> i picked asm_fast
+09:22 < RLa> .gc
+09:28 -!- Netsplit kubrick.freenode.net <-> irc.freenode.net quits: lowki_, loebster
+09:30 < RLa> the problem with 0.13 is that unique mode inference is not complete which does not let me merge both io and game state :\
+09:30 -!- Netsplit over, joins: lowki_, loebster
+09:31 < SpiderByte77> hmm
+10:04 -!- ohcibi1 [n=ohcibi@dslb-088-077-026-171.pools.arcor-ip.net] has joined #prolog
+10:05 -!- ohcibi [n=ohcibi@dslb-088-077-026-171.pools.arcor-ip.net] has quit [Read error: 110 (Connection timed out)]
+10:20 -!- vixey [n=nono@amcant.demon.co.uk] has quit []
+10:24 -!- vixey [n=nono@amcant.demon.co.uk] has joined #PROLOG
+10:30 < RLa> hey vixey, i'm porting sokoban to mercury
+10:30 < vixey> cool, I'd like to see that very much
+10:36 < vixey> have you get mercury working?
+10:42 < RLa> 0.13 only
+11:05 < vixey> oh
+11:05 < vixey> I just read about superhomogenous form
+11:05 < vixey> this is really neat
+11:09 < SpiderByte77> vixey: what's that?
+11:10 < vixey> an intermediate language in mercury
+11:10 < vixey> http://www.mercury.csse.unimelb.edu.au/information/papers/unif.ps.gz
+11:10 < vixey> they way they've set it up means you never have to dereference
+11:11 < SpiderByte77> an intermediate language? like, macro stuff?
+11:21 < RLa> hm, nice code for updating tile:
+11:21 < RLa> !:State = ((!.State) ^ board := list.det_replace_nth(!.State ^ board, Point ^ y + 1, list.det_replace_nth(list.det_index0(!.State ^ board, Point ^
+             y), Point ^ x + 1, Tile)))
+11:21 < RLa> :D
+11:24 < RLa> hm, after correct formatting it looks even more unreadable
+11:24 < vixey> ahah
+11:41 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has joined #prolog
+11:46 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has quit [Remote closed the connection]
+11:51 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has joined #prolog
+11:56 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has quit [Remote closed the connection]
+11:56 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has joined #prolog
+11:58 -!- lleksah [n=lleksah@186.208-242-81.adsl-dyn.isp.belgacom.be] has joined #prolog
+12:01 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has quit [Remote closed the connection]
+12:07 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has joined #prolog
+12:12 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has quit [Remote closed the connection]
+12:22 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has joined #prolog
+12:27 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has quit [Remote closed the connection]
+12:29 < RLa> vixey, http://pastebin.com/m5a7bb6de
+12:30 -!- schasi [n=schasi@p54A24D80.dip.t-dialin.net] has joined #prolog
+12:32 < vixey> quite interesting
+12:35 < RLa> it worked correctly from first moment i got it compiled :)
+12:35 < vixey> well that is type systems for you
+12:37 < RLa> most of time i was troubeling with mode system :D
+12:40 < ski> RLa : game state being ?
+12:40 < RLa> i liked those state variables, those could make their way into usual prolog
+12:41 < RLa> game_state ---> state(point::point, board::board)
+12:41 < RLa> <- ideally, it should contain io state as well
+12:41 < ski> oh, like that
+12:41 < ski> ok
+12:42 < RLa> "it is not possible to use nested unique modes, i.e. modes in which anything but the top level of a variable is unique."
+12:43 < ski> *nod*
+12:43 < RLa> i think that was the problem
+12:44 < vixey> state variables
+12:44 < vixey> what is the advantage over --> notation?
+12:44 < RLa> --> can be used for state variables
+12:44 < ski> mainly that you can have several state variables, i thin
+12:44 < ski> k
+12:45 < RLa> in the program there is --> used for game state in some preds, but for io in others
+13:00 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has joined #prolog
+13:05 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has quit [Remote closed the connection]
+13:08 < vixey> hm
+13:08 < vixey> there is tcl bindings in mercury
+13:08 < vixey> hi ski
+13:16 < ski> hi
+13:16 < vixey> hey did you get what you wanted done? :)
+13:19 < ski> not exactly .. i got stuck reading a book "Topology via Logic" :)
+13:20 < ski> (more specifically, topology applied to programming datatypes)
+13:23  * ski curses the heat that turns his brain to moosh
+13:23 < vixey> hey
+13:24 < vixey> I wonder if HTML is a good gui for what I was thinking about
+13:24 < vixey> I could run a webserver in prolog and then one could use a browser to interact with it
+13:24 < ski> for kid games ?
+13:25 < SpiderByte77> ski: hey, where are you that's so hot these days?
+13:25 < ski> scandinavia
+13:26 < SpiderByte77> wow, really? how hot is it?
+13:26 < SpiderByte77> i've always imagined everywhere up there to be on the cool side
+13:26 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has joined #prolog
+13:27 -!- adi112358 [i=adrian@79.112.43.28] has joined #prolog
+13:27 < ski> maybe about 25 degrees celsius (outdoor termometer says 30, but that's partially in the sun)
+13:28 < SpiderByte77> i lived in Siberia (Krasnoyarsk) for two months during the summer a few years ago, and i was surprised how hot it was
+13:28 < SpiderByte77> heh heh
+13:28 < ski> what were you doing in siberia ?
+13:29 < SpiderByte77> renovating an orphanage
+13:30 < SpiderByte77> its hovering around 35C here in GA, USA
+13:30 < SpiderByte77> and about 85+% humidity. you've got it easy. ;P
+13:30 < SpiderByte77> heh heh
+13:30 < SpiderByte77> what part of scandinavia are you in?
+13:31 < SpiderByte77> i help out with a company in the Netherlands, doing internationalization for their US website
+13:31 < ski> southern
+13:32 -!- AtnNn [n=welcome@modemcable230.56-56-74.mc.videotron.ca] has quit [Remote closed the connection]
+13:32 < SpiderByte77> you can see my smiling face on their site: http://www.symbaloo.com/us/network
+13:32 < SpiderByte77> heh heh
+13:32 < ski> volunteer ?
+13:32 < SpiderByte77> (David - the one at the bottom, under United States)
+13:33 < SpiderByte77> yes, and that only on occasions I am needed
+13:33 < SpiderByte77> just brush-ups on english where needed
+13:33 < SpiderByte77> which isn't much - they've mostly got it down. ;]
+13:34 < ski> it ?
+13:34 < SpiderByte77> their english
+13:34 < ski> the orphanage ?
+13:34 < ski> oh
+13:34 < SpiderByte77> oh, no no - i switched subjects, sorry
+13:34 < SpiderByte77> the orphanage was in Russia
+13:34 < SpiderByte77> smack dab in the middle
+13:35 < SpiderByte77> 5+ days on a train in either direction to the nearest border
+13:35 < SpiderByte77> east or west
+13:35 < SpiderByte77> our team was glad to get back to civilization when we left and went to Moscow

@@ -1,0 +1,35 @@
+= Building Desktop Wiki =
+
+== Requirements ==
+
+* jdk 1.6 or newer (1.7 b24 tested)
+* ant (1.7.0 tested)
+
+
+== Build sequence ==
+
+Correct order of compilation of sub-projects:
+
+* rl-common
+* nondet-java
+* parser-tokenizer
+* wiki-parser
+* text-template
+* desktop-wiki
+
+== Build scripts ==
+
+=== Local build skripts ===
+
+In every subproject there is ''ant'' build script that can be used to build
+the subproject locally.
+
+**parser-tokenizer** requires bootstrap libraries to build therefore
+command ''ant -file bootstrap.xml'' must be run in the directory
+of subproject.
+
+=== Global build scripts ===
+
+* ''build.sh'' - builds everything.
+* ''build-clean.sh'' - cleans project and builds everything (compiling for different vm).
+* ''build-dist.sh'' - cleans project before and after building, makes one large package.

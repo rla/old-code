@@ -1,0 +1,8 @@
+{%:tervitus%}
+
+{%:aadress%}
+
+sisu:
+{%@%}
+
+--sisu;

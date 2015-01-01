@@ -1,0 +1,11 @@
+`G'        ->    #`Konstant'#
+
+`Konstant' ->    `Arv'
+`Arv'      ->    `Täisarv'
+`Täisarv'  ->    `Number'
+`Täisarv'  ->    `Täisarv'`Number'
+
+
+
+`Number'   -> 0
+           -> 1

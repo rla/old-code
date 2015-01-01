@@ -1,0 +1,353 @@
+$typecheck on
+$include "Rapidq.inc"
+$include "settings.inc"
+
+const version=0.4
+const buth=30
+const butw=40
+
+dim fpath as string
+
+fpath=getsetting("list.cfg", "fpath")
+
+dim form as qform
+dim listform as qform
+dim mainmenu as qmainmenu
+dim failmenu as qmenuitem
+dim exitbtn as qbutton
+dim listbtn as qbutton
+dim rfsbtn as qbutton
+dim status as qstatusbar
+dim drivelist as qlistview
+dim kettadl as qlabel
+dim count as integer
+dim k_arv as integer
+dim volume as string
+dim filesys as string
+dim ketas as string
+dim serial as integer
+dim tyyp# as long
+dim tyyp$ as string
+dim secpercl as long
+dim bytespersec as long
+dim vabap as long
+dim koikp as long
+dim lstname as string
+dim lstedit as qedit
+dim standard as qcheckbox
+dim list_file as qfilestream
+dim farv as integer
+dim fainult as qcheckbox
+dim mp3ainult as qcheckbox
+
+Declare Function GetVolumeInformation Lib "kernel32" Alias "GetVolumeInformationA" (lpRootPathName As String, lpVolumeNameBuffer As String, nVolumeNameSize As Long, lpVolumeSerialNumber As Long, lpMaximumComponentLength As Long, lpFileSystemFlags As Long, lpFileSystemNameBuffer As String, nFileSystemNameSize As Long) As Long
+Declare Function GetDriveType Lib "kernel32" Alias "GetDriveTypeA" (ByVal nDrive As String ) As Long
+Public Declare Function GetDiskFreeSpaceEx Lib "kernel32" Alias "GetDiskFreeSpaceExA" (ByVal lpRootPathName As String, lpFreeBytesAvailableToCaller As Long, lpTotalNumberOfBytes As Long, lpTotalNumberOfFreeBytes As Long ) As Long
+
+function getnd(dir as string, n as integer) as string
+  dim dnimi as string
+  dim dcnt as integer
+  dim uustmp as string
+  dcnt=1
+  chdir(dir)
+  dnimi=dir$("*.*", faDirectory)  
+  while len(dnimi)>0 or (dcnt<=n) do
+    if len(dir)=3 then
+      uustmp=dir+dnimi
+    else
+      uustmp=dir+"\"+dnimi
+    end if        
+    if direxists(uustmp) and (dnimi<>".") and (dnimi<>"..") then
+      if dcnt=n then getnd=dnimi
+      inc(dcnt)
+    end if
+    dnimi=dir$
+  wend
+  if dcnt=0 then 
+    getnd=""
+  end if  
+end function
+
+declare sub info
+declare sub valju
+declare sub teelist
+declare sub no_standard
+declare sub list_ok
+declare sub list_ext
+declare sub writef(folder as string)
+
+mainmenu.parent=form
+failmenu.caption="&Fail"
+mainmenu.additems failmenu
+
+status.parent=form
+status.addpanels "", ""
+status.panel(0).width=60
+status.panel(0).caption="List " + str$(version)
+
+form.caption="List " + str$(version)
+form.height=300
+form.width=600
+form.BorderStyle=bsSingle
+form.center
+
+rfsbtn.caption="&Uus"
+rfsbtn.left=350
+rfsbtn.top=200
+rfsbtn.height=buth
+rfsbtn.width=butw
+rfsbtn.onclick=info
+rfsbtn.parent=form
+
+listbtn.caption="&List"
+listbtn.left=425
+listbtn.top=200
+listbtn.height=buth
+listbtn.width=butw
+listbtn.onclick=teelist
+listbtn.parent=form
+
+exitbtn.caption="&Välju"
+exitbtn.left=500
+exitbtn.top=200
+exitbtn.height=buth
+exitbtn.width=butw
+exitbtn.onclick=valju
+exitbtn.parent=form
+
+kettadl.left=20
+kettadl.top=15
+kettadl.caption="Saadaolevad kettad :"
+kettadl.parent=form
+
+drivelist.top=30
+drivelist.left=20
+drivelist.width=560
+drivelist.parent=form
+drivelist.readonly=1
+drivelist.rowselect=1
+drivelist.addcolumns "Ketas", "Tüüp", "Label", "Seerianumber", "Failisysteem", "Suurus", "Vaba"
+drivelist.ViewStyle=vsReport
+drivelist.column(0).width=40
+drivelist.column(1).width=80
+drivelist.column(2).width=80
+drivelist.column(3).width=120
+drivelist.column(4).width=60
+drivelist.column(5).width=90
+drivelist.column(6).width=90
+
+sub info
+  drivelist.clear
+  k_arv=0
+  for count=1 to 26 do
+    ketas=chr$(count+64)+":\"
+    if direxists(ketas) then 
+      volume=space$(255)
+      filesys=space$(255)
+      GetVolumeInformation(ketas, @volume, len(volume), @serial, 0, 0, @filesys, len(filesys))
+      tyyp#=GetDriveType(ketas)
+      select case tyyp#
+        case 1
+          tyyp$="UNKNOWN"
+        case 2 
+          tyyp$="REMOVABLE"
+        case 3  
+          tyyp$="FIXED"
+        case 4  
+          tyyp$="REMOTE"
+        case 5  
+          tyyp$="CDROM"
+        case 6   
+          tyyp$="RAMDISK"
+      end select
+      GetDiskFreeSpaceEX(ketas, @secpercl, @koikp, @vabap)
+      drivelist.insertitem k_arv, ketas
+      drivelist.addsubitem k_arv, tyyp$
+      drivelist.addsubitem k_arv, rtrim$(volume)
+      drivelist.addsubitem k_arv, str$(serial)
+      drivelist.addsubitem k_arv, rtrim$(filesys)
+      drivelist.addsubitem k_arv, str$(koikp/1024)+" KB"
+      drivelist.addsubitem k_arv, str$(vabap/1024)+" KB"
+      inc(k_arv)
+    end if  
+next
+end sub
+
+call info
+
+status.panel(1).caption="Kokku "+str$(k_arv)+" ketast"
+
+form.ShowModal
+
+sub valju
+  form.close
+end sub
+
+sub teelist
+  if drivelist.itemindex=-1 then 
+    showmessage("Vali ketas, illest tahad listi teha")
+    exit sub
+  end if
+  
+  dim klabel as qedit
+  dim fnimiset as qgroupbox
+  dim okbtn as qbutton
+  dim extbtn as qbutton
+  
+  listform.caption="Tee List"
+  listform.height=300
+  listform.width=300
+  listform.BorderStyle=bsDialog
+  listform.center
+  
+  klabel.top=20
+  klabel.left=20
+  klabel.text="Ketas " +drivelist.item(drivelist.itemindex).caption
+  klabel.readonly=1
+  klabel.parent=listform
+  
+  mp3ainult.top=50
+  mp3ainult.left=20
+  mp3ainult.caption="Mp3 ainult"
+  mp3ainult.parent=listform
+  
+  fainult.top=70
+  fainult.left=20
+  fainult.caption="Failinimed ainult"
+  fainult.showhint=1
+  fainult.checked=1
+  fainult.hint="Listi salvestatakse ainult failide nimed või koos kausta nimega."
+  fainult.parent=listform
+  
+  fnimiset.top=100
+  fnimiset.width=250
+  fnimiset.left=20
+  fnimiset.height=100
+  fnimiset.caption="Listi faili nimi"
+  fnimiset.parent=listform
+  
+  lstname=drivelist.subitem(drivelist.itemindex, 1)
+  lstname=fpath+left$(lstname, len(lstname)-1)+".lst"
+  
+  standard.top=130
+  standard.left=40
+  standard.width=200
+  standard.checked=1
+  standard.onclick=no_standard
+  standard.caption=lstname
+  standard.parent=listform
+  
+  lstedit.top=160
+  lstedit.left=40
+  lstedit.width=200
+  lstedit.enabled=0
+  lstedit.text="C:\failinimi.txt"
+  lstedit.parent=listform
+  
+  okbtn.caption="&Ok"
+  okbtn.left=40
+  okbtn.top=225
+  okbtn.width=butw
+  okbtn.height=buth
+  okbtn.onclick=list_ok
+  okbtn.parent=listform
+  
+  extbtn.caption="&Tühista"
+  extbtn.left=220
+  extbtn.top=225
+  extbtn.width=butw
+  extbtn.height=buth
+  extbtn.onclick=list_ext
+  extbtn.parent=listform
+  
+  listform.ShowModal
+end sub
+
+sub no_standard
+  if standard.checked then 
+    lstedit.enabled=0
+  else 
+    lstedit.enabled=1
+  end if    
+end sub
+
+sub writef(folder as string)
+  dim fnimi as string
+  dim fntmp as string
+  
+  chdir(folder)
+  if len(folder)=3 then folder=left$(folder,2)
+  fnimi=dir$("*.*", 0)
+  
+  while len(fnimi)>0 do
+    if fainult.checked<>1 then  
+      fnimi=folder+"\"+fnimi
+    end if
+    if mp3ainult.checked then
+      if right$(fnimi, 4)=".mp3" then 
+        list_file.writeline(fnimi)
+        inc(farv)
+      end if  
+    else
+      list_file.writeline(fnimi)
+      inc(farv)
+    end if  
+    fnimi=dir$
+  wend
+end sub
+
+function getdir(root as string) as long
+  writef(root)
+  dim newdir as string
+  dim uus as string
+  dim ii as integer
+  ii=2
+  newdir=getnd(root, 1)
+  while len(newdir)>0 do
+      if len(root)=3 then    
+        uus=root+newdir
+      else
+        uus=root+"\"+newdir
+      end if  
+      getdir(uus)
+      newdir=getnd(root, ii)
+      inc(ii)
+  wend
+end function
+
+sub list_ok
+  listform.close
+  dim statusform as qform
+  dim listi_nimi as string
+  dim rida# as integer
+  
+  if standard.checked then
+    listi_nimi=lstname
+  else
+    listi_nimi=lstedit.text
+  end if
+  if len(listi_nimi)<4 then
+    showmessage("Error 1")
+    exit sub
+  end if
+  
+  list_file.open(listi_nimi, fmCreate)
+  list_file.writeline(date$)
+  list_file.writeline(time$)
+  for rida#=0 to 5 do
+    if rida#=1 or rida#=3 then 
+      list_file.writeline(left$(drivelist.subitem(drivelist.itemindex, rida#), len(drivelist.subitem(drivelist.itemindex, rida#))-1))
+    else
+      list_file.writeline(drivelist.subitem(drivelist.itemindex, rida#))
+    end if  
+  next  
+  farv=0
+  getdir(left$(drivelist.item(drivelist.itemindex).caption,3))
+  list_file.writeline("FailideArv=" +str$(farv))
+  list_file.close
+  if fileexists(listi_nimi) then showmessage(listi_nimi+" ok. "+str$(farv))
+end sub
+
+sub list_ext
+  listform.close
+end sub

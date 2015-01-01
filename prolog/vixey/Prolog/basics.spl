@@ -1,0 +1,163 @@
+(fact (= x x))
+
+(to-derive (call x) x)
+
+(to-derive (or x y) x)
+(to-derive (or x y) y)
+
+(to-derive (not goal)
+           (call goal) ! (fail))
+(fact (not goal))
+
+(to-derive (number? x) (number x))
+(to-derive (num? x) (number? x))
+
+(to-derive (is v v) (number? v))
+(to-derive (is _ v) (variable? v) ! (fail))
+(to-derive (is v (+ x y))     (is xv x) (is yv y) (%+ xv yv v))
+(to-derive (is v (- x y))     (is xv x) (is yv y) (%- xv yv v))
+(to-derive (is v (* x y))     (is xv x) (is yv y) (%* xv yv v))
+(to-derive (is v (/ x y))     (is xv x) (is yv y) (%/ xv yv v))
+(to-derive (is v (** x y))    (is xv x) (is yv y) (%** xv yv v))
+(to-derive (is v (mod x y))   (is xv x) (is yv y) (%mod xv yv v))
+(to-derive (is v (rem x y))   (is xv x) (is yv y) (%rem xv yv v))
+(to-derive (is v (sqrt x))    (is xv x) (%sqrt xv v))
+(to-derive (is v (sin x))     (is xv x) (%sin xv v))
+(to-derive (is v (cos x))     (is xv x) (%cos xv v))
+(to-derive (is v (tan x))     (is xv x) (%tan xv v))
+(to-derive (is v (asin x))    (is xv x) (%asin xv v))
+(to-derive (is v (acos x))    (is xv x) (%acos xv v))
+(to-derive (is v (atan x))    (is xv x) (%atan xv v))
+(to-derive (is v (abs x))     (is xv x) (%abs xv v))
+(to-derive (is v (floor x))   (is xv x) (%floor xv v))
+(to-derive (is v (round x))   (is xv x) (%round xv v))
+(to-derive (is v (ceiling x)) (is xv x) (%ceiling xv v))
+
+;;
+;; (and (and 3 (read x)) (and (display x) 0))
+;;
+
+(to-derive (coin x) (flip x))
+
+(fact (flip (heads)))
+(fact (flip (tails)))
+
+(to-derive (a-test x) (= x (x)))
+(to-derive (a-test x y) (= x (x)) (= y (y)))
+(to-derive (a-test x y z) (= x (x)) (= y (y)) (= z (z)))
+
+(fact (n (z)))
+(fact (n (s n)) (n n))
+
+(fact (member V0 (cons V0 V1)))
+(to-derive (member V0 (cons V1 V2)) (member V0 V2))
+        
+(fact (append (nil) V0 V0))
+(to-derive (append (cons V0 V1) V2 (cons V0 V3)) (append V1 V2 V3))
+
+(fact (select V0 (cons V0 V1) V1))
+(to-derive (select V0 (cons V1 V2) (cons V1 V3)) (select V0 V2 V3))
+
+(fact (permutation (nil) (nil)))
+(to-derive (permutation (cons V0 V1) V2)
+           (permutation V1 V3)
+           (select V0 V2 V3))
+
+(fact (foo (cons (1) (cons (2) (nil)))))
+
+(fact (big-list (cons 27 (cons 74 (cons 17 (cons 33 (cons 94 (cons 18 (cons 46 (cons 83 (cons 65 (cons 2 (cons 32 (cons 53 (cons 28 (cons 85 (cons 99 (cons 47 (cons 28 (cons 82 (cons 6 (cons 11 (cons 55 (cons 29 (cons 39 (cons 81 (cons 90 (cons 37 (cons 10 (cons 0 (cons 66 (cons 51 (cons 7 (cons 21 (cons 85 (cons 27 (cons 31 (cons 63 (cons 75 (cons 4 (cons 95 (cons 99 (cons 11 (cons 28 (cons 61 (cons 74 (cons 18 (cons 92 (cons 40 (cons 53 (cons 59 (cons 8 (nil)))))))))))))))))))))))))))))))))))))))))))))))))))))
+
+(to-derive (permutation-sort l sl)
+           (permutation l sl)
+           (sorted sl))
+
+(to-derive (sorted (nil)))
+(to-derive (sorted (cons x (nil))))
+(to-derive (sorted (cons x (cons y ys)))
+           (=< x y)
+           (sorted (cons y ys)))
+
+(to-derive (permutation-sort-benchmark x)
+           (big-list l)
+           (permutation-sort l x))
+
+(to-derive (qsort-benchmark x)
+           (big-list l)
+           (qsort l x (nil)))
+
+
+;; qsort([], R, R).
+;; qsort([X|L], R, R0) :- partition(L, X, L1, L2), qsort(L2, R1, R0), qsort(L1, R, [X|R1]).
+
+;; partition([],_,[],[]).
+;; partition([X|L],Y,[X|L1],L2) :- when((<= X Y)), partition(L,Y,L1,L2).
+;; partition([X|L],Y,L1,[X|L2]) :- partition(L,Y,L1,L2).")
+
+(to-derive (qsort (nil) r r))
+(to-derive (qsort (cons x l) r r0)
+           (partition l x l1 l2)
+           (qsort l2 r1 r0)
+           (qsort l1 r (cons x r1)))
+
+(to-derive (partition (nil) _ (nil) (nil)))
+(to-derive (partition (cons x l) y (cons x l1) l2)
+           (=< x y) !
+           (partition l y l1 l2))
+(to-derive (partition (cons x l) y l1 (cons x l2))
+           (partition l y l1 l2))
+
+
+(to-derive (d (+ u v) x (+ du dv)) ! (d u x du) (d v x dv))
+(to-derive (d (- u v) x (- du dv)) ! (d u x du) (d v x dv))
+(to-derive (d (* u v) x (+ (* du v) (* u dv))) ! (d u x du) (d v x dv))
+(to-derive (d (/ u v) x (/ (- (* du v) (* u dv)) (* v v))) ! (d u x du) (d v x dv))
+(to-derive (d x x 1) !)
+(to-derive (d _ _ 0))
+
+
+    (fact (saturn_digits (cons 1 (cons 2 (cons 3
+                         (cons 4 (cons 5 (cons 6
+                         (cons 7 (cons 8 (cons 9 (nil))))))))))))
+    
+    (to-derive (saturn (cons V0 (cons V1 (cons V2 ;; very slow
+                       (cons V3 (cons V4 (cons V5
+                       (cons V6 (cons V7 (cons V8 (nil)))))))))))
+               (saturn_digits V9)
+               (select V0 V9 V10)
+               (select V1 V10 V11)
+               (select V2 V11 V12)
+               (select V3 V12 V13)
+               (select V4 V13 V14)
+               (select V5 V14 V15)
+               (select V6 V15 V16)
+               (select V7 V16 V17)
+               (select V8 V17 (nil))
+               (is V18 (+ (+ V0 V1) V2))
+               (is V18 (+ (+ V3 V4) V5))
+               (is V18 (+ (+ V6 V7) V8))
+               (is V18 (+ (+ V0 V3) V6))
+               (is V18 (+ (+ V1 V4) V7))
+               (is V18 (+ (+ V2 V5) V8))
+               (is V18 (+ (+ V0 V4) V8))
+               (is V18 (+ (+ V2 V4) V6)))
+
+    (to-derive (saturn+ (cons a (cons b (cons c ;; much faster
+                        (cons d (cons e (cons f
+                        (cons g (cons h (cons i (nil)))))))))))
+               (saturn_digits d-0)
+               (select a d-0 d-1)
+               (select b d-1 d-2)
+               (select c d-2 d-3)
+               (is sum (+ a (+ b c)))
+               (select d d-3 d-4)
+               (select g d-4 d-5)
+               (is sum (+ a (+ d g)))
+               (select e d-5 d-6)
+               (is sum (+ c (+ e g)))
+               (select f d-6 d-7)
+               (is sum (+ d (+ e f)))
+               (select h d-7 d-8)
+               (is sum (+ b (+ e h)))
+               (select i d-8 (nil))
+               (is sum (+ c (+ f i)))
+               (is sum (+ a (+ e i))))

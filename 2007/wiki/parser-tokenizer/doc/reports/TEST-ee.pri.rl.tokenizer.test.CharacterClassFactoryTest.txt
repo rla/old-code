@@ -1,0 +1,5 @@
+Testsuite: ee.pri.rl.tokenizer.test.CharacterClassFactoryTest
+Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.005 sec
+
+Testcase: testClassesExist took 0.001 sec
+Testcase: testClassNotExists took 0 sec

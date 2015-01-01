@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Entries</title>
+</head>
+<body>
+	<table id="entries"></table>
+	
+	<div id="error"></div>
+
+	<script type="text/javascript">
+	
+		function Column(name, property) {
+			this.name = name;
+			this.property = property;
+		}
+	
+		function ColumnData() {
+			this.columns = [];
+			this.addColumn = function(name, property) {
+				this.columns.push(new Column(name, property));
+			}
+		}
+		
+		var entryTable = new ColumnData();
+		entryTable.addColumn("Title", "title");
+		
+		function populateTable(table, entries, columns) {
+			
+			for (var i = 0; i < entries.length; i++) {
+				var entry = entries[i];
+				var row = table.insertRow(-1);
+				
+				for (var c = 0; c < columns.columns.length; c++) {
+					row.insertCell(-1).appendChild(document.createTextNode(entry[columns.columns[c].property]));
+				}
+			}
+		}
+	
+		var request = new XMLHttpRequest();
+		request.open("GET", "http://localhost:10000/app?command=list", true);
+		
+		request.onload = function(e) {			
+			var table = document.getElementById("entries");
+			var response = JSON.parse(request.responseText);
+			var entries = response["list"];
+			
+			populateTable(table, entries, entryTable);
+		}
+		
+		request.onerror = function(e) {
+			document.getElementById("error").appendChild(document.createTextNode("Error"));
+		}
+		
+		request.send(null);
+	</script>
+</body>
+</html>

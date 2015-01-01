@@ -1,0 +1,63 @@
+startState end
+S: startState startState
+S: endState endState
+S: stringTransition stringTransition
+S: escapeQuote escapeQuote
+S: escapeNewline escapeNewline
+S: escapeTab escapeTab
+S: escapeReturn escapeReturn
+S: escapeEscape escapeEscape
+S: nextState nextState
+S: semanticsIdentifier semanticsIdentifier
+S: semanticsSemantics semanticsSemantics
+S: oldState oldState
+S: charTransition charTransition
+S: endTransition endTransition
+
+startState [whitespace] startStateWhitespace
+startStateWhitespace [identifier] endState
+endState [whitespace] endStateWhitespace
+endStateWhitespace "S:" semanticsWhitespace
+endStateWhitespace [identifier] oldState
+
+semanticsWhitespace [identifier] semanticsIdentifier
+semanticsIdentifier [whitespace] semanticsIdentifierWhitespace
+semanticsIdentifierWhitespace [identifier] semanticsSemantics
+semanticsSemantics [whitespace] semanticsSemanticsWhitespace
+semanticsSemantics ! end
+semanticsSemanticsWhitespace "S:" semanticsWhitespace
+semanticsSemanticsWhitespace [identifier] oldState
+semanticsSemanticsWhitespace ! end
+
+oldState [whitespace] oldStateWhitespace
+oldStateWhitespace "\"" stringTransition
+oldStateWhitespace "[" charTransition
+oldStateWhitespace "!" endTransition
+
+stringTransition "\\\\" escapeEscape
+stringTransition "\\\"" escapeQuote
+stringTransition "\\n" escapeNewline
+stringTransition "\\t" escapeTab
+stringTransition "\\r" escapeReturn
+
+escapeEscape "" escapeEscape
+escapeReturn "" stringTransition
+escapeTab "" stringTransition
+escapeNewline "" stringTransition
+escapeQuote "" stringTransition
+
+stringTransition "\"" stringTransitionWhitespace
+stringTransitionWhitespace [identifier] nextState
+
+charTransition "]" charTransitionWhitespace
+charTransitionWhitespace [identifier] nextState
+
+endTransition "" endTransitionWhitespace
+endTransitionWhitespace [identifier] nextState
+
+nextState [whitespace] nextStateWhitespace
+nextStateWhitespace "S:" semanticsWhitespace
+nextStateWhitespace [identifier] oldState
+
+nextState ! end
+nextStateWhitespace ! end

@@ -1,0 +1,20 @@
+Memory consumption of N=30 2D Laplacian matrix:
+
+Measured using ps utility: 59668 - 54140 =~ 5MB
+Assuming 4-byte floats: 4 * (30 - 1)**4 =~ 2.6MB
+Overhead factor is about 2.
+
+Memory consumption of N=60 Laplacian matrix:
+
+Measured using ps utility: 148804 - 54140 =~ 92MB
+Assuming 4-byte floats: 4 * (60 - 1)**4 =~ 46MB
+Overhead factor is still about 2.
+
+I have 2GB of memory, that gives 1GB of overhead-free memeory
+which gives sqrt(sqrt(10 ** 9 / 4)) =~ 130 as max N value.
+
+For a 3D Laplacian:
+In 3D we need n x n 2D Laplacians similary as we needed n x n 1D
+Laplacians in 2D Lap. That gives us total n^6 elements. Assuming
+same constrainst as above we get sqrt(sqrt(sqrt(10 ** 9 / 4))) =~ 11
+as max N value.

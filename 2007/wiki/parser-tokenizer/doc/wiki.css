@@ -1,0 +1,43 @@
+p, li {
+	font-family: Verdana, sans-serif;
+	font-size: 12pt;
+}
+
+body {
+	margin-left: 100px;
+	margin-top: 100px;
+	width: 700px;
+}
+
+p {
+	text-align: justify;
+	line-height: 200%;
+}
+
+h1 {
+	margin-bottom: 50px;
+}
+
+a {
+	color: #0000ff;
+}
+
+li img.image-tex {
+	vertical-align: middle;
+}
+
+p img.image-tex {
+	vertical-align: middle;
+}
+
+li {
+	line-height: 200%;
+}
+
+pre {
+	font-family: monospace;
+	padding: 10px;
+	padding-left: 20px;
+	background-color: #cccccc;
+	font-size: 10pt;
+}

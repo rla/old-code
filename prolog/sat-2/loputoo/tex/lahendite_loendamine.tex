@@ -1,0 +1,147 @@
+% Dokumendi klass, fondi suurus ja keel
+
+\documentclass[12pt,estonian]{report}
+
+% Kasutatavad paketid
+
+\usepackage[estonian]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{verbatim}
+\usepackage{algorithmic}
+
+% Kasutatav font "Computer Modern"
+
+\fontfamily{cm}
+
+% Makrodes kasutatavad loendurid
+% Lemmade, teoreemide ja algoritmide jaoks
+
+\newcounter{lemma_counter}\setcounter{lemma_counter}{1}
+\newcounter{theorem_counter}\setcounter{theorem_counter}{1}
+\newcounter{algorithm_counter}\setcounter{algorithm_counter}{1}
+\newcounter{example_counter}\setcounter{example_counter}{1}
+
+% Kasutatavad makrod
+% Lemma väljastamine
+
+\newcommand{\lemma}[1]{
+	\hspace{1cm}\textbf{Lemma \arabic{lemma_counter}\stepcounter{lemma_counter}. \textit{#1}}
+}
+
+% Teoreemi väljastamine
+
+\newcommand{\theorem}[1]{
+	\hspace{1cm}\textbf{Teoreem
+	\arabic{theorem_counter}\stepcounter{theorem_counter}. \textit{#1}} }
+
+% Tõestuse alguse tähistamine kirjaga "Tõestus:"
+
+\newcommand{\proof}[0]{
+	\hspace{1cm}\textbf{Tõestus.}
+}
+
+% Tõestuse jagamine osadeks, osa "nimi"
+
+\newcommand{\proofpart}[1]{
+	\hspace{1cm}\textbf{#1. }
+}
+
+% Tõestuse lõpumärk
+
+\newcommand{\proofend}[0]{\(\square\)}
+
+% Protseduuri nimi erikirjas
+
+\newcommand{\proc}[1]{\textsf{#1}}
+
+% Horisontaalne joon
+
+\newcommand{\horline}[0]{
+	\vspace{1ex}\hrule width\columnwidth\vspace{1ex}
+}
+
+% Keskkond algoritmi väljastamiseks
+% Kasuta kui \begin{algorithm}{OP}
+
+\newenvironment{algorithm}[1]{
+	\vspace{0.5cm}
+	\textbf{\large{Algoritm
+	\arabic{algorithm_counter}}\stepcounter{algorithm_counter}}. \proc{#1}
+	\horline
+	}{
+	\vspace{0.5cm}
+	\horline
+	\vspace{0.5cm}
+}
+
+\newcommand{\ainputoutput}[2]{
+	\hskip 2cm\llap{\textbf{Sisend:}} #1\\
+	\null\hskip 2cm\llap{\textbf{Väljund:}} #2
+}
+
+\newcommand{\abody}[0]{\horline\vspace{0.5cm}}
+
+% "Listing" keskkonna parameetrid
+
+\lstset{
+	language=Prolog,
+	basicstyle=\footnotesize\tt,
+	commentstyle=\tt
+}
+
+\newcommand{\programm}[1]{
+	\setstretch{1.0}
+	\lstinputlisting[captionpos=t,frame=single]{#1}
+	\onehalfspacing
+}
+
+% Reanumbri väljastamine 'listing' keskkonnas
+
+\renewcommand*\thelstnumber{\oldstylenums{\the\value{lstnumber}}:}
+
+
+% Vormistuslikud seaded
+% Pealkirjad nummerdamata
+
+%\setcounter{secnumdepth}{-2}
+
+% Lehekülgede ääred
+
+\geometry{verbose,a4paper,tmargin=3.5cm,bmargin=2.5cm,lmargin=3cm,rmargin=2cm}
+
+% Mitu taset näidata sisukorras
+
+\setcounter{tocdepth}{2}
+
+% Jäta lõikude vahele rohkem ruumi
+
+\setlength{\parskip}{\medskipamount}
+
+% Ära taanda lõike
+
+\setlength{\parindent}{0pt}
+
+% Määra reavahe
+
+\onehalfspacing
+
+\begin{document}
+\include{tiitelleht}
+\tableofcontents{}
+\include{sissejuhatus}
+\include{dpll_algoritm}
+\include{dpll_realisatsioon}
+\include{kasutamine}
+\include{kokkuvote}
+\include{abstract}
+\include{kirjandus}
+\include{lisa_dokumentatsioon}
+
+\end{document}

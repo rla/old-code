@@ -1,0 +1,29 @@
+Assignment 1
+Subtask 1.1:
+
+(task1_absolute.png)
+Error is lowest in the middle region of h for given x values.
+For smaller values of h the error increases because computation
+errors increase. For larger values of h the approximation
+formula in 1.1 does not give any more good results (algorithm error).
+
+Subtask 1.2
+
+(task1_absolute.png)
+Region of h for lowest error is biased towards larger values of
+h when using formula in 1.2 compared to the lowest error region of h
+when using formula in 1.1. This means that the formula in 1.2 is
+algorithmically better than the formula in 1.1. For lower values
+of h both algorithms give equally bad results because the
+computation error is not reduced when using better algorithm here.
+
+Subtask 1.5
+
+(task1_relative.png)
+In the plot of relative errors the error ranges for different
+x values are in the closer region than in the plot with
+absolute errors. This makes it easier to see the dependency
+between the value of x and the required value of h for the lowest error range.
+It can be seen that the x value of 0.001 (red plot) requires smaller h value for the lowest
+error than the x value of 1.0 (blue plot). Respectively same for 1.0 and 1000.0
+(yellow plot) which is quite expected result.

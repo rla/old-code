@@ -1,0 +1,3 @@
+Mercury/cs/wiki_block_io.c:63: warning: 'mercury__wiki_block_io__read_lines_3_0' used but never defined
+Mercury/cs/wiki_block_io.c:64: warning: 'mercury__wiki_block_io__find_blocks_4_0' used but never defined
+Mercury/cs/wiki_block_io.c:65: warning: 'mercury__wiki_block_io__separator_1_0' used but never defined

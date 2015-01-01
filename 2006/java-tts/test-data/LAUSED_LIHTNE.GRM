@@ -1,0 +1,35 @@
+`G'             ->    #`Väärtustamine'#
+
+`Väärtustamine' ->    `Identifikaator'=`Väärtus'
+
+`Väärtus'       ->    `Avaldis'
+
+`Avaldis'       ->    `Liitmine'
+`Avaldis'       ->    `Korrutamine'
+
+`Liitmine'      ->    `Korrutamine'+`Avaldis'
+
+`Korrutamine'   ->    `Konstant'
+`Korrutamine'   ->    `Korrutamine'*`Konstant'
+
+`Konstant' ->    `Arv'
+`Arv'      ->    `Täisarv'
+`Täisarv'  ->    `Number'
+`Täisarv'  ->    `Täisarv'`Number'
+
+
+
+`Number'   -> 0
+           -> 1
+           -> 2
+           -> 3
+           
+           
+`Identifikaator' -> `Täht'
+`Identifikaator' -> `Identifikaator'`Täht'
+`Identifikaator' -> `Identifikaator'`Number'
+
+
+`Täht'      -> a
+`Täht'      -> b
+`Täht'      -> c

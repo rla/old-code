@@ -1,0 +1,17 @@
+Testsuite: ee.pri.rl.parser.test.FastParserTest
+Tests run: 1, Failures: 0, Errors: 1, Time elapsed: 0.006 sec
+
+Testcase: testStackParser took 0.003 sec
+	Caused an ERROR
+ee/pri/rl/FastParser
+java.lang.NoClassDefFoundError: ee/pri/rl/FastParser
+	at ee.pri.rl.parser.test.FastParserTest.testStackParser(Unknown Source)
+Caused by: java.lang.ClassNotFoundException: ee.pri.rl.FastParser
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:220)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:208)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:323)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:294)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:268)
+	at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:336)
+

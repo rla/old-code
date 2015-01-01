@@ -1,0 +1,19 @@
+.copyright{
+  font-family: courier;
+  font-size: 10pt;
+  color: #4B8DFB;
+}
+A:hover{
+  color: #990000;
+}
+.link_show{
+  color: #999999;
+  font-family: courier;
+  font-size: 10pt;
+}
+.sisuobjekt{
+  border: 1px solid #6699cc;
+  padding: 10px 10px 10px 10px;
+  min-height: 200px;
+  background-color: #ffffff;
+}

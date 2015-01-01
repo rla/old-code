@@ -1,0 +1,84 @@
+<html>
+<head>
+  <title>Logi sisse</title>
+  <style type="text/css">
+	A {
+    	font-family: verdana;
+        font-size: 12pt;
+        color: #556699;
+        text-decoration: underlined;
+	}
+    .riba {
+    	font-family: arial;
+        font-size: 12pt;
+        color: #ffffff;
+        text-decoration: underlined;
+        font-weight: normal;
+    }
+    .menu {
+    	font-family: arial;
+        font-size: 12pt;
+        color: #ffffff;
+        text-decoration: underlined;
+        font-weight: normal;
+	}
+    H1 {
+    	font-family: arial;
+        font-size: 14pt;
+        color: #556699;
+    }
+    H2 {
+      	font-family: arial;
+        font-size: 12pt;
+        color: #556699;
+        border-bottom: 1px solid #556699;
+    }
+    INPUT {
+    	background-color: #eeeeee;
+        border: 1px solid #000066;
+    }
+    TD {
+        font-family: verdana;
+        font-size: 11pt;
+    }
+    BODY {
+    	background-color: #b1d3ec;
+        margin: 0px;
+    }
+    .menuu {
+    	border: 1px solid #556699;
+    }
+  </style>
+</head>
+
+<body>
+<table style="width: 100%; height: 100%" cellspacing="0" cellpadding="6">
+<tr>
+<td colspan="2" style="height: 20pt; border-bottom: 2px solid #ffffff; background-color: #6caad9; color: #ffffff">
+&nbsp;
+</td>
+</tr>
+<tr>
+<td style="width: 80px; border-right: 2px solid #ffffff; color: #b6c5f2; font-weight: bold; background-color: #6caad9" valign="top">
+<br><br>
+&nbsp;
+</td>
+<td valign="center" width="100%" style="padding: 10pt" align="center">
+<form action="index.php" method="post">
+<input name="login" type="hidden" value="1">
+<input name="keel" type="hidden" value="ee">
+Kasutajanimi:<br>
+<input name="nimi" type="text" value=""><br>
+Parool:<br>
+<input name="parool" type="password" value=""><br><br>
+<input type="submit" value="Logi sisse">
+</form>
+</td>
+</tr>
+</table>
+<div align="center" style="position: absolute; bottom: 10pt; left: 60pt">
+<a href="login-ee.html"><img src="pildid/ee.gif" style="border: none"></a>
+<a href="login-en.html"><img src="pildid/gb.gif" style="border: none"></a>
+</div>
+</body>
+</html>

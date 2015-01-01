@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title></title>
+    <meta content="">
+    <style></style>
+  </head>
+<body>
+<h1>Slackware linux</h1>
+<p>Antud õpetus keskendub Slackware Linuxi versioonile 10.0,
+kuid võib toimida ka teiste versioonide korral.</p>
+<h2>1.Boot disketid</h2>
+<h3>1.1.Boot-diskettide tõmmised</h3>
+<ul>
+<li><a href="bare.i">Kernel bare.i</a>
+<li><a href="install.1">Esimene paigaldusdisk</a>
+<li><a href="install.2">Teine paigaldusdisk</a>
+</ul>
+<h3>1.2.Tõmmiste kirjutamine</h3>
+Boot-tõmmise kirjutamiseks disketile linuxi alt tuleb kasutada käsku <b>dd if=[tõmmise-nimi] of=/dev/fd0</b>.
+Windowsi või dosi all saab hakkama programmiga <a href="rawrite.exe">Rawrite.exe</a>.
+Käsk rawrite kasutamiseks on <b>rawrite [tõmmise-nimi] A:</b>.<br>
+Sellest programmist on olemas eraldi ka Windows NT ja XP versioonid:<br>
+<ul>
+<li><a href="nt/rawrite.exe">Rawrite NT</a>
+<li><a href="xp/rawrite.exe">Rawrite XP</a>
+</ul>
+<h2>2.Bootimine</h2>
+<h3>2.1 Diskettide abil</h3>
+Bootimiseks sisestame esimese disketi arvutisse ja käivitame arvuti. Enne paigaldamisdiskide kasutamist
+näidatakse käsurida, kuhu saab sisestada lisaparameetrid. Tavaliselt pole sinna midagi vaja
+kirjutada. Sisestame flopiseadmesse esimese paigaldusdiski ja vajutame Enterit. Varsti küsitakse teise disketi
+järele. Anname selle talle.<br>
+Kui kuskile ekraanile ei tekkinud teadet Error või Kernel panic ja kui me näeme käsurida, siis on kõik
+seni hästi läinud. Veateateid põhjustavad enamasti mittetöötavad disketid.
+Süsteemi sisselogimiseks vajutame lihtsalt Enterit. 
+<h3>2.2 Cd-lt</h3>
+Slackware Linuxi distributsioon asub kahel cd-l. Esimest neist saab kasutada bootimiseks. Lõpptulemus
+on sama, mis diskettide korral.
+<h2>3.Kõvaketta partitsioonide loomine</h2>
+Selleks vajame utiili nimega fdisk. Käsk tema kasutamiseks sisestame käsureale <b>fdisk /dev/hdX</b>, kus X on
+vastavalt a-h.<br>
+Kõvakettad ja muud IDE seadmed on jagatud nii:<br>
+<b>/dev/hda</b> - esimese IDE kanali master seade<br>
+<b>/dev/hdb</b> - esimese IDE kanali slave seade<br>
+<b>/dev/hdc</b> - teise IDE kanali master seade<br>
+jne.<br><br>
+Fdiski kasutamine on väga lihtne, üldist abi saab käsuga <b>m</b>.<br>
+Antud seadme partitsioonide tabelit
+näeb käsuga <b>p</b>.<br>
+Partitsiooni kustutamine käib käsuga <b>d</b>, kusjuures
+tuleb valida kustutatava osa tüüp (primary (<b>p</b>), extended (<b>e</b>)) ja partitsiooni
+järjekorranumber.<br>
+Kustutamisega võiks sinnamaale jõuda, kus partitsioonide tabelis pole ühtegi sissekannet.<br>
+Kui see on tehtud, loome uued partitsioonid käsuga <b>n</b>. Sealjuures küsitakse
+loodava partitsiooni järjekorranumbrit. Nummerdamist võiks alustada 1-st.<br>
+Vajame kolme partitsiooni, mille suurused võiks olla 512 MB, 4 GB ja kolmas ülejäänud ketta ruumi suurune.
+Probleem võib tekkida sellega, et fdisk tahab ketta partitsioonide suurusi märkida radade arvus, mitte
+megabaitides.<br>
+Käsk <b>p</b> väljastastas infot ka antud ketta suuruse kohta, näiteks:<br>
+<pre>
+Command (m for help): p
+
+Disk /dev/hda: 30.7 GB, 30750031872 bytes
+255 heads, 63 sectors/track, 3738 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+...
+</pre>
+Siin on esimesel real kirjas ketta nimi (/dev/hda) ja suurus gigabaitides ning baitides.
+Teiselt realt saame, et kettal on 3738 rada. Kolmas rida annab ühe ketta ühe raja suuruse baitides. Seega
+oleks partitsioonide 1 ja 2 suurused vastavalt 65, 500. Fdisk küsib partitsiooni algusrada, pakkudes ise
+ketta algusest esimese mittekasutatu. Lisaks tahab teada ka suurust (vaikimisi pakub tervet ketast ja
+esimese ning teise partitsiooni korral tuleb sisestada vastavalt 65 ja 500). Kolmanda tegemisel võib vabalt
+kasutada vaikeväärtusi.<br>
+Kui partitsioonid on loodud, tuleb muuta neist esimese tüüpi. Fdiskis vajutame <b>t</b>, valime
+esimese partitsiooni (1) ning sisestama tüübi koodi (82). Koodile 82 Vastab Linux swap.<br>
+Järgmiseks võiks seada aktiivseks teise partitsiooni (sellelt toimub alglaadimine). Seda
+teeme käsuga <b>a</b>. Küsitakse partitsiooni numbrit, sisestame 2.<br>
+Nüüd on ketas sobivalt jaotatud ja lõpetuseks kasutame fdiski käsku <b>w</b>, mis kirjutab uue tabeli seadmesse.<br>
+Fdiskist väljume käsuga <b>q</b>.
+<h2>4.Installeerimine</h2>
+Kõigepealt eeldame, et oleme bootinud ning süsteemis sees (2.), ning meil on olemas sobivad partitsioonid (3.).<br>
+Paigaldamise alustamiseks sisestame käsu <b>setup</b>.
+</body>
+</html>

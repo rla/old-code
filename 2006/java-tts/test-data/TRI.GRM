@@ -1,0 +1,47 @@
+`programm'	->	`programm12'#
+`programm12'	->	#`operaatorid'
+`operaatorid'	->	`operaator'
+		->	`operaatorid13';`operaatorid'
+`operaatorid13'	->	`operaator'		
+`operaator'	->	`label'|`operaator'
+		->	`omistamine'
+		->	`iflause'
+		->	`suunamine'
+		->	`lugemine'
+		->	`kirjutamine'
+`label'		->	#i#
+`omistamine'	->	`muutuja':=`omistamine1'
+		->	`muutuja':=`loogilav'
+`omistamine1'	->	`aritmav'
+`muutuja'	->	#i#		
+`iflause'	->	`tingimus'`operaator'
+`suunamine'	->	GOTO`label'
+`aritmav'	->	`yksliige'
+		->	`aritmav'+`aritmav2'
+		->	`aritmav'-`aritmav3'
+`aritmav2'	->	`yksliige'		
+`aritmav3'	->	`yksliige'		
+`yksliige'	->	`tegur'
+		->	`yksliige'*`yksliige4'
+		->	`yksliige'/`tegur'
+`yksliige4'	->	`tegur'		
+`tegur'		->	#i#
+		->	#c#
+		->	(`tegur5'
+`tegur5'	->	`aritmav')		
+`loogilav'	->	`aritmav'<`loogilav6'
+		->	`aritmav'>`loogilav7'
+		->	`aritmav'<=`loogilav8'
+		->	`aritmav'>=`loogilav9'
+		->	`aritmav'/=`loogilav10'
+		->	`aritmav'=`loogilav11'
+`loogilav6'	->	`aritmav'		
+`loogilav7'	->	`aritmav'
+`loogilav8'	->	`aritmav'
+`loogilav9'	->	`aritmav'
+`loogilav10'	->	`aritmav'
+`loogilav11'	->	`aritmav'
+`tingimus'	->	IF`loogilav'THEN
+`lugemine'	->	READ #i#
+`kirjutamine'	->	WRITE #i#
+

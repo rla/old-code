@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<textures>
+  <texture name="wall" file="r.jpg"/>
+  <texture name="floor" file="floor.jpg"/>
+  <texture name="wall2" file="18.jpeg"/>
+  <texture name="wall3" file="15.jpeg"/>
+  <texture name="door1" file="door1.jpg"/>
+  <texture name="ceil" file="ceil.jpg"/>
+</textures>

@@ -1,0 +1,23 @@
+<html>
+<head>
+  <title>Seadistus</title>
+</head>
+<body>
+<h1>Seadistus</h1>
+
+Failis conf.php asuvad mysql serveriga ühendamiseks vajalik aadress,
+kasutajanimi ja parool. Need tuleb seada enne lehekülje kasutamist.<br>
+Faili sisu:<br>
+
+<pre>
+&#60;?php
+$SYSTEEM['nimi']='sait1';       //saidi nimi
+$SYSTEEM['host']='localhost';   //mysql serveri aadress
+$SYSTEEM['user']='root';        //kasutajanimi
+$SYSTEEM['pass']='';            //parool
+$SYSTEEM['base']='admin';       //andmebaas
+$SYSTEEM['vaikimisi_keel']='ee';//keel, milles kuvatakse esilehekülg.
+?&#62;
+</pre>
+</body>
+</html>

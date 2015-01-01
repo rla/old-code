@@ -1,0 +1,88 @@
+================================================================
+Title                   : Mall
+Filename                : MALL.WAD
+Author                  : Barrasso and Zep
+Email Address           : nramirez@bvsd.k12.co.us (Barrasso on IRC)
+                          mstolp@nyx.cs.du.edu (Zep on IRC)
+Misc. Author Info       : Authors of STARGATE.WAD
+                          Please send us comments,suggestions etc...
+
+Description             : This DOOM II deathmatch wad with a mall theme.  
+                          It should be used with deathmatch 2.0
+                          Includes around 80 new textures (And a movie)
+                          6 new sounds, new music, all weapons but the
+                          BFG.  Very open level, main mall hall with 
+                          around 8 stores to fight in.  You thought 
+                          playing hide and seek in a mall was fun! Wait
+                          until you try deathmatch in one!
+
+                          Stores include :
+                           Music store
+                           Sporting goods store
+                           TV store
+                           Computer store
+                           Book store
+                           Arcade
+                           Closed pet store
+                           Movie theater
+                           Food court
+
+MUCH Additional Credit to   :  Author of COOLWAD1.WAD (we stole some
+                                  of your cool sounds)
+                               Author of TRINITY.WAD (for your cool
+                                  movie)
+                               Ice Tiger (For suggestions)
+                               Mystic (For making 4 player doom possible
+                                  for us locally) BBS -> (303)415-1895
+                               And Id Software for making the game.
+
+
+================================================================
+
+* Play Information *
+
+MAP #                   : MAP01
+Single Player           : Yes   (Just for looking around, no monsters.)
+Cooperative 2-4 Player  : Nope. (No monsters, no point.)
+Deathmatch 2-4 Player   : Yes! (suggest -altdeath)
+Difficulty Settings     : No
+New Sounds              : Yes
+New Graphics            : Yes
+New Music               : Yes
+Demos Replaced          : None
+
+* Construction *
+
+Base                    : New level from scratch
+Editor used             : Deth 2.3
+                          Deutex 3.5
+                          Dview 250
+                          BSP 1.2
+                          NWT 1.3
+                          Midi2mus
+                          Deluxe Paint 2 Enhanced
+Build Time              : Too damn much.... * 12
+Known Bugs              : Zero.
+
+
+* Copyright / Permissions *
+
+Authors may NOT use this level as a base to build additional
+levels.
+
+You MAY distribute this WAD, provided you include this file, with
+no modifications.  You may distribute this file in any electronic
+format (BBS, Diskette, CD, etc) as long as you include this file
+intact. 
+
+* Where to get this WAD *
+
+FTP sites:  FTP.CDROM.COM
+            FTP.IDSOFTWARE.COM
+
+BBS's: 
+        .WAD Server BBS
+            (303)-673-9189
+        Enternet
+            (303)-415-1895
+

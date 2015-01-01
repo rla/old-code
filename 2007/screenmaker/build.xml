@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<project name="screenmaker" default="jar">
+
+	<property name="src" value="src" />
+	<property name="lib" value="lib" />
+	<property name="build" value="bin" />
+	<property name="jar" value="${ant.project.name}.jar" />
+
+	<path id="compile.classpath">
+		<fileset dir="${lib}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<path id="svnant.classpath">
+		<fileset dir="ant">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="compile" description="Compile the project">
+		<mkdir dir="${build}" />
+		<javac destdir="${build}">
+			<src path="${src}" />
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="clean" description="Clean the project">
+		<delete dir="${build}" />
+		<delete file="${jar}" />
+	</target>
+
+	<target name="jar" depends="compile" description="Package the project into jar">
+		<jar destfile="${jar}" basedir="${build}" />
+	</target>
+
+	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml"
+		classpathref="svnant.classpath" />
+
+	<target name="tag">
+		<property name="tagname" value="release-1" />
+
+		<property name="svn.base.url"
+			value="https://infdot.com/usvn/svn/screenmaker/trunk" />
+		<property name="svn.tag.url"
+			value="https://infdot.com/usvn/svn/screenmaker/tags/${tagname}" />
+
+		<echo message="Source branch: ${svn.base.url}" />
+		<echo message="Destination tag: ${svn.tag.url}" />
+
+		<svn username="raivo" password="Eclipse1985" javahl="true" svnkit="false"
+			failonerror="false">
+			<delete url="${svn.tag.url}" message="[Build Script] delete previous tag: ${tagname}" />
+		</svn>
+
+		<svn username="raivo" password="Eclipse1985" javahl="true" svnkit="false"
+			failonerror="true">
+			<copy srcurl="${svn.base.url}" desturl="${svn.tag.url}"
+				message="[Build Script] created tag: ${tagname}" />
+		</svn>
+
+		<echo message="... tagging completed." />
+	</target>
+
+</project>

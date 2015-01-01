@@ -1,0 +1,14 @@
+= Wiki editor quick keys =
+
+== Contents ==
+
+* __ALT+L__ - create new list.
+* __ALT+I__ - create new list item.
+* __ALT+C__ - create level 1 heading (caption).
+* __ALT+S__ - create level 2 heading (section).
+* __ALT+P__ - create level 3 heading (paragraph).
+
+== Control ==
+
+* __ALT+SHIFT+S__ - save current page.
+* __ALT+SHIFT+C__ - compile current page into html.

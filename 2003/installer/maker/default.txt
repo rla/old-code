@@ -1,0 +1,2 @@
+D:\RapidQ\naide3.exe -> %path\naide3.exe
+D:\RapidQ\naide1.exe -> %path\naide1.exe

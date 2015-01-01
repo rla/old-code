@@ -1,0 +1,27 @@
+class JavaMeetod {
+	
+	
+	private String nimi; 
+	private String tyyp; 
+	private String tagastus; 
+	private String parameetrid; 
+	
+	public JavaMeetod(String nimi, String tyyp, String tagastus, String parameetrid) {
+	
+		
+		
+		this.nimi=nimi;
+		this.tyyp=tyyp;
+		this.tagastus=tagastus;
+		this.parameetrid=parameetrid;
+	
+	}
+	
+	public String toString() {
+	
+		
+		
+		return  +tyyp + +tagastus + +nimi + +parameetrid + ;
+	
+	}
+}

@@ -1,0 +1,7 @@
+Testsuite: ee.pri.rl.parser.serialization.test.ParserSerializationTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.059 sec
+------------- Standard Output ---------------
+Compiling took 1ms
+------------- ---------------- ---------------
+
+Testcase: testSerializationDeserialization took 0.056 sec

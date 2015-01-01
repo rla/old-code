@@ -1,0 +1,49 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>The Indexer</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../../../laanemets.css" />
+</head>
+<body>
+<h1>The Indexer</h1>
+<div class="spacing"></div>
+
+<h2>Introduction</h2>
+<p>
+The Indexer is full-text search engine that is optimized for search speed over very large
+document collections.
+</p>
+
+<h2>Features</h2>
+<ul>
+  <li>Support for partial words, like sp*d (would match speed)</li>
+  <li>Weighted results using term vectors</li>
+  <li>Very simple API</li>
+  <li>Support for specified encoding (or subset of it)</li>
+</ul>
+
+<h2>Character Encoding</h2>
+<p>
+The Indexer uses character mapper that maps every multibyte character
+into one byte. This is required for trigram indexing.
+</p>
+
+<h2>Partial matching</h2>
+<p>
+For search queries that use wildcards in the words we use the trigram indexing. Every indexed word
+is splitten into three-byte vectors. The word ID is saved into B-tree in separated file.
+To get the tree id we use digital tree to store three-byte vectors. Every three-byte
+vector maps to distinct B-tree. Therefore we can easily
+find all the words that correspond to the partial word in the query. The words themself are
+stored in the packed form in sequencial file.
+</p>
+
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="../../../pictures/email.png" alt="email" align="top"/>, 02.09.06, <a href="../../../index.html">Index</a>
+
+</body>
+</html>

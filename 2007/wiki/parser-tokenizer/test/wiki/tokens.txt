@@ -1,0 +1,7 @@
+text
+text(text)          [numeric]          text_number(number)
+text_number(number) [lower_identifier] text(text)
+text(text)          "**"               text_bold(bold)
+text_bold(bold)     ""                 text(text)
+text(text)          "__"               text_italic(italic)
+text_italic(italic) ""                 text(text)

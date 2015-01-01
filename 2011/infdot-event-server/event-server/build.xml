@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<project name="infdot-net-event" default="jar-with-deps">
+
+	<property name="doc" value="doc" />
+	<property name="etc" value="etc" />
+	<property name="dist" value="dist" />
+
+	<property name="src" value="src" />
+	<property name="lib" value="lib" />
+
+	<property name="build" value="bin" />
+	<property name="jar" value="${ant.project.name}.jar" />
+	<property name="jar.with.deps" value="${ant.project.name}-with-dependencies.jar" />
+	
+	<taskdef resource="com/infdot/build/tasks.properties" />
+
+	<path id="compile.classpath">
+		<fileset dir="${lib}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="compile" description="Compiles the project">
+		<mkdir dir="${build}" />
+		<javac destdir="${build}" debug="false">
+			<src path="${src}" />
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="clean" description="Clean the project">
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+		<delete file="${jar}" />
+	</target>
+
+	<target name="jar" depends="compile" description="Creates jar file">
+		<jar destfile="${jar}" basedir="${build}" />
+	</target>
+	
+	<target name="jar-with-deps" depends="jar" description="Creates jar file, merges dependencies">
+		<jar destfile="${jar.with.deps}" basedir="${build}">
+			<zipfileset src="${lib}/commons-lang-2.5.jar" excludes="META-INF/**" />
+			<zipfileset src="${lib}/commons-logging-1.1.1.jar" excludes="META-INF/**" />
+			<zipfileset src="${lib}/ezmorph-1.0.6.jar" excludes="META-INF/**" />
+			<zipfileset src="${lib}/json-lib-2.3-jdk15.jar" excludes="META-INF/**" />
+			<zipfileset src="${lib}/netty-3.2.2.Final.jar" excludes="META-INF/**" />
+			<zipfileset src="${lib}/commons-collections-3.2.jar" excludes="META-INF/**" />
+			<zipfileset src="${lib}/commons-beanutils-1.8.3.jar" excludes="META-INF/**" />
+		</jar>
+	</target>
+
+</project>

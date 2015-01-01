@@ -1,0 +1,1 @@
+JAVA_HOME=/usr/lib/jdk1.7.0

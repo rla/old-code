@@ -1,0 +1,989 @@
+% Dokumendi klass, fondi suurus ja keel
+
+\documentclass[12pt,estonian]{report}
+
+% Kasutatavad paketid
+
+\usepackage[estonian]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{geometry}
+
+% Makrodes kasutatavad loendurid
+% Lemmade, teoreemide ja algoritmide jaoks
+
+\newcounter{lemma_counter}\setcounter{lemma_counter}{1}
+\newcounter{theorem_counter}\setcounter{theorem_counter}{1}
+\newcounter{algorithm_counter}\setcounter{algorithm_counter}{1}
+
+% Kasutatavad makrod
+% Lemma väljastamine
+
+\newcommand{\lemma}[1]{
+	\hspace{1cm}\textbf{Lemma \arabic{lemma_counter}\stepcounter{lemma_counter}. \textit{#1}}
+}
+
+% Teoreemi väljastamine
+
+\newcommand{\theorem}[1]{
+	\hspace{1cm}\textbf{Teoreem \arabic{theorem_counter}\stepcounter{theorem_counter}. \textit{#1}}
+}
+
+% Tõestuse alguse tähistamine kirjaga "Tõestus:"
+
+\newcommand{\proof}[0]{
+	\hspace{1cm}\textbf{Tõestus.}
+}
+
+% Tõestuse jagamine osadeks, osa "nimi"
+
+\newcommand{\proofpart}[1]{
+	\hspace{1cm}\textbf{#1. }
+}
+
+% Tõestuse lõpumärk
+
+\newcommand{\proofend}[0]{\(\square\)}
+
+% Protseduuri nimi erikirjas
+
+\newcommand{\proc}[1]{\textsf{#1}}
+
+% Horisontaalne joon
+
+\newcommand{\horline}[0]{
+	\vspace{1ex}\hrule width\columnwidth\vspace{1ex}
+}
+
+% Keskkond algoritmi väljastamiseks
+% Kasuta kui \begin{algorithm}{OP}
+
+\newenvironment{algorithm}[1]{
+	\vspace{0.5cm}
+	\horline
+	\textbf{Algoritm \arabic{algorithm_counter}\stepcounter{algorithm_counter}}. \proc{#1}
+}{
+	\horline
+	\vspace{0.5cm}
+}
+
+% Vastavalt algoritmi sisend/väljund ja keha
+
+\newcommand{\ainput}[1]{\newline\emph{sisend:} #1}
+\newcommand{\aoutput}[1]{\newline\emph{väljund:} #1}
+\newcommand{\abody}[0]{\horline}
+
+% "Listing" keskkonna parameetrid
+
+\lstset{
+	language=Prolog,
+	basicstyle=\small\tt,
+	commentstyle=\tt
+}
+
+
+% Vormistuslikud seaded
+% Pealkirjad nummerdamata
+
+%\setcounter{secnumdepth}{-2}
+
+% Lehekülgede ääred
+
+\geometry{verbose,a4paper,tmargin=2.5cm,bmargin=2.5cm,lmargin=4cm,rmargin=3cm}
+
+% Mitu taset näidata sisukorras
+
+\setcounter{tocdepth}{2}
+
+% Jäta lõikude vahele rohkem ruumi
+
+\setlength{\parskip}{\medskipamount}
+
+% Ära taanda lõike
+
+\setlength{\parindent}{0pt}
+
+% Määra reavahe
+
+\onehalfspacing
+
+\begin{document}
+
+% Siit algab tiitelleht
+
+\thispagestyle{empty}
+
+\begin{center}
+{\large\sffamily{
+T A R T U\ \ \ Ü L I K O O L\\
+MATEMAATIKA-INFORMAATIKATEADUSKOND\\
+Arvutiteaduse instituut\\
+Informaatika eriala
+}}
+
+\vspace*{\stretch{5}}
+
+{\textbf{\Large Raivo Laanemets}}
+
+\vspace{4mm}
+
+{\textbf{\LARGE DPLL protseduuri täiendamine lahendite täpseks loendamiseks}}
+
+\vspace{5mm}
+
+{\textbf{\Large Bakalaureusetöö (4 AP)}}
+
+\end{center}
+
+\vspace*{\stretch{4}}
+
+{\hfill{\Large Juhendaja: Tõnu Tamme, MSc}}
+
+\vspace*{\stretch{3}}
+
+\begin{flushright}
+
+\noindent Autor: ........................................... ``.....'' mai\hskip16pt 2007
+
+\vspace{2mm}
+
+\noindent Juhendaja: .................................... ``.....'' mai\hskip16pt 2007
+
+\end{flushright}
+
+\vspace*{\stretch{2}}
+
+\begin{center}
+{\large{TARTU 2007}}
+\end{center}
+
+% Siin lõpeb tiitelleht
+
+\newpage
+
+\tableofcontents{}
+
+\chapter*{Sissejuhatus}
+\addcontentsline{toc}{chapter}{\numberline{}Sissejuhatus}
+
+Lausearvutusvalemi lahendite loendamisel on erinevaid rakendusi. Näiteks
+loogikaskeemide omaduste väljaselgitamine ja testimismustrite genereerimine.
+Lahendite loendamisele saab taandada tuletust Bayes'i võrgus ja Dedekindi
+numbrite leidmist. Selles töös vaatleme lahendite täpset loendamist.
+Koostatud on algoritme ka lahendite arvu umbkaudseks leidmiseks,
+kasutades tõenäosuslikke ja randomiseeritud meetodeid.
+Paraku on teada, et isegi umbkaudne loendamine garanteeritud väikese veaga on
+arvutuslikult raske ülesanne. Täpse lahendite arvu leidmise probleem
+on \#P-täielik \cite{key-8}.
+
+Selles töös võtame vaatluse alla algoritmi, mis on saadud kehtestatavuse
+algoritmi täiendades. Kehtestatavuse algoritm baseerub artiklites
+\cite{key-1,key-2} kirjeldatud protseduuril. Nendes artikites on
+kirjeldatud algoritmi pedikaatarvutuses kirja pandud teoreemide tõestamiseks
+(predikaatarvutuse valemi $F$ samaselt tõesuse näitamine). Esitatud
+protseduuri saab kirjeldada kolmest osast koosnevana:
+
+\begin{enumerate}
+\item Valemi $\neg F$ teisendamine prefikskujule $F'$.
+\item Valemist $F'$ kvantorivabade konjuktiivsel normaalkujul lausearvutusvalemite $F'_{k}$
+genereerimine.
+\item Eelmises sammus saadud valemi $F'_{k}$ kehtestatavuse kontrollimine.
+Kui $F'_{k}$ on kehtestatav, siis mine tagasi sammu (2), vastasel
+korral väljasta {}``tõene'' ja lõpeta töö.
+\end{enumerate}
+Algoritm toetud faktile, et valem $F$ on samaselt tõene parajasti
+siis, kui $\neg F$ on mittekehtestatav. Sammus (2) tehtavad teisendused
+säilitavad kehtestatavust (s-ekvivalentsus). Sammu (3) sooritamiseks
+rakendatakse valemile teatavaid süntaktilisi teisendusi kuni saadakse
+tühivalem või valem, mis sisaldab tühiklauslit. Tühivalem on kehtestatav,
+aga tühiklauslit sisaldav valem ei ole. Praktiliselt kõik lausearvutuse
+kehtestatavuse täielikud aloritmid kasutavad nendes kahes artiklis välja toodud
+teisendusreegleid.
+
+Selles töös ei kasuta me kõiki artiklites \cite{key-1,key-2}
+esitatud reegleid, vaid võtame aluseks nn. hargnemisreegli
+(\emph{branching rule}) ja selle erikujud ning valemit lihtsustavad
+reeglid. Need reeglid säilitavad kehtestatavust ning hilisemas töö osas
+näitame, et nende reeglite jaoks kehtivad teatud võrrandid,
+mis võimaldavad lahendite arvu loendamist.
+
+Kõigepealt defineerime töös kasutatavad mõisted, seejärel kirjeldame
+teisendusreeglid, tõestame nende korrektsuse ja anname näiteid nende
+reeglite rakendamisest kehtestavate valemite tuletamiseks.
+Pärast seda esitame kehtestatavuse otsinguprotseduuri
+ja näitame selle korrektsust ning termineeruvust.
+Lõpuks täiendame otsinguprotseduuri loendamiseks ning
+tõestame ka selle korrektsuse ja termineeruvuse.
+
+
+\section*{Definitsioonid}
+
+\emph{Muutujaks} \emph{}nimetame suvalist sümbolit $x$ fikseeritud sümbolite
+hulgast. \emph{Literaaliks} $l$ loeme muutujat $x$ ($l\equiv x$) või tema
+eitust $-x$ ($l\equiv-x$). \emph{Klausliks} $C$ loeme literaalide disjunktsiooni
+$C=l_{1}\vee..\vee l_{n}$. \emph{Konjuktiivsel normaalkujul valemiks} $F$
+loeme klauslite konjuktsiooni $F=C_{1}\wedge..\wedge C_{k}$. Muutuja
+$x$ \emph{väärtustuseks} nimetame funktsiooni $v$, $v(x)\in\{0,1\}$. Literaali
+$l$ loeme tõeseks, kui $l\equiv x$ ja $v(x)=1$ või $l\equiv-x$
+ja $v(x)=0$. Literaali $l$ loeme vääraks, kui $l\equiv x$ ja $v(x)=0$
+või $l\equiv-x$ ja $v(x)=1$. Literaali $l\equiv x$ \emph{komplementaariks}
+nimetame literaali $\bar{l}\equiv-x$ ja literaali $l'\equiv -x$ komplementaariks
+literaali $\bar{l'}\equiv x$. Klauslit $C=l_{1}\vee..\vee l_{n}$
+nimetame väärtustusel $v$ tõeseks ($v(C)=1$), kui $C$ sisaldab
+vähemalt ühte tõest literaali, vastasel korral vääraks ($v(C)=0$).
+Valemit $F=C_{1}\wedge..\wedge C_{k}$ loeme väärtustusel $v$ tõeseks
+($v(F)=1$), kui ükski klauslitest $C_{1},..,C_{k}$ pole väär, vastasel
+korral vääraks ($v(F)=0$). Töös eeldame, et ükski klausel ei sisalda
+korraga literaali $l$ ja tema komplementaari $\bar{l}$. Samuti eeldame,
+et ükski literaal ei esine samas klauslis mitu korda ja valem ei sisalda
+ühtegi klauslit topelt. Esimesel juhul on võib klausli eemaldada, sest
+selline klausel on alati tõene ja mingit infot ta ei anna. Teisel juhul
+võib topelt esinevad literaalid või klauslid eemaldada, jättes alles
+vastavalt ainult ühe literaali või klausli esinemise.
+
+Konjuktiivsel normaalkujul valemi $F=C_{1}\wedge..\wedge C_{n}$
+võib samastada klauslite hulgaga $\{ C_{1},..,C_{n}\}$. Klausli $C=l_{1}\vee..\vee l_{k}$
+võib samastada literaalide hulgaga $\{ l_{1},..,l_{k}\}$. \emph{Tühivalemi}
+$\emptyset$ loeme tõeseks. \emph{Tühiklausli} $\emptyset$ loeme vääraks.
+Konjuktiivsel normaalkujul valemi, mis sisaldab tühiklauslit, loeme
+samuti vääraks. Valemi ja klauslite väljendamine hulga kujul teeb
+lihtsamaks ja loetavamaks algoritmide esitamise.
+
+Valemist $F$ rääkides mingi konkreetse väärtustuse $v$ piires kasutame
+tähistusviisi $F|_{A=1}$ näitamaks, et $v(A)=1$.
+
+
+\chapter{Tuletamine}
+
+Siin kirjeldatavad ja kasutatavad tuletusreeglid säilitavad valemi
+kehtestatavust. Tuletamine toimub ülaltpoolt allapoole, mis tähendab,
+kui reegli ülemises osas olev valem on tõene mingil väärtustusel,
+siis on seda ka reegli alumises osas olev valem. Iga reegli jaoks
+anname tema üldkuju, kommentaarid reegli kohta ja näite tema kasutamisest.
+Reeglite korrektsuse tõestame töö järgmises osas.
+
+Tuletussüsteemi ainsaks aksioomiks on tühivalem $\emptyset|_{x_1=\delta_1,...,x_l=\delta_l}$ koos mingi
+kitsendava väärtustusega $v(x_i)=\delta_i$, $1\le i\le l$, $\delta_i \in \{0,1\}$. On selge, et tühivalem
+on suvalisel väärtustusel kehtestatav.
+
+Reeglite valikul ja kirjeldamisel on otseselt silmas peetud nende sobivust
+valemi kehtestatavuse otsinguprotseduuri jaoks.
+
+\section{Teisendusreeglid}
+
+
+\subsection{Tõeste klauslite elimineerimine}
+
+Tõeste klauslite elimineerimisreegel on valemit lihtsustav reegel
+mingi väärtustuse piires. Näiteks vaatleme valemit
+
+$F|_{A=1}=C_{1}\wedge C_{2}$, kus $C_{1}=A\vee B$ ja $C_{2}=C\vee B$.
+Ilmselt on selge, et valemit $F$ saab lihtsustada, eemaldades sellest
+tõesed klauslid. Antud juhul on tõene $C_{1}$ ning me saame lihtsustatud
+valemiks $F'=C_{2}$. 
+
+Reegli üldkuju positiivselt esineva muutuja jaoks \emph{(R1p)}:
+
+\[
+\frac{C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}|_{x=1}}{C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k}|_{x=1}}R1p,\]
+
+kus $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\vee\dots\vee l_{i_{l}}$ ja $l_{i_{j}}\equiv x$.
+
+
+Reegli üldkuju negatiivselt esineva muutuja jaoks \emph{(R1n)}:
+
+\[
+\frac{C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}|_{x=0}}{C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k}|_{x=0}}R1n,\]
+
+kus $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\vee\dots\vee l_{i_{l}}$ ja $l_{i_{j}}\equiv -x$.
+
+
+Elimineerimisreeglit on mõistlik kasutada vahetult pärast muutuja
+väärtuse fikseerimist (näiteks vahetult pärast väärtustusreegli rakendamist).
+See võimaldab eemaldada valemist klauslid, mis on juba tõeseks muutunud,
+ning mis ei anna midagi juurde valemi kehtestatavusele. Kuivõrd valemis
+võib literaal $(l\equiv x)$ sisalduda rohkem kui ühes klauslis, tuleb
+reeglit rakendada järjest, kuni kõik sellised klauslid on elimineeritud.
+
+
+\subsection{Väärade literaalide elimineerimine}
+
+Eelmise reegli abil saime valemist eraldada klauslid, mis olid juba
+tõesed, ning mis ei anna midagi juurde valemi muutujate sobivate väärtustuste
+otsimisel. Samuti võime klauslitest kustutada literaalid, mille kohta
+teame, et nad on seni leitud väärtustuses väärad. Võtame näiteks valemi
+$F|_{B=0}=C_{1}\wedge C_{2}$, kus $C_{1}=A\vee B$ ja $C_{2}=C\vee B$.
+Mõlemast klauslist $C_{1},C_{2}$ võime eemaldada literaali $B$.
+Selle tulemusena saame valemi $F'|_{B=0}=C'_{1}\wedge C'_{2}$, kus
+$C'_{1}=A$ ja $C'_{2}=B$.
+
+Reegli üldkuju positiivselt esineva muutuja jaoks \emph{(R2p)}:
+
+\[
+\frac{C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k},C_{i}'=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}|_{x=0}}{C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}},l_{i_{j}}\equiv x|_{x=0}}R2p\]
+
+
+Reegli üldkuju negatiivselt esineva muutuja jaoks \emph{(R2n)}:
+
+\[
+\frac{C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k},C_{i}'=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}|_{x=1}}{C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k},C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}},l_{i_{j}}\equiv-x|_{x=1}}R2n\]
+
+
+Sarnaselt eespool kirjeldatud tõeste klauslite elimineerimise reegliga,
+on mõistlik antud reeglit rakendada vahetult pärast mingi muutuja
+väärtuse fikseerimist. Samuti võib muutuja esineda väärana rohkem
+kui ühes klauslis. Seega tuleks ka seda reeglit rakendada järjest
+nii kaua, kuni vastavaid klausleid enam valemis ei ole.
+
+
+\subsection{Väärtustusreegel}
+
+Väärtustusreegel fikseerib mingi valemis esineva muutuja $x$ väärtustuse. Väärtustusreegleid
+on kaks: reegel (a), mis annab muutujale väärtuseks ``tõene'' ja
+reegel (b), mis annab muutujale väärtuseks ``väär''. Reegli erikujuks
+ühikklausli väärtustusreegel, mis kasutab valemis esinevat informatsiooni
+muutuja väärtuse valimisel. 
+
+% Hargnemisreegel (\emph{branching rule}) jaotab valemi kaheks komponendiks.
+% Jaotamine tehakse mingi muutuja järgi, mis pole seni veel väärtustatud.
+% Ühte komponenti võetakse muutuja tõese väärtusega ja teise komponenti
+% väära väärtusega. Näiteks olgu antud valem $F=C_{1}\wedge C_{2}$,
+% kus $C_{1}=A\vee B$ ja $C_{2}=C\vee B$. Valime jaotamise aluseks
+% muutuja $A$. Siis saame kaks valemit $F|_{A=1}$ ja $F|_{A=0}$.
+% {[}näidata tulemust pärast lihtsustuste sisseviimist] Sisuliselt võimaldab
+% hargnemisreegel jagada kehtestatavuse otsingu kaheks: esimeses osas
+% otsitakse mudelit, kus $v_{1}(A)=1$ ning teises osas mudelit, kus
+% $v_{2}(A)=0$. On selge, et selline jaotus jagab valemi väärtustuste
+% hulga kaheks. Seda omadust saame väga hästi ära kasutada valemi tõeväärtuste
+% loendamisel. Siis esitame hargnemisreegli kahe eraldi tuletusreeglina.
+% Esimeses reeglis (a) valitakse muutuja väärtuseks ``tõene'', teises
+% (b) aga ``väär''.
+
+Väärtustusreegli a üldkuju \emph{(R3p)}:
+
+
+\[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}|_{x=1}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R3p\]
+
+
+Väärtustusreegli b üldkuju \emph{(R3n)}:
+
+\[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}|_{x=0}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R3n\]
+
+
+Väärtustusreegli rakendamise järel on mõistlik rakendada järjest nii
+tõeste klauslite elimineerimisreeglit kui ka väärade literaalide elimineerimisreeglit,
+et eemaldada valemitest mittevajalikud komponendid.
+
+
+\subsection{Ühikklausli väärtustamine}
+
+Ühikklausli väärtustamine on väärtustusreegli erikuju.
+Olgu antud valem $F=C_{1}\wedge C_{2}$, kus $C_{1}=A$ ja $C_{2}=B\vee\neg A$.
+Rakendame nüüd hargnemisreeglit $A$ järgi. Saame kaks valemit $F|_{A=1}$
+ja $F|_{A=0}$. On selge, et valem $F|_{A=0}$ on väär, sest klausel
+$C_{1}$ on väär (ning saaksime pärast väära literaali $A$ elimineerimist
+tühiklausli).
+
+Reegli üldkuju positiivselt esineva muutuja jaoks \emph{(R4p)}:\[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k},C_{i}=l_{i},l_{i}\equiv x|_{x=1}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R4p\]
+
+
+Reegli üldkuju negatiivselt esineva muutuja jaoks \emph{(R4n)}:
+
+\[
+\frac{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k},C_{i}=l_{i},l_{i}\equiv-x|_{x=0}}{C_{1}\wedge\dots\wedge C_{i}\wedge\dots\wedge C_{k}}R4n\]
+
+\section{Näidistuletus}
+
+Järgnevalt on esitatud valemi $F=C_{1}\wedge C_{2}\wedge C_{3}$,
+kus $C_{1}=A\vee B\vee\neg C$, $C_{2}=\neg A\vee\neg B$ ja $C_{3}=C\vee\neg B$
+tuletuspuu:
+
+\input{naidistuletus}
+
+\section{Teisendusreeglite korrektsus}
+
+Nüüd näitame ülalkirjeldatud reeglite korrektsuse, st. näitame, et
+reeglid \emph{R1p, R1n, R2p, R2n, R3p, R3n, R4p} ja
+\emph{R4n} säilitavad valemi kehtestatavuse. Kõik need tõestused on
+sarnased: kõigepealt valime suvalise interpretatsiooni $v$, kus reegli
+ülemisel pool olev valem on tõene, seejärel näitame, et selles interpretatsioonis
+$v$ on ka reegli alumisel poolel olev valem tõene.
+
+\lemma{Tõeste klauslite elimineerimine on korrektne}
+
+Jagame tõestuse kahte ossa: kõigepealt näitame reegli \emph{R1p} korrektsuse,
+siis teeme sedasama reegli \emph{R1n} jaoks.
+
+\proofpart{R1p} Vaatleme valemit $F=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}$.
+Näitame suvalise interpretatsiooni $v$ jaoks, kus $v(x)=1$, kui
+$v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$,
+siis ka $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$,
+kus $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{l}}$ ja $l_{i_{j}}\equiv x$.
+
+\proof
+
+$v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+ja $v(x)=1$  $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(l_{i_{j}})=1$
+$\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(C_{i})=1$
+$\Rightarrow$\\
+$v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+ \proofend
+
+\proofpart{R1n} Vaatleme valemit $F=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}$.
+Näitame suvalise interpretatsiooni $v$ jaoks, kus $v(x)=0$, kui
+$v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$,
+siis ka $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$,
+kus $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{l}}$ ja $l_{i_{j}}\equiv-x$.
+
+\proof
+
+$v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+ja $v(x)=0$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(l_{i_{j}})=1$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(C_{i})=1$
+$\Rightarrow$\\
+$v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$
+\proofend
+
+\lemma{Väärade literaalide elimineerimine on korrektne}
+
+Jagame taas tõestuse kahte ossa.
+
+\proofpart{R2p} Olgu $F=C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k}$
+ja $C_{i}'=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$
+ning $l_{i_{j-1}}\equiv x$. Näitame suvalise interpretatsiooni $v$
+jaoks, kus $v(x)=0$, kui $v(C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k})=1$,
+siis ka $v(C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k})=1$,
+kus $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$.
+
+\proof
+
+$v(C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k})=1$ ja $v(x)=0$
+$\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i}')=\dots=v(C_{k})=1$ ja $v(l_{i_{j}})=0$
+$\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i}')=\dots=v(C_{k})=1$ ja $v(C_{i})=v(C_{i}'\vee l_{i_{j}})=1$
+$\Rightarrow$\\
+$v(C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k})=1$ \proofend
+
+\proofpart{R2n} Olgu $F=C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k}$
+ja $C_{i}'=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$
+ning $l_{i_{j-1}}\equiv-x$. Näitame suvalise interpretatsiooni $v$
+jaoks, kus $v(x)=1$, kui $v(C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k})=1$,
+siis ka $v(C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k})=1$,
+kus $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$.
+
+\proof
+
+$v(C_{1}\wedge\dots\wedge C_{i}'\wedge..\wedge C_{k})=1$ ja $v(x)=1$
+$\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i}')=\dots=v(C_{k})=1$ ja $v(l_{i_{j}})=0$
+$\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i}')=\dots=v(C_{k})=1$ ja $v(C_{i})=v(C_{i}'\vee l_{i_{j}})=1$
+$\Rightarrow$\\
+$v(C_{1}\wedge\dots\wedge C_{i}\wedge..\wedge C_{k})=1$ \proofend
+
+\lemma{Väärtustusreeglid on korrektsed}
+
+\proof
+
+Reeglid \emph{R3p, R3n} on triviaalselt korrektsed.
+\proofend
+
+\lemma{Ühikklausli väärtustamine on korrektne}
+
+\proof
+
+Tegemist on väärtustusreeglite erijuhuga. \proofend
+
+\chapter{Otsing}
+
+Praktilistes rakendustes huvitab meid mingi valemi $F$ muutujate
+väärtustus $v$, millel ta tõene on. Selleks tuleb koostada protseduur,
+mis konstrueerib valemi tuletuspuid. Seda ülesannet võime vaadelda
+kui otsingut olekute ruumis. Sellisel juhul peab otsinguprotseduur
+rakendama tuletusreegeid tagurpidi, st. altpoolt ülespoole. See tähendab,
+et igal sammul tuleks proovida rakendada reeglit, mida rakendada saab.
+Samme tuleks teha nii kaua, kuni oleme saanud tühivalemi $\emptyset$.
+Korjates kokku väärtustusreeglite rakendamisel saadud muutujate väärtused,
+võime lõpuks õelda, millisel muutujate väärtustusel oli antud valem
+tõene. Järgnevalt proovime leida näites kasutatud valemi $F$ muutujate
+väärtustuse, millel see valem on tõene.
+
+Olgu antud valem $F=C_{1}\wedge C_{2}\wedge C_{3}$, kus $C_{1}=A\vee B\vee\neg C$,
+$C_{2}=\neg A\vee\neg B$ ja $C_{3}=C\vee\neg B$. Rakendame teisendusi
+sellele valemile, et leida kehtestav väärtustus.
+
+\begin{enumerate}
+\item Väärtustusreegli kasutamine $A$ järgi, saame valemi $F|_{A=1}$.
+Kõigepealt rakendame lihtsustavaid teisendusi valemile $F|_{A=1}$:
+
+\begin{enumerate}
+\item Elimineerime tõese klausli $C_{1}$.
+\item Elimineerime väära literaali $\neg A$ klauslist $C_{2}$, saame valemi
+$F'|_{A=1}={C'}_{2}\wedge C_{3}$, ${C'}_{2}=\neg B$.
+\end{enumerate}
+\item Valemile $F'|_{A=1}$ rakendame nüüd ühe literaaliga klausli elimineerimist
+klausli $C'_{2}$ järgi. Saame valemi $F''|_{A=1,B=0}$. Kohe saame
+ka valemit lihtsustada, eemaldades klausli $C_{3}.$ Kuna tulemuseks
+on tühivalem, mis on tõene valem, siis võime otsingu lõpetada. Otsingu
+tuleusena oleme saanud osalise väärtustuse $v_{o}$, kus $v_{o}(A)=1$
+ja $v_{o}(B)=0$. On lihtne kontrollida, et esialgne valem on antud
+väärtususes tõene sõltumata $C$ väärtusest.
+\end{enumerate}
+Nüüd oleme valmis formuleerima otsingualgoritmi valemi kehtestatavuse
+kindlakstegemiseks.
+
+
+\section{Otsinguprotseduur}
+
+Ülalkirjeldatud teisendusreeglite rakendamiseks saame kirja panna
+otsinguprotseduuri. Protseduuri paneme kirja kui rekursiivse otsingu,
+mille eesmärgiks on leida etteantud valemi muutujate tõene väärtustus.
+Protseduur \proc{OP} (otsinguprotseduur) saab sisendina valemi $F$.
+Protseduuri esimeses sammus kontrollime valemi triviaalset tõesust/väärust
+vastavalt sellele, kas valem on tühivalem või sisaldab tühiklauslit.
+Kui valemi tõesuse üle ei saa veel otsustada, siis rakendame hargnemisreeglit.
+Kõigepealt üritame kasutada reegli erikuju, ühe literaaliga klausli
+elimineerimist. Kui ühe literaaliga klauslit valemis ei esine, rakendame
+üldist hargnemisreeglit mingi valemi muutuja $x$ järgi, kusjuures
+muutuja valime protseduuri \proc{VM} (vali muutuja) järgi. Kuivõrd
+üldine väärtustusreegel jagab otsingu kaheks, siis jätkame kõigepealt
+esimese haru järgi \emph{(R3p)}. Kui see ei anna tulemust, siis jätkame teise haru \emph{(R3n)}
+järgi. Enne kumbagi harusse suundumist rakendame valemile lihtsustavaid
+teisendusi: tõeste klauslite elimineerimist ja väärade literaalide
+elimineerimist. Kõik algoritmis rakendatavad teisendused sooritatakse
+altpoolt ülespoole.
+
+\begin{algorithm}{OP}
+\ainput{konjuktiivsel normaalkujul valem $F$.}
+\aoutput{tulemus, kas valem $F$ on kehtestatav või mitte.}
+\abody
+
+\begin{enumerate}
+\item Kui $F=\emptyset$, siis tagasta ``kehtestatav'' ja lõpeta töö.
+\item Kui $\emptyset\in F$, siis tagasta ``mittekehtestatav'' ja lõpeta
+töö.
+\item Kui leidub ühikliteraaliga klausel $C_{i}=l$ valemis $F$, siis
+
+\begin{enumerate}
+\item Kui $l\equiv x$, siis rakenda valemile $F$ teisendust \emph{R4p},
+saades valemi $F|_{x=1}$. Sellele valemile rakenda järjest lihtsustavaid
+teisendusi \emph{R1p} ja \emph{R2n}, kuni neid rohkem rakendada ei
+saa. Lihtsustamiste tulemusena saadi valem $F'$. Tagasta \mbox{\proc{OP}$(F')$}
+tulemus.
+\item Kui $l\equiv-x$, siis rakenda valemile $F$ teisendust \emph{R4n},
+saades valemi $F|_{x=0}$. Sellele valemile rakenda järjest lihtsustavaid
+teisendusi \emph{R1n} ja \emph{R2p}, kuni neid rohkem rakendada ei
+saa. Lihtsustamiste tulemusena saadi valem $F'$. Tagasta \mbox{\proc{OP}$(F')$}
+tulemus. 
+\end{enumerate}
+\item Kui kolmandas sammus ei leidunud ühe literaaliga klauslit, siis rakendame
+väärtustusreeglit ühte \emph{R3p, R3n} (proovime mõlemat). Need reeglid
+eeldavad ühe muutuja $x$ valikut. Muutuja valik toimub taas protseduuriga
+\mbox{$x=$\proc{VM}$(F)$}. Rakendades ühte neist reeglitest, saame valemi $F'$.
+Tagasta \mbox{\proc{OP}$(F')$} tulemus.
+\end{enumerate}
+\end{algorithm}
+
+Hetkel teostame muutuja valiku sammudel (3) ja (4) juhuslikul. Selleks
+võib olla näiteks kõige ``vasakpoolsem'' muutuja. Artiklis \cite{key-10}
+on põhjalikult vaadeldud muutuja valiku põhimõtteid DPLL protseduuris
+ja sarnastes algoritmides. Teatud valemite klassi jaoks võib sobiva
+põhimõtte järgi valitud muutuja anda head heuristilist väärtust, mis
+vähendab protseduuri keskmist tööaega.
+
+\begin{algorithm}{VM}
+\ainput{konjuktiivsel normaalkujul valem $F$.}
+\aoutput{mingi valemis $F$ esinev muutujasümbol.}
+\abody
+
+\begin{enumerate}
+\item Tagasta juhuslikult valitud muutuja valemist $F$.
+\end{enumerate}
+\end{algorithm}
+
+
+\section{Otsinguprotseduuri korrektsus}
+
+Nüüd näitame, et ülalkirjeldatud algoritm \proc{OP} on korrektne
+kehtestatavuse suhtes.
+
+\theorem{kui otsinguprotseduur \textsf{OP} tagastab konjuktiivsel normaalkujul valemi $F$ korral
+``kehtestatav'', siis on valem $F$ kehtestatav.}
+
+\proof otsinguprotseduur koostab valemi $F$ tuletuspuu ja kasutab
+ainult tuletusreegleid \emph{R1p, R1n, R2p, R2n, R3p, R3n, R4p} ja \emph{R4n}.
+Vastavalt lemmadele (1), (2), (3) ja (4)
+säilitavad need reeglid valemi \mbox{kehtestatavuse. \proofend}
+
+
+\section{Otsinguprotseduuri termineeruvus}
+
+\theorem{otsinguprotseduur \proc{OP} termineerub}
+
+\proof On selge, et otsinguprotseduur \proc{OP} lõpetab töö, kui
+valem on tühivalem või sisaldab tühiklauslit (vastavalt sammus (1) ja
+(2)). Termineeruvuse näitamiseks piisab näidata, et protseduuri \proc{OP}
+rakendamisel $n$-muutujaga valemile toimuvad protseduuri rekursiivsed rakendamised
+$k$-muutujalistele valemitele, kus $k<n$. Sellisel juhul väheneb iga rekursiivse
+kutsega rangelt valemi muutujate arv. On selge, et lõpliku $n$ korral
+ei saa teha mittelõplikku arvu rekursiivseid pöördumisi, jõudmata
+$0$-muutujaga valemini, milleks saab olla vaid valem sammus (1)
+või valemini, mis sisaldab tühiklauslit (samm (2)).
+
+Kõigepealt näitame, et sammus (3) saadav valem $F$' sisaldab $k<n$
+muutujat, kui $F$ sisaldas $n$ muutujat. On selge, et $F$ sisaldab
+vähemalt ühte muutujat $x$. Vaatleme juhtu (3.a), kus $C_{i}\in F$,
+$C_{i}=l$, $l\equiv x$. Kõik klauslid, mis sisaldavad literaali
+$l$, on tõesed ja me eemaldame nad järjestikuse tõeste klauslite
+eemaldamise reegli rakendamisega. Selle tulemusena ei ole saadud valemis
+ühtegi muutuja $x$ positiivset esinemist. Teisest küljest, kõikidest
+klauslitest, milles sisaldaldub $x$ negatiivselt ($\overline{l}\equiv x$),
+kustutame kõik $\overline{l}$ esinemised järjestikuse väärade literaalide
+elimineerimise reegliga. Seega ei sisalda valem $F'$ enam muutujat
+$x$, st. tema muutujate arv on vähenenud ühe võrra. Juhu (3.b) jaoks
+on tõestuse käik analoogiline.
+
+Sammus (4) eeldame, et \proc{VM} termineerub, muidu on tõestuse käik
+sarnane, kasutades lihtsustavate reeglite järjestrakendamisel muutuja
+$x$ kadumist esialgsest valemist. \proofend
+
+
+\chapter{Lahendite loendamine}
+
+Tähistagu $\mu_{n}(F)$ $n$ väärtustamata muutujaga lausearvutusvalemi $F$ muutujate
+tõeste väärtustuste arvu. Meid huvitab efektiivne $\mu_{n}$ arvutamise
+protseduur suvalise etteantud valemi $F$ jaoks. Artiklis \cite{key-4}
+on näidatud, et selleks saab edukalt kasutada DPLL protseduuri. Meie
+formuleerime algoritmi (loendamisprotseduur) siin kirjeldatud loogilise
+raamistiku piires ning tõestame selle korrektsuse ning termineeruvuse.
+
+Kõigepealt vaatleme triviaalseid juhte: tühivalemit ja tühiklauslit
+sisaldavat valemit. Parameeter $n$ tähistab antud juhul fiktiivseid
+muutujaid, mis on küll olemas, aga ei esine valemis. On selge, et
+tühivalemi $F=\emptyset$ korral $\mu_{n}(F)={2}^{n}$, sest nendele
+$n$ muutujale võib anda suvalise väärtustuse. Seevastu tühiklauslit sisaldava valemi
+korral on meil tegemist samaselt väära valemiga ja mingi fiktiivsete
+muutujate väärtustus ei saa valemit tõeseks muuta. Seega kui $\emptyset\in F$,
+siis $\mu_{n}(F)=0$.
+
+Loendamisprotseduuri ehitame üles eespool kirjeldatud tuletusreegleid
+kasutades. Kõigepealt näitame, et tõeste klauslite elimineerimisreeglid
+\emph{(R1p, R1n)} säilitavad valemi $F$ lahendite arvu.
+
+\lemma{Tõeste klauslite elimineerimisreegel säilitab
+konjuktiivsel normaalkujul valemi $F$ lahendite arvu.}
+
+\proof
+
+Olgu valem $F=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k}$.
+Pärast tõeste klauslite elimineerimisreegli ülalt alla rakendamist
+saame valemi $F'=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k}$,
+kus $C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{l}}$ ja $l_{i_{j}}\equiv x$.
+Lisaks on meil kitsendus $v(x)=\delta$, $\delta\in\{0,1\}$ mingi
+muutuja $x$ jaoks. On selge, et $\mu_{n}(F)=\mu_{n}(F')$ (1) parajasti
+siis, kui iga $F$ lahend on $F'$ lahendiks ja iga $F'$ lahend on
+ka $F$ lahendiks. Vastavalt lemmale (1) teame, et iga $F$ lahend
+on ka $F'$ lahend. Siin näitame, et iga $F'$ lahend on ka $F$ lahend.
+
+Olgu $v$ suvaline interpretatsioon, kus $v(F')=1$. Siis
+
+$v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i})=v(C_{i+1})=\dots=v(C_{k})=1$ $\Rightarrow$\\
+ $v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i+1}\wedge\dots\wedge C_{k})$. \proofend
+
+\lemma{Väärade literaalide elimineerimisreegel säilitab
+konjuktiivsel normaalkujul valemi $F$ lahendite arvu.}
+
+Olgu valem $F=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}'\wedge C_{i+1}\wedge\dots\wedge C_{k}$, kus
+$C_{i}'=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$. Sellele valemile
+rakendame reeglit \emph{R2p} või \emph{R2n} ja saame valemi $F'$. Sarnaselt lemmale (5)
+näitame ka siin, et iga $F$ lahend on $F'$ lahend ja vastupidi.
+
+\proofpart{R2p} Pärast reegli \emph{R2p} ülalt alla rakendamist saame valemi
+$F'=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k}$, kus
+$C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$ ja
+$l_{i_j}\equiv x$.
+
+\proof
+
+Vastavat lemmale (2, \emph{R2p}) on iga $F$ lahend, kus $v(x)=0$, $F'$ lahend. Näitame,
+et iga $F'$ lahend, kus $v(x)=0$, on ka $F$ lahend.
+
+$v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$ ja $v(x)=0$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(l_{i_{j}})=0$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(C_i\vee l_{i_{j}})=1$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(C_{i}')=1$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=C_{i}'=v(C_{i+1})=\dots=v(C_{k})=1$. \proofend
+
+\proofpart{R2n} Pärast reegli \emph{R2n} ülalt alla rakendamist saame valemi
+$F'=C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k}$, kus
+$C_{i}=l_{i_{1}}\vee\dots\vee l_{i_{j-1}}\vee l_{i_{j}}\vee l_{i_{j+1}}\dots\vee l_{i_{l}}$ ja
+$l_{i_j}\equiv -x$.
+
+\proof
+
+Vastavat lemmale (2, \emph{R2n}) on iga $F$ lahend, kus $v(x)=1$, $F'$ lahend. Näitame,
+et iga $F'$ lahend, kus $v(x)=1$, on ka $F$ lahend.
+
+$v(C_{1}\wedge\dots\wedge C_{i-1}\wedge C_{i}\wedge C_{i+1}\wedge\dots\wedge C_{k})=1$ ja $v(x)=1$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(l_{i_{j}})=0$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(C_i\vee l_{i_{j}})=1$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=v(C_{i+1})=\dots=v(C_{k})=1$ ja $v(C_{i}')=1$ $\Rightarrow$\\
+$v(C_{1})=\dots v(C_{i-1})=C_{i}'=v(C_{i+1})=\dots=v(C_{k})=1$. \proofend
+
+Eespool vaadeldud reeglid \emph{R1p, R1n, R2p, R2n} sobivad hästi ka lahendite
+loendamise protseduuri jaoks, sest nad aitavad oluliselt lihtsustada valemit, parandades
+sellega algoritmi kiirusomadusi. Lisaks säilitavad nad lahendite arvu, mis on vajalik
+loendamisalgoritmi korrektsuseks.
+
+Me saame kasutada ka reegleid \emph{R3p} ja \emph{R3n}, aga mitte viisil,
+nagu me tegime seda otsinguprotseduuris \proc{OP}.
+Olgu antud mingi $n$ väärtustamata muutujaga valem $F$ ja mingi muutuja $x$
+(esineb valemis $F$ või on fiktiivne). Seejärel rakendame reegleid \emph{R3p} ja \emph{R3n} alt üles muutuja $x$
+järgi valemile $F$ ning saame tulemuseks vastavalt valemid $F|_{x=1}$ ja $F|_{x=0}$. Me
+näitame, et $\mu_n(F)=\mu_{n-1}(F|_{x=1})+\mu_{n-1}(F|_{x=0})$.
+
+\lemma{$n$ väärtustamata muutujaga valemi $F$ ja valemis esineva muutuja $x$ jaoks kehtib võrratus
+$\mu_n(F)=\mu_{n-1}(F|_{x=1})+\mu_{n-1}(F|_{x=0})$.}
+
+\proof
+Väärtustuste hulk jaguneb kaheks mittelõikuvaks hulgaks, mõlemas summa
+pooles väärtustame ühe muutuja ära. \proofend
+
+Järgnevad tõestused väärtustusreeglite erikujude \emph{R4p} ja \emph{R4n} jaoks.
+
+\lemma{(R4p) $n$ väärtustamata muutujaga valemi $F$ jaoks, mis sisaldab ühikklauslit $C_i$, $C_i=l$, $l\equiv x$, kehtib
+võrratus $\mu_n(F)=\mu_{n-1}(F|_{x=1})$.}
+
+\proof
+Vastavalt lemmale (7) kehtib võrratus \mbox{$\mu_n(F)=\mu_{n-1}(F|_{x=1})+\mu_{n-1}(F|_{x=0})$ (1)}.
+Kuivõrd $F|_{x=0}$ korral $v(l)=0$ ja $v(C_i)=0$ ning $v(F|_{x=0})=0$, st. $F|_{x=0}$ on samaselt
+väär, siis võrratuse (1) paremas pooles liige $\mu_{n-1}(F|_{x=0})=0$. \proofend
+
+\lemma{(R4n) $n$ väärtustamata muutujaga valemi $F$ jaoks, mis sisaldab ühikklauslit $C_i$, $C_i=l$, $l\equiv -x$, kehtib
+võrratus $\mu_n(F)=\mu_{n-1}(F|_{x=0})$.}
+
+\proof
+Sarnane lemma (8) tõestusega. Vastavalt lemmale (7) kehtib võrratus \mbox{$\mu_n(F)=\mu_{n-1}(F|_{x=1})+\mu_{n-1}(F|_{x=0})$ (1)}.
+Kuivõrd $F|_{x=1}$ korral $v(l)=0$ ja $v(C_i)=0$ ning $v(F|_{x=1})=0$, st. $F|_{x=1}$ on samaselt
+väär, siis võrratuse (1) paremas pooles liige $\mu_{n-1}(F|_{x=1})=0$. \proofend
+
+Kasutades eespool defineeritud tuletusreegleid ja nende jaoks kehtivaid võrratusi lahendite arvu kohta,
+saame formuleerida järgmise algoritmi lahendite loendamise jaoks.
+
+\section{Loendamisprotseduur}
+
+\begin{algorithm}{LP}
+\ainput{konjuktiivsel normaalkujul valem $F$ ja muutujate arv $n$.}
+\aoutput{valemi $F$ muutujate väärtustuste arv, millel valem $F$ tõene on.}
+\abody
+
+\begin{enumerate}
+\item Kui $F=\emptyset$, siis tagasta $2^{n}$.
+\item Kui $\emptyset\in F$, siis tagasta $0$.
+\item Kui leidub ühikliteraaliga klausel $C_{i}=l$ valemis $F$, siis
+
+\begin{enumerate}
+\item Kui $l\equiv x$, siis rakenda valemile teisendust \emph{R4p}, saades
+valemi $F|_{x=1}$. Sellele valemile rakenda järjest lihtsustavaid
+teisendusi \emph{R1p} ja \emph{R2n}, kuni neid rohkem rakendada ei
+saa. Lihtsustamiste tulemusena saadi valem $F'$. Tagasta \mbox{\proc{LP}$(F',n-1)$}
+tulemus.
+\item Kui $l\equiv-x$, siis rakenda valemile teisendust \emph{R4n}, saades
+valemi $F|_{x=0}$. Sellele valemile rakenda järjest lihtsustavaid
+teisendusi \emph{R1n} ja \emph{R2p}, kuni neid rohkem rakendada ei
+saa. Lihtsustamiste tulemusena saadi valem $F'$. Tagasta \mbox{\proc{LP}$(F',n-1)$}
+tulemus.
+\end{enumerate}
+\item Kui kolmandas sammus ei leidunud ühe literaaliga klauslit, siis valime
+kõigepealt muutuja $x$, \mbox{$x=$\proc{VM}$(F)$}. Seejärel rakenda
+reegleid \emph{R3p} ja \emph{R3n}, saades vastavad valemid $F|_{x=1}$
+ja $F|_{x=0}$. Valemile $F|_{x=1}$ rakenda lihtsustavaid teisendusi
+\emph{R1p} ja \emph{R2n}, kuni neid enam rakendada ei saa. Selle tulemusena
+saame valemi $F_{p}$. Valemile $F|_{x=0}$ rakenda aga lihtsustavaid
+teisendusi \emph{R1n} ja \emph{R2p}, kuni neid enam rakendada ei saa.
+Selle tulemusena saame valemi $F_{n}$. Tagasta \mbox{\proc{LP}$(F_p, n-1)$}
+$+$ \mbox{\proc{LP}$(F_n, n-1)$}.
+\end{enumerate}
+\end{algorithm}
+
+\section{Loendamisprotseduuri korrektsus}
+
+\theorem{Kui \proc{LP} tagastab $n$ väärtustamata muutujaga kojuktiivsel normaalkujul valemi $F$ korral täisarvu $t$,
+siis on valemi $F$ nendel $n$ muutujal $t$ erinevat väärtustust, mille korral valem $F$ on tõene.}
+
+\proof
+Kasutame induktsiooni valemis $F$ esinevate mittefiktiivsete muutujate arvu järgi.
+
+\emph{Baas}. Baasjuhtum jaguneb kaheks.
+\begin{enumerate}
+\item Kui valem $F$ on tühivalem, siis ei ole temas ühtegi mittefiktiivset muutujat.
+Sellele vastab algoritmi \proc{LP} samm (1). Siis on meil vaja väärtustada $n$
+fiktiivset muutujat. Nendel muutujatel on $2^n$ erinevat väärtustust. Seega
+tagastab algoritm \proc{LP} sammus (1) õige tulemuse.
+\item Kui valem $F$ sisaldab tühiklauslit, siis võib temas küll veel mittefiktiivseid
+muutujaid. Sellele vastab algoritmi \proc{LP} samm (2). Kuivõrd tühiklauslit 
+sisaldav valem $F$ on samaselt väär, siis on tema lahendite arv 0.
+\end{enumerate}
+
+\emph{Samm}. Sammu sooritamisel eeldame, et iga $0\le k<m$ korral tagastab \proc{LP}
+$n$ väärtustamata muutujaga valemi $F$ korral, milles on $k$ mittefiktiivset muutujat, korrektse tulemuse
+$t$.
+
+Olgu valemis $F$, mis ei ole tühivalem ega sisalda tühiklauslit, $m$ mittefiktiivset muutujat. Rakendame protseduuri \proc{LP}
+valemile $F$. Ilmselt sooritatakse kõigepealt samm (3) või (4).
+
+\begin{enumerate}
+\item Sammu (3) rakendamise korral on meil $C_i\in F$, kus $C_i=l$ ja $l\equiv x$ või $l\equiv -x$.
+Rakendades järjest lihtsustavaid teisendusi, eemaldatakse valemist muutuja $x$ positiivsed ning
+negatiivsed esinemised. On selge, et pärast lihtsustamist saadud valemis $F'$ on $m'$, $m'<m$ mittefiktiivset
+muutujat. Tagastame \mbox{\proc{LP}$(F',n-1)$}, mis lemma (8) (juhul $l\equiv x$) või
+lemma (9) (juhul $l\equiv -x$) ning sammu eelduse tõttu on korrektne tulemus.
+\item Sammu (4) rakendamise korral valib protseduur \proc{VM} valemist $F$ ühe
+mittefiktiivse muutuja. Rakendades kõigepealt väärtustusreegleid \emph{R3p} ja \emph{R3n}
+ning seejärel lihtsustavaid teisendusi, saame vastavad valemid $F_p$ ja $F_n$. Sarnaselt
+eelmise juhuga, eemaldatakse lihtsustamise käigus valemitest vähemalt
+üks mittefiktiivne muutuja. Tagastame
+\mbox{\proc{LP}$(F_p, n-1)$} $+$ \mbox{\proc{LP}$(F_n, n-1)$}, mis lemma (7) ja sammu
+eelduse tõttu on korrektne tulemus. \proofend
+\end{enumerate}
+
+\section{Loendamisprotseduuri termineeruvus}
+
+\theorem{Loendamisprotseduur \proc{LP} termineerub}
+
+\proof
+Täiesti sarnane teoreemi (2) tõestusega (\proc{OP} termineeruvus). Igal algoritmi \proc{LP} rekursiivsel
+pöördumisel termineerub \proc{LP} sammus (1) või (2) või vähendatakse sisendvalemis esinevate
+muutujate arvu vähemalt ühe võrra, rakendades järjest lihtsustusreegleid sammus (3) või (4). \proofend
+
+
+ \chapter*{Kokkuvõte}
+ \addcontentsline{toc}{chapter}{\numberline{}Kokkuvõte}
+
+Töös vaatlesime lausearvutusvalemi lahendite loendamise probleemi ning selle lahendamiseks
+kasutatavat algoritmi, mis on saadud valemi kehtestatavuse algoritmi sobivalt täiendades.
+Kõigepealt koostasime tuletusreeglid kehtestatavate valemite tuletamiseks ning näitasime
+nende reeglite korrektsuse kehtestatavuse suhtes. Pärast seda
+oli juba lihtne ehitada üles kehtestatavuse kindlakstegemise algoritmi, mis
+kasutas otsingut ja eespool kirjeldatud tuletusreegleid. Otsinguprotseduuri omadustest
+tõestasime korrektsuse kehtestatavuse suhtes ja termineeruvuse.
+
+Lõpuks täiendasime kehtestatavuse algoritmi lahendite loendamise jaoks. Samal
+ajal näitasime, kuidas käitub valemi lahendite arv, rakendades sellele mõnda
+kirjeldatud teisendusreeglitest. See võimaldas anda tõestuse
+loendamisprotseduuri korrektsusele.
+
+Töö sisaldab lisadena nii otsinguprotseduuri kui loendamisalgoritmi realisatsioone
+keeles Prolog. Prolog võimaldas kasutatavad sümbolteisendused lakooniliselt
+ja selgelt arvutiprogrammina realiseerida.
+
+% Resümee
+
+\chapter*{Using DPLL procedure to count models}
+\addcontentsline{toc}{chapter}{\numberline{}Using DPLL procedure to count models}
+
+
+{\textbf{\Large Bachelor thesis (6 ECTS credits)}}
+
+\vspace{1cm}
+
+{\textbf{\Large Raivo Laanemets}}
+
+\vspace{1cm}
+
+{\textbf{\Large Abstract}}
+
+\vspace{1cm}
+
+In this thesis we present logical inference system for satisfiable
+boolean formulas. The rules of this system resemble the steps of well-know
+DPLL algorithm for the boolean satisfiability problem. The proof of correctness
+of this system is given. Then we build up SAT procedure that
+uses exactly these rules. The correctness and termination of this
+procedure is given. Finally we show how to extend the given SAT procedure
+to effectively count the satisfying assignments. At the very end, implementations
+of both SAT and counting procedure in Prolog are given.
+
+% Resümee lõpp
+
+% Kirjandus
+
+\addcontentsline{toc}{chapter}{Kirjandus}
+\begin{thebibliography}{20}
+
+\bibitem[Davis60]{key-1}M.Davis, H.Putnam, \emph{A Computing Procedure for
+Quantification Theory},
+J. Assoc. Comput. Mach., 7:201-215, 1960.
+
+\bibitem[Davis62]{key-2}M.Davis, G.Logemann, D.Loveland, \emph{A Machine Program
+for Theorem-Proving},
+Communications of the ACM, 4:394-397, 1962.
+
+\bibitem[Birnbaum99]{key-4}E.Birnbaum, E.L.Lozinskii, \emph{The Good Old Davis-Putnam
+Procedure Helps Counting Models},
+Journal of Artifical Intelligence Research 10, 1999, p. 457-477.
+
+\bibitem[Gomes06]{key-5}C.P.Gomes, A.Sabharwal, B.Selman, \emph{Model Counting:
+A New Strategy for Obtaining Good Bounds},
+AAAI 2006.
+
+\bibitem[Sang05]{key-6}T.Sang, P.Beame, H.Kautz, \emph{Solving Bayesian Networks
+by Weighted Model Counting},
+AAAI 2005: 475-482.
+
+\bibitem[Roth96]{key-8}D.Roth, \emph{On the hardness of approximate reasoning},
+Artifical Intelligence, 82(1/2):273-302, 1996.
+
+\bibitem[Moskewicz01]{key-9}M.W.Moskewicz, C.F.Madigan, Y.Zhao, L.Zhang, S.Malik,
+\emph{Chaff: Engineering an Efficent SAT Solver},
+In Proceedings of the 38th Design Automation Conference (DAC'01), June 2001.
+
+\bibitem[Lagoudakis01]{key-10}M.G.Lagoudakis, M.L.Littman, \emph{Learning to Select
+Branching Rules in the DPLL Procedure for Satisfiability},
+Electronic Notes in Discrete Mathematics (ENDM), Vol. 9.
+\end{thebibliography}
+
+% Siit algavad tööga kaasa pandud lisad
+
+\chapter*{Lisa 1\\
+	Otsinguprotseduuri realisatsioon}
+
+% Otsinguprotseduuri kood. Enne koodi lisamist siia tuleb
+% see teisendada iso-8859-15 kodeeringusse.
+% Teisendamine;
+% iconv -f utf-8 -t iso-8859-15 sisendfail > väljundfail
+
+% Määra reavaheks 1.0
+
+\setstretch{1.0}
+
+% Lisa kood
+\lstinputlisting{op_iso.pl}
+
+% Vii reavahe tagasi 1.5 peale
+
+\onehalfspacing
+
+\chapter*{Lisa 2\\
+	Loendamisprotseduuri realisatsioon}
+
+\setstretch{1.0}
+\lstinputlisting{lp_iso.pl}
+\onehalfspacing
+
+
+
+\end{document}

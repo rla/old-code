@@ -1,0 +1,4 @@
+= Wiki-parser external dependencies =
+
+* texvc - converts TeX code into PNG image file. Comes
+  with TeX package.

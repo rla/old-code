@@ -1,0 +1,13 @@
+Markmik.exe - lihtne märkimkuprogramm
+
+versioon 1.00 -----
+Failid: markmik.exe - programm
+        markmik.mrk - kirjete fail
+        LoeMind!.txt - abifail (text)
+
+Lubab kirjed lisada aga mitte kustutada
+Peab olema C:\Markmik\ kaustas
+
+-------------------
+
+Copyright C Raivx 2002

@@ -1,0 +1,26 @@
+.vmenu{
+  font-family: arial;
+  font-size: 12pt;
+  color: #996633;
+  text-decoration: none;
+}
+.menu_selected{
+  background-color: none;
+  font-family: arial;
+  font-size: 12pt;
+  color: #990000;
+  text-decoration: underline;
+  padding: 0px 0px 0px 0px;
+  border: none;
+}
+.menu_item{
+  font-family: arial;
+  font-size: 10pt;
+  color: #336699;
+}
+.path{
+  font-family: verdana;
+  color: #669966;
+  font-size: 14pt;
+  font-weight: light;
+}

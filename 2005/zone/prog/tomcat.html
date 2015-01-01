@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+  <title>Apache Tomcat</title>
+  <meta name="Description" content="Apache Tomcat">
+  <meta name="Author" content="Raivo Laanemets">
+  <meta name="Copyright" content="(c) 2005 Raivo Laanemets">
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-13">
+  <style type="text/css">
+  body, li, i, h1, h2, h3, h4, h5, p {
+    font-family: Helvetica, sans-serif;
+  }
+  p, pre {
+    padding-left: 20px;
+  }
+  
+  li {
+  
+    padding-bottom: 20px;
+  
+  }
+  .command {
+  
+    background-color: #eeeeee;
+    padding: 15px;
+    font-family: Courier, serif;
+  
+  }
+  .webcpp pre
+{
+color: #000000
+}
+
+.webcpp font
+{
+font-size:100%
+}
+
+.webcpp .symbols
+{
+color: #0077dd
+}
+
+.webcpp .preproc
+{
+color: #a900a9
+}
+
+.webcpp .integer
+{
+color: #ff0032
+}
+
+.webcpp .floatpt
+{
+color: #ff23a6
+}
+
+.webcpp .dblquot
+{
+color: #00b800
+}
+
+.webcpp .sinquot
+{
+color: #00b86b
+}
+
+.webcpp .keyword
+{
+color: #224fff;
+font-weight: bold
+}
+
+.webcpp .keytype
+{
+color: #ff9933;
+font-weight: bold
+}
+
+.webcpp .comment
+{
+color: #666666;
+font-style: italic
+}
+  </style>
+  </head>
+<body style="width:600px">
+<h1>Apache Tomcat</h1>
+<p>
+Apache Tomcat on vahend Java keeles kirjutatud veebirakenduste serveerimiseks.
+Täpsemalt võib lugeda lehelt <a href="http://jakarta.apache.org/tomcat/">http://jakarta.apache.org/tomcat/</a>.
+</p>
+<h2>Näide rakenduse koodist</h2>
+<p>
+<pre><font color="#0000FF">import</font> java.io.*;
+<font color="#0000FF">import</font> javax.servlet.*;
+<font color="#0000FF">import</font> javax.servlet.http.*;
+
+<font color="#0000FF">public class</font> HelloWorld <font color="#0000FF">extends</font> HttpServlet {
+
+    <font color="#0000FF">public void</font> doGet(HttpServletRequest request, HttpServletResponse response)
+    <font color="#0000FF">throws</font> IOException, ServletException
+    {
+        response.setContentType(&quot;<font color="#009900">text/html</font>&quot;);
+        PrintWriter out = response.getWriter();
+        out.println(&quot;<font color="#009900">&lt;html&gt;</font>&quot;);
+        out.println(&quot;<font color="#009900">&lt;head&gt;</font>&quot;);
+        out.println(&quot;<font color="#009900">&lt;title&gt;Hello World!&lt;/title&gt;</font>&quot;);
+        out.println(&quot;<font color="#009900">&lt;/head&gt;</font>&quot;);
+        out.println(&quot;<font color="#009900">&lt;body&gt;</font>&quot;);
+        out.println(&quot;<font color="#009900">&lt;h1&gt;Hello World!&lt;/h1&gt;</font>&quot;);
+        out.println(&quot;<font color="#009900">&lt;/body&gt;</font>&quot;);
+        out.println(&quot;<font color="#009900">&lt;/html&gt;</font>&quot;);
+    }
+}</pre>
+</p>
+
+<h2>Paigaldamine</h2>
+<ol>
+<li>
+  Tomcati kasutamise eelduseks on Java SDK olemasolu. Java SDK
+  saab tõmmata aadressilt <a href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>.
+  Vajalik on just SDK, kuigi Java JRE-st piisab rakenduste jooksutamiseks, aga ta ei võimalda uusi rakendusi otse luua(puudub Java kompilaator).
+  Vt. <a href="java_paigaldamine.html">Java paigaldamine</a>.
+</li>
+<li>
+  Seejärel tuleb tõmmata Tomcat, mida saab aadressilt <a href="http://apache.datanet.ee/jakarta/tomcat-4/v4.1.31/bin/jakarta-tomcat-4.1.31.tar.gz">http://apache.datanet.ee/jakarta/tomcat-4/v4.1.31/bin/jakarta-tomcat-4.1.31.tar.gz</a>.
+</li>
+<li>
+  Mine kausta kuhu sa tõmbasid Tomcati arhiivifaili ja paki see lahti.
+  <div class="command">$ tar -zxvf jakarta-tomcat-4.1.31.tar.gz</div>
+</li>
+<li>
+  Omanda <i>root</i>-õigused ning loo uus kataloog /opt/tomcat.
+  <div class="command">
+  $ su<br>
+  Password:<br>
+  # mkdir /opt/tomcat
+  </div>
+</li>
+<li>
+  Kopeeri Tomcati arhiivi lahtipakkimisel tekkinud kausta sisu vastloodud kausta.
+  <div class="command">
+  # cp -r jakarta-tomcat-4.1.31/* /opt/tomcat
+  </div>
+</li>
+<li>
+  Muuda faili /opt/tomcat/conf/tomcat-users.xml, mis määrab Tomcat'i serveri
+  administratsiooniks vajalikud paroolid. Fail võiks olla umbes selline:
+  <div class="webcpp">
+  <pre>
+  <font CLASS=preproc>&lt;<font CLASS=keytype>?xml</font> <font CLASS=keytype>version</font>=<font CLASS=sinquot>'1.0'</font> <font CLASS=keytype>encoding</font>=<font CLASS=sinquot>'utf-8'</font><font CLASS=keytype>?</font>&gt;</font>
+  <font CLASS=preproc>&lt;tomcat-users&gt;</font>
+  <font CLASS=preproc>&lt;role rolename=<font CLASS=dblquot>"tomcat"</font>/&gt;</font>
+  <font CLASS=preproc>&lt;role rolename=<font CLASS=dblquot>"role1"</font>/&gt;</font>
+  <font CLASS=preproc>&lt;role rolename=<font CLASS=dblquot>"manager"</font>/&gt;</font>
+  <font CLASS=preproc>&lt;role rolename=<font CLASS=dblquot>"admin"</font>/&gt;</font>
+  <font CLASS=preproc>&lt;user username=<font CLASS=dblquot>"tomcat"</font> password=<font CLASS=dblquot>"tomcat"</font> roles=<font CLASS=dblquot>"tomcat"</font>/&gt;</font>
+  <font CLASS=preproc>&lt;user username=<font CLASS=dblquot>"both"</font> password=<font CLASS=dblquot>"tomcat"</font> roles=<font CLASS=dblquot>"tomcat,role1"</font>/&gt;</font>
+  <font CLASS=preproc>&lt;user username=<font CLASS=dblquot>"role1"</font> password=<font CLASS=dblquot>"tomcat"</font> roles=<font CLASS=dblquot>"role1"</font>/&gt;</font>
+  <font CLASS=preproc>&lt;user username=<font CLASS=dblquot>"TomcatAdmin"</font> password=<font CLASS=dblquot>"tcpass"</font> roles=<font CLASS=dblquot>"admin,manager"</font>/&gt;</font>
+  <font CLASS=preproc>&lt;/tomcat-users&gt;</font>
+  </pre>
+  </div>
+  NB! Antud faili eelviimasel real on määratud administraatori parool, soovitav
+  on sinna midagi muud valida.
+</li>
+</ol>
+
+<h2>Kasutamine</h2>
+<ul>
+<li><h3>Käivitamine</h3>
+  <div class="command">
+  # /opt/tomcat/bin/startup.sh
+  </div><br>
+  Mugavamaks kasutamiseks on sobiv lisada vastav sissekanne
+  masina käivitusskriptide hulka nii, et Tomcat käivituks
+  koos ülejäänud serveriga.
+</li>
+<li><h3>Peatamine</h3>
+  <div class="command">
+  # /opt/tomcat/bin/shutdown.sh
+  </div>
+</li>
+<li><h3>Proovimine</h3>
+  Kohalikul serveril saab vaadata, kas Tomcat-i paigaldamine
+  õnnestus, sisestades veebilehitseja URL reale http://localhost:8080.
+  Kaasatulnud näiteid saab vaadata aadressilt http://localhost:8080/examples/servlets/index.html.
+</li>
+</ul>
+
+<p><i>Koostas: Raivo Laanemets, <a href="mailto:rlaanemt@ut.ee">rlaanemt@ut.ee</a><br>
+Copyright (c) 2005 Raivo Laanemets<br>
+Autor ei vastuta lingitud materjali õigsuse eest.<br>
+Lehte viimati täiendatud: kolmapäev, 28. juuni 2005.</i></p>
+<p>
+<a href="http://validator.w3.org/check?uri=referer"><img
+  src="http://www.w3.org/Icons/valid-html401"
+  alt="Valid HTML 4.01!" height="31" width="88"></a>
+</p>
+</body>
+</html>

@@ -1,0 +1,5 @@
+Testsuite: ee.pri.rl.tokenizer.test.TokenizerTest
+Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.008 sec
+
+Testcase: testCorrectTokenizing took 0.005 sec
+Testcase: testErrorHandling took 0.001 sec

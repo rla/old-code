@@ -1,0 +1,4 @@
+Testsuite: ee.pri.rl.text.template.test.TemplateProcessorTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.029 sec
+
+Testcase: testTemplateProcessor took 0.025 sec

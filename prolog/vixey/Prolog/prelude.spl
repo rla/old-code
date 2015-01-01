@@ -1,0 +1,64 @@
+(fact (= x x))
+
+(fact (flip (heads)))
+(fact (flip (tails)))
+
+(to-derive (call x) x)
+
+;; using call here would cause bad cut interaction
+(to-derive (or x y) x)
+(to-derive (or x y) y)
+
+(to-derive (not x) (call x) (!) (fail))
+(to-derive (not x))
+
+(to-derive (member x (cons x xs)))
+(to-derive (member x (cons e xs))
+           (member x xs))
+
+(to-derive (append (nil) ys ys))
+(to-derive (append (cons x xs) ys (cons x zs))
+           (append xs ys zs))
+
+(to-derive (select e (cons e es) es))
+(to-derive (select e (cons x es) (cons x fs))
+           (select e es fs))
+
+
+(to-derive (test (bar x)) (!) (flip x))
+(to-derive (test (foo)))
+
+(to-derive (test-2) (and (flip x) (!)) (!))
+(to-derive (test-2) (!))
+
+(to-derive (test-3 x y) (flip x) (!) (flip y))
+(to-derive (test-3 (x) (y)))
+
+(to-derive (is sum (+ a (+ e i)))
+           (%+ e i x)
+           (%+ a x sum))
+
+    (fact (saturn_digits (cons (1) (cons (2) (cons (3)
+                         (cons (4) (cons (5) (cons (6)
+                         (cons (7) (cons (8) (cons (9) (nil))))))))))))
+
+    (to-derive (saturn+ (cons a (cons b (cons c ;; much faster
+                        (cons d (cons e (cons f
+                        (cons g (cons h (cons i (nil)))))))))))
+               (saturn_digits d-0)
+               (select a d-0 d-1)
+               (select b d-1 d-2)
+               (select c d-2 d-3)
+               (is sum (+ a (+ b c)))
+               (select d d-3 d-4)
+               (select g d-4 d-5)
+               (is sum (+ a (+ d g)))
+               (select e d-5 d-6)
+               (is sum (+ c (+ e g)))
+               (select f d-6 d-7)
+               (is sum (+ d (+ e f)))
+               (select h d-7 d-8)
+               (is sum (+ b (+ e h)))
+               (select i d-8 (nil))
+               (is sum (+ c (+ f i)))
+               (is sum (+ a (+ e i))))

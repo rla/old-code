@@ -1,0 +1,649 @@
+$include "Rapidq.inc"
+$typecheck on
+
+const path="C:\Windows\Desktop\Myweb\"
+
+function getfile(path as string) as string
+  dim kord as integer
+  dim posit as integer
+  dim tmpstr as string
+  tmpstr=path
+  for kord=1 to 20 do
+    posit=instr(1,tmpstr,"\")
+    if posit=0 then kord=20
+    tmpstr=delete$(tmpstr,1,posit)
+  next
+  getfile=tmpstr  
+end function
+
+dim form as qform
+dim ftpform as qform
+dim metaform as qform
+dim linkform as qform
+dim linkedit as qedit
+dim rich as qrichedit
+dim menu as qmainmenu
+dim fail as qmenuitem
+dim save as qmenuitem
+dim open as qmenuitem
+dim prev as qmenuitem
+dim new as qmenuitem
+dim ftp as qmenuitem
+dim insert as qmenuitem
+dim meta as qmenuitem
+dim link as qmenuitem
+dim pilt as qmenuitem
+dim iefnimi as string
+dim ftpftp as string
+dim ftppass as string
+dim ftpuser as string
+dim ftpname as string
+dim dir as qedit
+dim i as integer
+dim korgus as integer
+dim com(1 to 18) as qbutton
+dim must as qfont
+dim comsock as qsocket
+dim comport as integer
+dim ftpedit as qedit
+dim nickedit as qedit
+dim passedit as qedit
+dim failedit as qedit
+dim ftprich as qrichedit
+dim n as integer
+dim metaname as qedit
+dim metacont as qedit
+dim popup as qpopupmenu
+dim copy as qmenuitem
+dim paste as qmenuitem
+dim fontsize as integer
+dim font as qcombobox
+dim fontl as qlabel
+dim linktarget as qedit
+dim linktext as qedit
+
+ftpftp="ftp.zone.ee"
+ftppass="parool"
+ftpuser="kasutajanimi"
+ftpname="failinimi"
+
+n=0
+
+dim br as qbutton
+
+declare sub salvesta
+declare sub ava_fail
+declare sub check
+declare sub uus
+declare sub br_ok
+declare sub copyr
+declare sub fonts
+declare sub fonte
+declare sub center
+declare sub centerend
+declare sub table
+declare sub tableend
+declare sub tr
+declare sub trend
+declare sub td
+declare sub tdend
+declare sub bold
+declare sub boldend
+declare sub frame
+declare sub frameend
+declare sub iframe
+declare sub iframeend
+declare sub send_it
+declare sub saada
+declare sub ftpclose
+declare sub metatag
+declare sub metaok
+declare sub kopeeri
+declare sub pastefrom
+declare sub fontclick
+declare sub makelink
+declare sub link_ok
+declare sub link_canc
+declare sub image
+
+iefnimi=""
+
+copy.caption="Kopeeri"
+copy.onclick=kopeeri
+
+paste.caption="Paste"
+paste.onclick=pastefrom
+
+popup.AddItems copy, paste
+
+must.name="Tahoma"
+must.color=&H000000
+must.size=fontsize
+
+pilt.caption="&Pilt"
+pilt.onclick=image
+
+link.caption="&Link"
+link.onclick=makelink
+
+ftp.caption="&Ftp"
+ftp.onclick=send_it
+
+fail.caption="&Fail"
+fail.additems new, open, save
+
+new.onclick=uus
+new.caption="Uus"
+
+insert.caption="&Sisesta"
+insert.additems meta, link, pilt
+
+meta.caption="<META>"
+meta.onclick=metatag
+
+open.onclick=ava_fail
+open.caption="Ava fail"
+
+save.onclick=salvesta
+save.caption="Salvesta"
+
+prev.caption="&Vaata"
+prev.onclick=check
+
+menu.parent=form
+menu.additems fail, insert, prev, ftp
+
+form.height=540
+form.width=760
+form.BorderStyle=bsSingle
+form.caption="JimHtmlEditor"
+
+rich.plaintext=1
+rich.parent=form
+rich.HideSelection=0
+rich.hidescrollbars=0
+rich.ScrollBars=ssBoth
+rich.align=alLeft
+rich.font=must
+rich.width=500
+rich.PopupMenu=popup
+
+dir.top=30
+dir.readonly=1
+dir.text=path
+dir.left=525
+dir.width=200
+dir.parent=form
+
+fontl.top=60
+fontl.left=525
+fontl.caption="Fondi suusrus"
+fontl.parent=form
+
+font.top=60
+font.left=600
+font.width=40
+font.Style=2
+font.onchange=fontclick
+font.parent=form
+
+korgus=100
+for i=1 to 18 do
+  com(i).left=525
+  com(i).height=20
+  com(i).width=75
+  com(i).top=korgus
+  com(i).parent=form
+  korgus=korgus+20
+next
+com(1).caption="<BR>"
+com(1).onclick=br_ok
+
+com(2).caption="<FONT>"  
+com(2).onclick=fonts
+
+com(3).caption="</FONT>"
+com(3).onclick=fonte
+
+com(4).caption="<CENTER>"
+com(4).onclick=center
+
+com(5).caption="</CENTER>"
+com(5).onclick=centerend
+
+com(6).caption="<TABLE>"
+com(6).onclick=table
+
+com(7).caption="</TABLE>"
+com(7).onclick=tableend
+
+com(8).caption="<TR>"
+com(8).onclick=tr
+
+com(9).caption="</TR>"
+com(9).onclick=trend
+
+com(10).caption="<TD>"
+com(10).onclick=td
+
+com(11).caption="</TD>"
+com(11).onclick=tdend
+
+com(12).caption="<B>"
+com(12).onclick=bold
+
+com(13).caption="</B>"
+com(13).onclick=boldend
+
+com(14).caption="<FRAMESET>"
+com(14).onclick=frame
+
+com(15).caption="</FRAMESET>"
+com(15).onclick=frameend
+
+com(16).caption="<IFRAME>"
+com(16).onclick=iframe
+
+com(17).caption="</IFRAME>"
+com(17).onclick=iframeend
+
+com(18).caption="Ü"
+com(18).onclick=copyr  
+  
+call uus
+
+font.additems "8" ,"10", "12"
+font.itemindex=0
+form.showmodal
+
+
+sub salvesta
+  dim savedlg as qsavedialog
+  dim fnimi as string
+  savedlg.caption="Faili salvestamine"
+  savedlg.InitialDir=path
+  if savedlg.execute then
+    fnimi=savedlg.filename
+  end if
+  rich.SaveToFile(fnimi)
+end sub
+
+sub ava_fail
+  dim opendlg as qopendialog
+  dim fnimi as string
+  opendlg.caption="Ava fail"
+  opendlg.InitialDir=path
+  if opendlg.execute then
+    fnimi=opendlg.filename
+  end if
+  rich.LoadFromFile(fnimi)
+end sub
+
+sub check
+  rich.SaveToFile(path +"temp.html")
+  run "C:\Program Files\Internet Explorer\iexplore.exe " +path +"temp.html"
+end sub
+
+sub uus
+  rich.clear
+  rich.addstring "<HTML>"
+  rich.addstring "<HEAD>"
+  rich.addstring "  <TITLE>United</TITLE>"
+  rich.addstring "</HEAD>"
+  rich.addstring "<BODY>"
+  rich.addstring ""
+  rich.addstring ""
+  rich.addstring "</BODY>"
+  rich.addstring "</HTML>"
+end sub
+
+sub br_ok
+  rich.SelText="<BR>"
+end sub
+
+sub copyr
+  rich.SelText="&copy"
+end sub
+
+sub fonts
+  rich.SelText="<FONT>"
+end sub
+
+sub fonte
+  rich.SelText="</FONT>"
+end sub
+
+sub center
+  rich.SelText="<CENTER>"
+end sub
+
+sub centerend
+  rich.SelText="</CENTER>"
+end sub
+
+sub table
+  rich.SelText="<TABLE>"
+end sub
+
+sub tableend
+  rich.SelText="</TABLE>"
+end sub
+
+sub tr
+  rich.SelText="<TR>"
+end sub
+
+sub trend
+  rich.SelText="</TR>"
+end sub
+
+sub td
+  rich.SelText="<TD>"
+end sub
+
+sub tdend
+  rich.SelText="</TD>"
+end sub
+
+sub bold
+  rich.SelText="<B>"
+end sub
+
+sub boldend
+  rich.SelText="</B>"
+end sub
+
+sub frame
+  rich.SelText="<FRAMESET>"
+end sub
+
+sub frameend
+  rich.SelText="</FRAMESET>"
+end sub
+
+sub iframe
+  rich.SelText="<IFRAME>"
+end sub
+
+sub iframeend
+  rich.SelText="</IFRAME>"
+end sub
+
+sub makelink
+  dim okbtn as qbutton
+  dim cancbtn as qbutton
+  dim linkl as qlabel
+  dim targetl as qlabel
+  dim textl as qlabel
+  
+  linkform.height=225
+  linkform.width=300
+  linkform.BorderStyle=bsSingle
+  linkform.caption="Sisesta link"
+  linkform.center
+  
+  linkl.top=30
+  linkl.left=25
+  linkl.caption="Link"
+  linkl.parent=linkform
+  
+  linkedit.top=30
+  linkedit.left=75
+  linkedit.width=200
+  linkedit.text="http://"
+  linkedit.parent=linkform
+  
+  targetl.top=60
+  targetl.left=25
+  targetl.caption="Target"
+  targetl.parent=linkform
+  
+  linktarget.top=60
+  linktarget.left=75
+  linktarget.width=200
+  linktarget.text=""
+  linktarget.parent=linkform
+  
+  textl.top=90
+  textl.left=25
+  textl.caption="Text"
+  textl.parent=linkform
+  
+  linktext.top=90
+  linktext.left=75
+  linktext.width=200
+  linktext.text="Link"
+  linktext.parent=linkform
+  
+  okbtn.left=25
+  okbtn.top=150
+  okbtn.caption="Ok"
+  okbtn.onclick=link_ok
+  okbtn.parent=linkform
+  
+  cancbtn.left=200
+  cancbtn.top=150
+  cancbtn.caption="Tühista"
+  cancbtn.onclick=link_canc
+  cancbtn.parent=linkform
+  
+  linkform.showmodal
+end sub
+
+sub send_it
+  dim ftpl as qlabel
+  dim nickl as qlabel
+  dim passl as qlabel
+  dim faill as qlabel
+  dim saadabtn as qbutton
+  dim closebtn as qbutton
+  
+  ftpform.height=300
+  ftpform.width=350
+  ftpform.BorderStyle=bsDialog
+  ftpform.caption="Saada leht ftp-sse"
+  ftpform.center
+  
+  ftpl.top=30
+  ftpl.left=25
+  ftpl.caption="Ftp aadress"
+  ftpl.parent=ftpform
+  
+  ftpedit.top=30
+  ftpedit.left=100
+  ftpedit.text=ftpftp
+  ftpedit.parent=ftpform
+  
+  nickl.top=60
+  nickl.left=25
+  nickl.caption="Kasutajanimi"
+  nickl.parent=ftpform
+  
+  nickedit.top=60
+  nickedit.left=100
+  nickedit.text=ftpuser
+  nickedit.parent=ftpform
+  
+  passl.top=90
+  passl.left=25
+  passl.caption="Ftp parool"
+  passl.parent=ftpform
+  
+  passedit.top=90
+  passedit.left=100
+  passedit.text=ftppass
+  passedit.parent=ftpform
+  
+  faill.top=120
+  faill.left=25
+  faill.caption="Faili nimi"
+  faill.parent=ftpform
+  
+  failedit.top=120
+  failedit.left=100
+  failedit.text=ftpname
+  failedit.parent=ftpform
+  
+  saadabtn.top=150
+  saadabtn.left=25
+  saadabtn.onclick=saada
+  saadabtn.caption="Saada"
+  saadabtn.parent=ftpform
+  
+  closebtn.top=150
+  closebtn.left=250
+  closebtn.parent=ftpform
+  closebtn.onclick=ftpclose
+  closebtn.caption="Sulge"
+  
+  ftprich.align=alBottom
+  ftprich.parent=ftpform
+  ftprich.readonly=1
+  ftprich.plaintext=1
+  ftprich.addstring date$
+  
+  ftpform.showmodal
+end sub
+
+sub saada
+  dim ip as string
+  dim datasock as qsocket
+  dim dataport as integer
+  dim client as integer
+  dim fail as qfilestream
+  dim mess as string
+  
+  rich.SaveToFile(path +"temp.tmp")
+  ftprich.addstring "Ühendan..."
+  comport=comsock.connect(ftpedit.text, 21)
+  ip=comsock.gethostip
+  ftprich.addstring comsock.readline(comport)
+  ftprich.addstring comsock.readline(comport)
+  comsock.writeline(comport, "USER " +nickedit.text)
+  ftprich.addstring comsock.readline(comport)
+  comsock.writeline(comport, "PASS " +passedit.text)
+  ftprich.addstring comsock.readline(comport)
+  sendmessage(ftprich.handle ,&HB7, 0, 0)
+  while comsock.IsServerReady(comport)>0 do
+    ftprich.addstring comsock.readline(comport)
+  wend
+  comsock.writeline(comport, "TYPE l8")
+  ftprich.addstring comsock.readline(comport)
+  sendmessage(ftprich.handle ,&HB7, 0, 0)
+  comsock.writeline(comport, "PORT 192,168,0,4,10," +str$(n))
+  ftprich.addstring comsock.readline(comport)
+  sendmessage(ftprich.handle ,&HB7, 0, 0)
+  dataport=datasock.open(2560 +n)
+  comsock.writeline(comport, "STOR " +failedit.text)
+  ftprich.addstring comsock.readline(comport)
+  while datasock.ConnectionReady(dataport)<1 do
+  wend
+  client=datasock.accept(dataport)
+  fail.open(path +"temp.tmp", fmOpenRead)
+  while fail.position<fail.size do
+    mess=fail.readstr(1)
+    datasock.write(client, mess, 1)
+  wend
+  fail.close
+  kill path +"temp.tmp"
+  datasock.close(client)
+
+  ftprich.addstring comsock.readline(comport)
+  while comsock.IsServerReady(comport)>0 do
+    ftprich.addstring comsock.readline(comport)
+  wend
+  sendmessage(ftprich.handle ,&HB7, 0, 0)
+  comsock.writeline(comport, "QUIT")
+  ftprich.addstring comsock.readline(comport)
+  sendmessage(ftprich.handle ,&HB7, 0, 0)
+  comsock.close 
+  n=n+1
+  ftpftp=ftpedit.text
+  ftpuser=nickedit.text
+  ftppass=passedit.text
+  ftpname=failedit.text
+end sub
+
+sub ftpclose
+  ftprich.clear
+  ftpform.close
+end sub
+
+sub metatag
+  dim metabtn as qbutton
+  dim namel as qlabel
+  dim contl as qlabel
+  metaform.height=250
+  metaform.width=300
+  metaform.BorderStyle=bsSingle
+  metaform.caption="Sisesta meta tag"
+  metaform.center
+  
+  namel.left=25
+  namel.top=50
+  namel.caption="NAME"
+  namel.parent=metaform
+  
+  metaname.left=100
+  metaname.top=50
+  metaname.text="descryption"
+  metaname.parent=metaform
+  
+  contl.left=25
+  contl.top=75
+  contl.caption="CONTENT"
+  contl.parent=metaform
+  
+  metacont.left=100
+  metacont.top=75
+  metacont.text="Jimmy Cool weebileht"
+  metacont.parent=metaform
+  
+  metabtn.left=25
+  metabtn.top=175
+  metabtn.caption="Sisesta"
+  metabtn.onclick=metaok
+  metabtn.parent=metaform
+  
+  metaform.showmodal
+end sub
+
+sub metaok
+  metaform.close
+  rich.SelText="<META NAME=" +chr$(34) +metaname.text +chr$(34) +" CONTENT=" +chr$(34) +metacont.text +chr$(34) +">"
+end sub
+
+sub kopeeri
+  rich.CopyToClipboard
+end sub
+
+sub pastefrom
+  rich.PasteFromClipboard
+end sub
+
+sub fontclick
+  if font.itemindex=0 then fontsize=8
+  if font.itemindex=1 then fontsize=10
+  if font.itemindex=2 then fontsize=12
+  
+  must.size=fontsize
+  rich.font=must
+end sub
+
+sub link_ok
+  rich.SelText="<A href=" +chr$(34) +linkedit.text +chr$(34) +" target="> +chr$(34) +linktarget.text _
+  +chr$(34) +">" +linktext.text +"</A>"
+  linkform.close
+end sub
+
+sub link_canc
+  linkform.close
+end sub
+
+sub image
+  dim openimg as qopendialog
+  openimg.caption="Sisesta pilt"
+  if openimg.execute then
+    rich.SelText="<IMG src=" +chr$(34) +getfile(openimg.filename) +chr$(34) +">"
+  end if
+end sub

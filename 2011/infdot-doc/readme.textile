@@ -1,0 +1,9 @@
+h1. Infdot-doc documentation
+
+h2. Distribution
+
+|_intermediates_|Contains files header.html and footer.html that are used for intermediate XHTML result.|
+
+h2. Command line usage
+
+bc. infdot-doc file.textile [template.xsl]

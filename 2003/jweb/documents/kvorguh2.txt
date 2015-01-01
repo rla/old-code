@@ -1,0 +1,49 @@
+Content-Type: plain/text
+Date        : 22/07/2000 22:41 
+Sender      : Narrow <nss@privacyx.com>
+Subject     : Kuidas häkkida teiste Windows masinatesse?
+X-System    : Windows
+X-Status    : Narrow-EST-#02
+X-Credits   : Aatiplex Team
+_________________________________________________________________________________
+
+Selle dokumendi autor ei vastuta millegi eest! See informatsioon on mõeldud
+õppe materjalina ja et inimesed teaksid, et see on võimalik.
+
+Ma ei hakka pikalt kirjutama ja loodan, et lugeja teab mis on "Sharing".
+Kui ei tea, siis küsige kellegi käest! Selleks, et "Sharing" töötaks
+peab teie Windows masinas installeeritud "Client for Microsoft Networks"
+ja "TCP/IP protokoll". Kui sa kasutad Atlas Starterit, siis meie suur
+sõber ET teeb selle asjanduse sinu asemel.
+
+Kuidas installeerida?
+1) Mine: Start -> Settings -> Control Panel -> Network
+2) Vajuta "Add..."
+3) Klõpsa kaks korda "Client" peale
+4) Vali "Microsoft" ja sealt "Client for Microsoft Networks"
+5) Vajuta "OK"
+6) Jälle "Add..." ja nüüd vali "Protocol".
+7) Klõpsa kaks korda "Microsoft" ja seal "IPX/SPX-compatible Protocol" peale.
+8) Vajuta "OK" "OK" "OK" "OK" "OK" ja tee restart.
+
+Nüüd on sinu masin valmis häkkimiseks! :)
+Näiteks, arvutil on IP aadress: 177.2.2.1 ja tal on "C" ketas "Share-itut".
+Kuidas sisse saada? Väga lihtsalt. Mine: Start -> Run. Seal kirjuta:
+explorer \\177.2.2.1. Kui "Sharing" ei tööta, peaks ta ütlema mida siukest:
+"\\177.2.2.1 path not found" Aga, kui töötab, siis peaksid sa nägema paar kataloogi.
+Näiteks kolm kataloogi: A, C, D. Alati proovi C! Sest A võib olla tema
+floppi ja ta hakkab häälitsema või D on tema CDROM ja see ka kurat
+hakkab häälitsema, siis 177.2.2.1 kasutaja saab kohe aru, et keegi
+mässab tema arvutiga! Kui tahad proovida oma masinat, siis jälle
+mine: Start -> Run ja nüüd kirjuta: explorer \\127.0.0.1
+Edasi ise tead mida teed ;-)
+
+Kuidas leida siukseid masinaid?
+1) Kasutades IRCed.
+2) Pordi skännimisega. Jah, kui port 139 on lahti, siis "Sharing" töötab.
+3) Kasuta ShareFinder (kirjutas Pc Spectrum). Saad seda tõmmata siit:
+http://www.zone.ee/unix/sf.zip
+4) Proovi skännida: 212.107.37.x, 212.107.38.x, 212.107.39.x ja 212.107.40.x
+
+Kui tahate, et ma kirjutaks mida võiks teha kui oled sees, siis mailige
+mulle. Sest ma ei tea palju neid inimesi on kes loevad seda :(

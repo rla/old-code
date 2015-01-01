@@ -1,0 +1,33 @@
+--Programmi Addr2 readme fail--
+
+Praegune versioon 2.01 beta test
+
+--Tutvustamine--
+
+Programm on mõeldud failist addr.txt või mõnest muust addresside otsimiseks.
+
+--Failid--
+addr2.exe - kompileeritud programm
+addr.txt - addresside lähtefail
+addrnew.txt - korduvate ridadeta fail
+settings.ini - programmi settingute fail
+addrfail.tpu - kompileeritud addr libary
+addrfali.pas - addr libary lähtekood
+addr2.pas - programmi lähtekood  
+loemind!.txt - readme fail
+
+--KKK--
+
+Miinimumraud 80286, mälu vastavalt töödeldava faili suurusele(1+MB)
+Programm töötab opsüsteemidega dos5.1, win3.0+, win95, win98, win98se, winMe, winNT for workgroups 3.1+
+Opsüsteemid winxp, win2000, Unix, Linux pole toetatud.  
+
+--Vead--
+ 
+Kui leiad mõne vea siis teata mailile cljim17@yahoo.com
+
+--Copyright--
+
+Copyright for Addr2.exe Jimmy Cool
+Source availible
+www.hot.ee/cljim/addr2.html

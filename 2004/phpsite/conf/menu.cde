@@ -1,0 +1,38 @@
+Cache(?id=cache,0){
+    Failid(?id=cache_failid,0){}
+    Seadistus(?id=cache_conf,0){}
+    Tühjenda(?id=cache_del,0){}
+}
+Menüü(?id=menu,0){}
+Põhiseaded(?id=settings,0){}
+Abi(?id=abi,0){
+    Objektid(?id=abi_obj,0){
+        blabla(?id=blabla,0){}
+        blabla2(?id=blabla2,0){}
+    }
+    Standardid(?id=standards,0){
+        Bännerid(?id=standard_bannerid,0){}
+        Templeidid(?id=abi_templeidid,0){}
+    }
+}
+Index(?id=index,0){}
+CSS(?id=css,0){
+    Kasutatavad(?id=css_used,0){}
+}
+Andmed(?id=data,0){}
+Logimine(?id=logimine,0){}
+Objektid(?id=obj,0){
+    js(?id=obj&amp;act=js,0){}
+    text(?id=obj&amp;act=text,0){}
+    php(?id=php,0){}
+    thtml(?id=thtml,0){}
+    html(?id=html,0){}
+}
+MySql(?id=mysql,0){
+    Vaata(?id=mysql&amp;act=vaata_db,0){}
+    Uus(?id=mysql&amp;act=uus_baas,0){}
+}
+Uus(?id=uus,0){}
+Templeidid(?id=temps,0){}
+
+Leheküljed(?id=lehed,0){}

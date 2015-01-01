@@ -1,0 +1,81 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Veebiliides</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="http://www.rl.pri.ee/laanemets.css" />
+</head>
+<body>
+<h1>Veebiliides</h1>
+<div class="spacing"></div>
+<div style="border: 1px solid #000000; padding: 20px">
+<!-- Generator: GNU source-highlight 2.5
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><i><font color="#9A1900">% Misjonäride ja inimsööjate probleem</font></i>
+<i><font color="#9A1900">% Tehisintellekt I</font></i>
+<i><font color="#9A1900">% Veebipõhine kasutajaliides</font></i>
+<i><font color="#9A1900">% Raivo Laanemets, rlaanemt@ut.ee, 29.10.06</font></i>
+
+<font color="#990000">:-</font><b><font color="#000000">encoding</font></b><font color="#990000">(</font>utf8<font color="#990000">).</font>
+
+<font color="#990000">:-</font><b><font color="#000000">use_module</font></b><font color="#990000">(</font><b><font color="#000000">library</font></b><font color="#990000">(</font><font color="#FF0000">'http/thread_httpd'</font><font color="#990000">)).</font>
+<font color="#990000">:-</font><b><font color="#000000">use_module</font></b><font color="#990000">(</font>misjonarid<font color="#990000">).</font>
+
+<i><font color="#9A1900">% Serveri käivitus (user-lõimes)</font></i>
+start<font color="#009900">_</font>server<font color="#990000">:-</font>
+	<b><font color="#000000">http_server</font></b><font color="#990000">(</font>serve<font color="#990000">,</font> <font color="#990000">[</font><b><font color="#000000">port</font></b><font color="#990000">(</font><font color="#993399">8888</font><font color="#990000">),</font> <b><font color="#000000">workers</font></b><font color="#990000">(</font><font color="#993399">10</font><font color="#990000">)]),</font>
+	<b><font color="#000000">current_thread</font></b><font color="#990000">(</font><font color="#009900">X</font><font color="#990000">,</font> <font color="#009900">_</font><font color="#990000">),</font> <b><font color="#000000">concat</font></b><font color="#990000">(</font><font color="#FF0000">'httpd@'</font><font color="#990000">,</font> <font color="#009900">_</font><font color="#990000">,</font> <font color="#009900">X</font><font color="#990000">),</font> <b><font color="#000000">thread_join</font></b><font color="#990000">(</font><font color="#009900">X</font><font color="#990000">,</font> <font color="#009900">_</font><font color="#990000">).</font>
+
+<i><font color="#9A1900">% Vastamine päringule,</font></i>
+<i><font color="#9A1900">% saadame http ja html päised. body osas</font></i>
+<i><font color="#9A1900">% väljastame lahenduse</font></i>
+<b><font color="#000000">serve</font></b><font color="#990000">(</font><font color="#009900">Q</font><font color="#990000">):-</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'Content-Type: text/html\n\n'</font><font color="#990000">),</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;'</font><font color="#990000">),</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'&lt;html&gt;&lt;head&gt;&lt;title&gt;Lahend&lt;/title&gt;&lt;meta http-equiv="Content-Type" content="text/html;charset=utf-8" /&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;'</font><font color="#990000">),</font>
+	<font color="#990000">(</font><b><font color="#000000">vars</font></b><font color="#990000">(</font><font color="#009900">Q</font><font color="#990000">,</font> <font color="#009900">M</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">),</font> <b><font color="#000000">ok</font></b><font color="#990000">(</font><font color="#009900">M</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">)</font> <font color="#990000">-&gt;</font>
+		<b><font color="#000000">lahenda</font></b><font color="#990000">(</font><font color="#009900">M</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">)</font>
+		<font color="#990000">;</font>
+		<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'Parameetrid peavad olema vahemikus 0..50 (R ja P vahemikus 1..50)\n'</font><font color="#990000">)</font>
+	<font color="#990000">),</font>
+	<b><font color="#0000FF">format</font></b><font color="#990000">(</font><font color="#FF0000">'&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;'</font><font color="#990000">).</font>
+
+<i><font color="#9A1900">% Päringust muutujate välja lugemine</font></i>
+<b><font color="#000000">vars</font></b><font color="#990000">(</font><font color="#009900">Q</font><font color="#990000">,</font> <font color="#009900">M</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">):-</font>
+	<b><font color="#000000">member</font></b><font color="#990000">(</font><b><font color="#000000">search</font></b><font color="#990000">(</font><font color="#009900">Ps</font><font color="#990000">),</font> <font color="#009900">Q</font><font color="#990000">),</font>
+	<b><font color="#000000">member</font></b><font color="#990000">(</font>m<font color="#990000">=</font><font color="#009900">M1</font><font color="#990000">,</font> <font color="#009900">Ps</font><font color="#990000">),</font>
+	<b><font color="#000000">member</font></b><font color="#990000">(</font>n<font color="#990000">=</font><font color="#009900">N1</font><font color="#990000">,</font> <font color="#009900">Ps</font><font color="#990000">),</font>
+	<b><font color="#000000">member</font></b><font color="#990000">(</font>p<font color="#990000">=</font><font color="#009900">P1</font><font color="#990000">,</font> <font color="#009900">Ps</font><font color="#990000">),</font>
+	<b><font color="#000000">member</font></b><font color="#990000">(</font>r<font color="#990000">=</font><font color="#009900">R1</font><font color="#990000">,</font> <font color="#009900">Ps</font><font color="#990000">),</font>
+	<b><font color="#000000">to_int</font></b><font color="#990000">(</font><font color="#009900">M1</font><font color="#990000">,</font> <font color="#009900">M</font><font color="#990000">),</font>
+	<b><font color="#000000">to_int</font></b><font color="#990000">(</font><font color="#009900">N1</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">),</font>
+	<b><font color="#000000">to_int</font></b><font color="#990000">(</font><font color="#009900">P1</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">),</font>
+	<b><font color="#000000">to_int</font></b><font color="#990000">(</font><font color="#009900">R1</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">).</font>
+
+<b><font color="#000000">to_int</font></b><font color="#990000">(</font><font color="#009900">X</font><font color="#990000">,</font> <font color="#009900">I</font><font color="#990000">):-</font>
+	<font color="#990000">\+</font> <b><font color="#000000">empty</font></b><font color="#990000">(</font><font color="#009900">X</font><font color="#990000">),</font>
+	<b><font color="#000000">term_to_atom</font></b><font color="#990000">(</font><font color="#009900">I</font><font color="#990000">,</font> <font color="#009900">X</font><font color="#990000">),</font>
+	<font color="#009900">integer</font><font color="#990000">(</font><font color="#009900">I</font><font color="#990000">).</font>
+
+<b><font color="#000000">empty</font></b><font color="#990000">(</font><font color="#FF0000">''</font><font color="#990000">).</font>
+
+<i><font color="#9A1900">% Muutujatele seatud kitsendused</font></i>
+<b><font color="#000000">ok</font></b><font color="#990000">(</font><font color="#009900">M</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">):-</font>
+	<b><font color="#000000">in</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">50</font><font color="#990000">,</font> <font color="#009900">M</font><font color="#990000">),</font>
+	<b><font color="#000000">in</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">50</font><font color="#990000">,</font> <font color="#009900">N</font><font color="#990000">),</font>
+	<b><font color="#000000">in</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">50</font><font color="#990000">,</font> <font color="#009900">P</font><font color="#990000">),</font>
+	<b><font color="#000000">in</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">50</font><font color="#990000">,</font> <font color="#009900">R</font><font color="#990000">).</font>
+
+<b><font color="#000000">in</font></b><font color="#990000">(</font><font color="#009900">A</font><font color="#990000">,</font> <font color="#009900">B</font><font color="#990000">,</font> <font color="#009900">X</font><font color="#990000">):-</font> <font color="#009900">X</font> <font color="#990000">&gt;=</font> <font color="#009900">A</font><font color="#990000">,</font> <font color="#009900">X</font> <font color="#990000">=&lt;</font> <font color="#009900">B</font><font color="#990000">.</font></tt></pre>
+
+</div>
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="http://www.rl.pri.ee/pictures/email.png" alt="email" align="top"/>, <a href="http://www.rl.pri.ee/index.html">Index</a>
+
+</body>
+</html>

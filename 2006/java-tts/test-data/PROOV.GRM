@@ -1,0 +1,12 @@
+`G'        ->    #`Konstant'#
+
+
+`Konstant' ->    `Arv'
+`Arv'      ->    `Number'
+`Arv'      ->    `Arv'`Number'
+
+
+
+`Number'   -> 0
+           -> 1
+           -> 2

@@ -1,0 +1,48 @@
+laanemets_dstate.sh ja laanemets_ddiff.sh
+=====================
+Kausta oleku muutuste vaatlemiseks mõeldud vahendid.
+
+Autor: Raivo Laanemets, rlaanemt@ut.ee
+
+
+laanemets_dstate.sh
+---------
+
+Kirjutab kausta oleku tööfaili. Jätab meelde iga faili
+kohta (alamkaustasid ignoreerib):
+
+	faili nime
+	omaniku
+	grupi
+	suuruse
+	õigused
+	muutmise kuupäeva
+	räsi
+	
+Kasutamine: laanemets_dstate.sh [-d kaust] [-o tööfail] [-h] [-v]
+
+Käsurea võtmete kirjeldus
+	-d kaust, mille olek säilitatakse.
+		Kui võtit mitte anda, valib kaustaks praeguse töökausta.
+		
+	-o tööfail, kuhu olek salvestatakse.
+		Kui võtit mitte anda, siis salvestatakse vaadeldavasse kausta faili .dstate.
+	
+	-h väljastab lühikese kasutusõpetuse
+	-v näitab hetkel töödeldava kausta failide nimesid nende töötlemise järjekorras.
+
+laanemets_ddiff.sh
+--------
+
+Võrdleb etteantud kausta praegust ja eelmist olekut.
+Kasutamine: ddiff.sh [-d kaust]
+
+Käsurea võtmete kirjeldus:
+	-d kaust, mille olekuid võrreldakse. Kui midagi ette anda,
+		siis kasutab praegust töökausta.
+	
+	
+laanemets_dstatediff.sh
+-------------
+
+Abiutiil, mis tegelikult teeb võrldemise. ddiff.sh kasutab seda.

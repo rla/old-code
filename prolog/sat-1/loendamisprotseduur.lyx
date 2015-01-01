@@ -1,0 +1,274 @@
+#LyX 1.4.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\language estonian
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Enumerate
+Kui 
+\begin_inset Formula $F=\emptyset$
+\end_inset
+
+, siis tagasta 
+\begin_inset Formula $2^{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Kui 
+\begin_inset Formula $\emptyset\in F$
+\end_inset
+
+, siis tagasta 
+\begin_inset Formula $0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Kui leidub ühikliteraaliga klausel 
+\begin_inset Formula $C_{i}=l$
+\end_inset
+
+ valemis 
+\begin_inset Formula $F$
+\end_inset
+
+, siis
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Kui 
+\begin_inset Formula $l\equiv x$
+\end_inset
+
+, siis rakenda valemile teisendust 
+\emph on
+R4p
+\emph default
+, saades valemi 
+\begin_inset Formula $F|_{x=1}$
+\end_inset
+
+.
+ Sellele valemile rakenda järjest lihtsustavaid teisendusi 
+\emph on
+R1p
+\emph default
+ ja 
+\emph on
+R2n
+\emph default
+, kuni neid rohkem rakendada ei saa.
+ Lihtsustamiste tulemusena saadi valem 
+\begin_inset Formula $F'$
+\end_inset
+
+.
+ Tagasta 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+mbox{
+\backslash
+proc{LP}$(F',n-1)$}
+\end_layout
+
+\end_inset
+
+ tulemus.
+\end_layout
+
+\begin_layout Enumerate
+Kui 
+\begin_inset Formula $l\equiv-x$
+\end_inset
+
+, siis rakenda valemile teisendust 
+\emph on
+R4n
+\emph default
+, saades valemi 
+\begin_inset Formula $F|_{x=0}$
+\end_inset
+
+.
+ Sellele valemile rakenda järjest lihtsustavaid teisendusi 
+\emph on
+R1n
+\emph default
+ ja 
+\emph on
+R2p
+\emph default
+, kuni neid rohkem rakendada ei saa.
+ Lihtsustamiste tulemusena saadi valem 
+\begin_inset Formula $F'$
+\end_inset
+
+.
+ Tagasta 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+mbox{
+\backslash
+proc{LP}$(F',n-1)$}
+\end_layout
+
+\end_inset
+
+ tulemus.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Kui kolmandas sammus ei leidunud ühe literaaliga klauslit, siis valime kõigepeal
+t muutuja 
+\begin_inset Formula $x$
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+mbox{$x=$
+\backslash
+proc{VM}$(F)$}
+\end_layout
+
+\end_inset
+
+.
+ Seejärel rakenda reegleid 
+\emph on
+R3p
+\emph default
+ ja 
+\emph on
+R3n
+\emph default
+, saades vastavad valemid 
+\begin_inset Formula $F|_{x=1}$
+\end_inset
+
+ ja 
+\begin_inset Formula $F|_{x=0}$
+\end_inset
+
+.
+ Valemile 
+\begin_inset Formula $F|_{x=1}$
+\end_inset
+
+ rakenda lihtsustavaid teisendusi 
+\emph on
+R1p
+\emph default
+ ja 
+\emph on
+R2n
+\emph default
+, kuni neid enam rakendada ei saa.
+ Selle tulemusena saame valemi 
+\begin_inset Formula $F_{p}$
+\end_inset
+
+.
+ Valemile 
+\begin_inset Formula $F|_{x=0}$
+\end_inset
+
+ rakenda aga lihtsustavaid teisendusi 
+\emph on
+R1n
+\emph default
+ ja 
+\emph on
+R2p
+\emph default
+, kuni neid enam rakendada ei saa.
+ Selle tulemusena saame valemi 
+\begin_inset Formula $F_{n}$
+\end_inset
+
+.
+ Tagasta 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+mbox{
+\backslash
+proc{LP}$(F_p, n-1)$}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $+$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+mbox{
+\backslash
+proc{LP}$(F_n, n-1)$}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

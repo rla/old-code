@@ -1,0 +1,23 @@
+= Desktop wiki ToDo list =
+
+* --Creation of new wiki pages from the program--
+* Creation of new folders from the program
+* Upload of wiki pages to FTP server
+* Upload of complete site to FTP server
+* Download of wiki pages from FTP server
+* More helpful IDE
+* ''About'' dialog
+* Adjustable fast keys
+* --Styles (CSS) and headers and footers local to some folder--
+* Latex symbols list popup
+* Error line highlight
+* Syntax-level compatability with ''Creole''
+* Page search
+* Page hyperlinking help (popup)
+* More configurable editor (fonts etc.)
+* Development docs
+** Setting project up in Eclipse
+** Building project
+** Extending project
+* User manual
+** Configuration

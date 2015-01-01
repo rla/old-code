@@ -1,0 +1,519 @@
+#LyX 1.5.6 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\usecolortheme{beaver}
+\usepackage{algorithmic}
+\end_preamble
+\language estonian
+\inputencoding auto
+\font_roman ae
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Puude teisenduskauguse arvutamine
+\end_layout
+
+\begin_layout Author
+Raivo Laanemets
+\end_layout
+
+\begin_layout BeginFrame
+Probleemi kirjeldus
+\end_layout
+
+\begin_layout Itemize
+Antud on kaks puud 
+\begin_inset Formula $A$
+\end_inset
+
+ ja 
+\begin_inset Formula $B$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Puude peal saab teostada operatsioone:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Tipu kustutamine
+\end_layout
+
+\begin_layout Itemize
+Lisamine
+\end_layout
+
+\begin_layout Itemize
+Ümbernimetamine
+\end_layout
+
+\begin_layout Itemize
+Alampuude ümbertõstmine
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Leida lühim/vähima kaaluga selline op.
+ jada, mis teisendab puu 
+\begin_inset Formula $A$
+\end_inset
+
+ puuks 
+\begin_inset Formula $B$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Võimalikud lahendused
+\end_layout
+
+\begin_layout Standard
+Puid on kahte tüüpi:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+ordered tree
+\emph default
+ - tipu alamate järjestus on oluline
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Teada on 
+\begin_inset Formula $O(n^{4})$
+\end_inset
+
+ kiiruse ja mäluga algoritmid
+\end_layout
+
+\begin_layout Itemize
+Dünaamiline programmeerimine metsade salvestamisega
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\emph on
+unordered tree
+\emph default
+ - tipu alamate järjestus on mitteoluline
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Üldisel juhul NP-täielik probleem
+\end_layout
+
+\begin_layout Itemize
+Toore jõuga lahendamine
+\end_layout
+
+\begin_layout Itemize
+Tehisintellekti algoritmid (A*)
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Näide 1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $A$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $B$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename puuA.ps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename puuB.ps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Projektist
+\end_layout
+
+\begin_layout Itemize
+Algoritm ja realisatsioon 
+\emph on
+unordered
+\emph default
+-tüüpi fülogeneetiliste puude jaoks
+\end_layout
+
+\begin_layout Itemize
+Fülogeneetiline puu
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Täielik kahendpuu
+\end_layout
+
+\begin_layout Itemize
+Andmed lehtedes
+\end_layout
+
+\begin_layout Itemize
+Alampuude järjestus pole oluline
+\end_layout
+
+\begin_layout Itemize
+Salvestatud NHX formaadis: 
+\family typewriter
+(A,(B,C))
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Rakendus: võrrelda kahe erineva meetodiga saadud puude 
+\begin_inset Quotes eld
+\end_inset
+
+sarnasust
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Algoritm kasutab alt-üles lähenemist
+\end_layout
+
+\begin_layout Itemize
+Üritab mõlemad puud ühtlustada kuni alles jääb üks tipp mõlemas puus
+\end_layout
+
+\begin_layout Itemize
+Kaks operatsiooni: lehtede ühendamine ja lehtede ümbervahetamine
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Näide 2
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $A$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $B$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename puuA.ps
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename puuB.ps
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+td.sh -in1 data/test/A.txt -in2 data/test/B.txt
+\newline
+Swap A and B in first tree
+\newline
+Merge
+ A and C in both trees into L0
+\newline
+Merge B and L0 in both trees into L1
+\newline
+Swaps:
+ 1
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Näide 3
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $A$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $B$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/raivo/school/ut/2009_algorithmics/treedistance/data/tf105200.dm.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/raivo/school/ut/2009_algorithmics/treedistance/data/tf105200.ds.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Näide 3 ja tulemused
+\end_layout
+
+\begin_layout Itemize
+Suurte puude korral algoritm optimaalset teisenduskaugust ei leia
+\end_layout
+
+\begin_layout Itemize
+Randomiseeritud variant genereerib palju puid ja leiab ligilähedase kauguse
+\end_layout
+
+\begin_layout Itemize
+Ühendamise operatsioonile saab ahne kaalu anda - algoritm eelistab väiksemaid
+ puid
+\end_layout
+
+\begin_layout Itemize
+Reaalse kasutamise jaoks vajab paremaid heuristikaid
+\end_layout
+
+\begin_layout Itemize
+Kitsendatud variant ka NP-täielik?
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<!-- Süsteemi TTS ehitusfail -->
+
+<project name="tts" basedir="." default="usage">
+	
+	<!-- Mitmesuguste parameetrite seadistused -->
+	
+	<property name="src.dir" value="src"/>
+	<property name="src.tests.dir" value="test"/>
+	<property name="build.dir" value="bin"/>
+	<property name="build.native.dir" value="bin-native"/>
+	
+	<!-- Vaikimisi eesmärk, mis kirjeldab teisi ehituseesmärke -->
+	
+	<target name="usage">
+		<echo message="build        - Kompileerimine Java baitkoodi"/>
+		<echo message="build-native - Kompileerimine masinkoodi"/>
+	</target>
+	
+	<!-- Kompileerimine Java baitkoodi -->
+	
+	<target name="build" description="Compile main source tree java files">
+		<mkdir dir="${build.dir}"/>
+		<javac destdir="${build.dir}" target="1.5" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}"/>
+		</javac>
+	</target>
+	
+	<!-- Testide kompileerimine Java baitkoodi -->
+	
+	<target name="build-tests" description="Compile main source tree java files">
+		<mkdir dir="${build.dir}"/>
+		<javac destdir="${build.dir}" target="1.5" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.tests.dir}"/>
+			<classpath refid="compile-tests-classpath"/>
+		</javac>
+	</target>
+	
+	<!-- Puhastamine -->
+	
+	<target name="clean" description="Clean output directories">
+		<delete>
+			<fileset dir="${build.dir}">
+				<include name="**/*.class" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<path id="compile-tests-classpath">
+		<pathelement location="${build.dir}"/>
+	</path>
+	
+</project>

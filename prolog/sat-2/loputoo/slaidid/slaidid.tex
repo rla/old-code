@@ -1,0 +1,237 @@
+\documentclass{beamer}
+\usepackage[latin1]{inputenc}
+
+\mode<presentation>
+{
+	\usetheme{default}
+	\useoutertheme[]{shadow}
+	\usecolortheme{beaver}
+}
+
+\setbeamerfont{title}{size=\huge}
+\setbeamerfont{frametitle}{size=\large}
+
+\setbeamertemplate{footline}{}
+
+\title{DPLL protseduur lahendite loendamiseks}
+\subtitle{Bakalaureusetöö, 4AP}
+\author{
+	\textit{Autor:} Raivo Laanemets \\
+	\textit{Juhedaja:} Tõnu Tamme \\
+    Tartu Ülikool \\
+    Arvutiteaduse instituut
+}
+\date{17. jaanuar 2008}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Sissejuhatus}
+\subsection{Kehtestatavusprobleem}
+\frame
+{
+	\frametitle{Kehtestatavusprobleem}
+	
+	
+	\begin{itemize}
+		\item Antud $n$ muutuja Boole'i funktsioon $f(x_1,\dots,x_n)$.
+		\item Leidub selline muutujate $x_1,\dots,x_n$ väärtustus, et
+		$f(x_1,\dots,x_n)=1$? ($x_1,\dots,x_n$ on lahend).
+		\item Mõnikord soovime teada ka konkreetset $x_1,\dots,x_n$ väärtustust,
+		millel $f$ tõene on.
+	\end{itemize}
+}
+\subsection{Loendamisprobleem}
+\frame
+{
+	\frametitle{Loendamisprobleem}
+	
+	\begin{itemize}
+		\item Antud $n$ muutuja Boole'i funktsioon $f(x_1,\dots,x_n)$.
+		\item Mitu muutujate $x_1,\dots,x_n$ väärtustust leidub, nii et
+		$f(x_1,\dots,x_n)=1$? ($f$ lahendite arv)
+	\end{itemize}
+}
+\subsection{Keerukus}
+\frame
+{
+	\frametitle{Keerukus}
+	
+	\begin{itemize}
+		\item Kehtestatavusprobleem on \emph{NP-täielik} (S.Cook, 1971).
+		\item Klassi \emph{NP-täielik} kuuluvad ka:
+		sõltumatu tippude hulk, klikkide leidmine, tippude hulga kate (graafiteooria
+		probleemid), samuti \emph{Sudoku}, $\dots$
+	\end{itemize}
+}
+\frame
+{
+	\frametitle{Keerukus}
+	
+	\begin{itemize}
+		\item Lahendite loendamine on kehtestatavusele vastav loendamisprobleem ja on
+		\emph{\#P-täielik} (D.Roth, 1996).
+		\item Klassi \emph{\#P-täielik} kuuluvad ka:
+		tuletus Bayes'i võrgus, Dedekindi arvude leidmine, $\dots$
+	\end{itemize}
+}
+\section{DPLL algoritm}
+\subsection{DP algoritm}
+\frame
+{
+	\frametitle{DP algoritm}
+	
+	\begin{itemize}
+		\item M.Davis, H.Putnam, \emph{A Computing Procedure for Quantification Theory}, 1960
+		\item Predikaatloogikas kirja pandud teoreemide tõestamiseks.
+		\item Sisendiks predikaatloogika valem $F$.
+		\item Algoritm asendas $F$ tõesuse kontrolli $\neg F$ mittekehtestatavuse kontrolliga.
+	\end{itemize}
+}
+\frame
+{
+	\frametitle{DP algoritm}
+	
+	Algoritm koosnes neljast sammust:
+	\begin{enumerate}
+		\item Valemi $F$ eituse $\neg F$ leidmine.
+		\item Valemi $\neg F$ kirjutamine prefikskujule $G_p$ (kvantorid ''eespool``, maatriks KNK-l).
+		\item $G_p$ eksistentsikvantorite eemaldamine skolemiseerimise teel, saadi valem $G_s$.
+		\item Eespool saadud valemist kvantori- ja muutujavabade lausearvutusvalemite
+		$G_{s,1},G_{s,2},\dots$ genereerimine kuni nendest $n$ esimese valemi
+		konjuktsioon $G_{s,1}\wedge\dots\wedge G_{s,n}$ on mittekehtestatav. 
+	\end{enumerate}
+}
+\frame
+{
+	\frametitle{DP algoritm}
+	
+	Sammus (4) tehti järgmist:
+	\begin{itemize}
+		\item Leidub klausel $C=l$ - eemalda kõik klauslid,
+		kus esineb $l$ ja kõikidest klauslitest $\bar{l}$ (ühikliteraal).
+		\item $l$ esineb mingis klauslis, aga $\bar{l}$ mitte üheski - eemalda
+		kõik klauslid, kus $l$ esineb (puhas literaal).
+		\item Kui $W=(A\vee l)\wedge(B\vee \bar{l})\wedge R$, $A$,
+   		$B$ ja $R$ literaali $l$ ega $\bar{l}$ ei sisalda,
+   		kirjuta $W$ kujule $W'=(A\vee B\vee)\wedge R$ (muutujate elimineerimine).
+	\end{itemize}
+}
+\frame
+{
+	\frametitle{DP algoritm}
+	
+	\begin{itemize}
+		\item Reegleid sammus 4 rakendati kuni saadi tühi klausel
+		(klausel on tõene parajasti siis, kui vähemalt üks tema literaalidest on tõene)
+		\item Sarnaneb väga resolutiooniga (Robinson, 1965).
+		\item DP algoritm oli korrektne ja täielik ($F$ tõene - algoritm tuvastas selle).
+	\end{itemize}
+}
+\subsection{DPLL algoritm}
+\frame
+{
+	\frametitle{DPLL algoritm}
+	
+	\begin{itemize}
+		\item M.Davis, G.Logemann, D.Loveland, \emph{A Machine Program for Theorem-Proving}, 1962
+		\item Asendas elimineerimise jaotamisega:
+		\item Kui $W$ on kujul $W=(A\vee l)\wedge(B\vee \bar{l})\wedge R$, $A$,
+		$B$ ja $R$ literaali $l$ ega $\bar{l}$ ei sisalda, jaota $W$ valemiteks
+		$W_1=A\wedge R$ ja $W_2=B\wedge R$.
+		\item $W$ on mittekehtestatav parajasti siis kui $W_1$ ja $W_2$ seda on.
+	\end{itemize}
+}
+\subsection{DPLL algoritm}
+\frame
+{
+	\frametitle{DPLL algoritm}
+	
+	\begin{itemize}
+		\item Valem tõene, kui ''kadusid ära`` kõik klauslid.
+		\item Otseselt muutujate väärtustust ei anna.
+		\item Ei paku mugavat viisi lahendite loendamiseks.
+		\item PL teoreemitõestamiseks ebaefektiivne võrreldes
+		resolutsiooni ja unifitseerimisega.
+	\end{itemize}
+}
+\subsection{DPLL SAT}
+\frame
+{
+	\frametitle{DPLL SAT}
+	
+	\begin{itemize}
+		\item Kasutatav lausearvutusloogika valemite kehtestatavuse jaoks.
+		\item Annab kehtestatava väärtuse kui see leidub.
+		\item Jaotamine asendatud väärtustamisega.
+		\item Kasutatab Boole-Shannoni dekompositsiooni.
+		\item Töötab muutujate osalise väärtustusega.
+	\end{itemize}
+}
+\frame
+{
+	\frametitle{Boole-Shannoni dekompositsioon}
+	
+	\begin{itemize}
+		\item Universaalne vahend $n$ muutujaga ($n > 0$) valemite
+		jagamiseks kaheks $n-1$ valemiks.
+		\item Valida valemist $F$ muutuja $x$, saadakse kaks valemit $F_x$ ja $F_{\bar{x}}$,
+		esimeses võta $x=1$, teises $x=0$.
+		\item Võimaldab ära kasutada DPLL lihtsustusreegleid.
+		\begin{itemize}
+			\item $F_x$ - eemalda kõik $x$ sisaldavad klauslid, klauslitest eemalda $\neg x$.
+			\item $F_{\bar{x}}$ - eemalda kõik $\neg x$ sisaldavad klauslid, klauslitest eemalda $x$.
+		\end{itemize}
+		\item Vali $F_x$ või $F_{\bar{x}}$ ja jätka dekompositsiooni rakendamist.
+	\end{itemize}
+}
+\frame
+{
+	\frametitle{Boole-Shannoni dekompositsioon}
+	
+	\begin{itemize}
+		\item Kui valem sisaldab ühikklauslit $C=x$ ($C=\neg x$),
+		siis teha dekompositsioon $x$ järgi ja ignoreerida $F_{\bar{x}}$ ($F_x$).
+		\item Esimesel juhul on samaselt väär $F_{\bar{x}}$, teisel $F_x$.
+	\end{itemize}
+}
+\frame
+{
+	\frametitle{Boole-Shannoni dekompositsioon}
+	
+	\begin{itemize}
+		\item Dekompositsiooni saab rakendada ainult lõplik arv kordi, sest muutujad saavad otsa.
+		\item Võimalik kaks olukorda vahetult pärast lihtsustamist:
+		\begin{enumerate}
+			\item[*a] $F$ ei sisalda ühtegi klauslit - leitud kehtestatav väärtustus.
+			\item[*b] $F$ mingi klausel muutus tühjaks - $F$ on väär.
+		\end{enumerate}
+		\item Juhul (*a) on annavad muutujad, mille järgi dekompositsiooni rakendati, kehtestatava väärtustuse.
+	\end{itemize}
+}
+\frame
+{
+	\frametitle{Boole-Shannoni dekompositsioon}
+	
+	DPLLSAT($F$):
+	\begin{enumerate}
+		\item \textbf{if} $F$ tühi, tagasta \textbf{true}.
+		\item \textbf{else if} $F$ sisaldab tühiklauslit, tagasta \textbf{false}.
+		\item \textbf{else if} $F$ sisaldab ühikklauslit $C=x$, tagasta DPLLSAT($F_x$).
+		\item \textbf{else} Vali muutuja $x$, tagasta $F_x\vee F_{\bar{x}}$.
+	\end{enumerate}
+}
+\section{Lahendite loendamine}
+\frame
+{
+	\frametitle{Lahendite loendamine}
+	
+	\begin{itemize}
+		\item E.Birnbaum, E.L.Lozinskii, \emph{The Good Old Davis-Putnam Procedure Helps Counting Models}, 1999
+		\item DPLL protseduuri kasutamine loendamiseks.
+		\item Kasutab ära, et valem muutub tõeseks enne kõikide muutujate väärtustamist.
+		
+	\end{itemize}
+}
+\end{document}

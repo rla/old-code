@@ -1,0 +1,17 @@
+* /var/www/htdocs/zone/audio/misc/hv_psu.sxsch
+*#SIMETRIX
+V1 V1_P V1_N SIN 500m 100 50 -20m 0
+V2 Q1_G Q1_S PULSE -4.5 5.5 0 1u 1u 100u 1m
+R1 L1_N 0 10
+L1 Q1_S L1_N 100m  
+D1 D1_P V1_P BYW80-200
+D2 V1_P 0 BYW80-200
+D3 V1_N 0 BYW80-200
+D4 D1_P V1_N BYW80-200
+X$Q1 V1_P Q1_G Q1_S IRF530 pinnames: D G S
+C1 D1_P 0 10m  
+C2 L1_N 0 1m  
+.GRAPH D1_P curveLabel="D1-anode" nowarn=true ylog=auto xlog=auto
+.GRAPH L1_N curveLabel="Probe2-NODE" nowarn=true ylog=auto xlog=auto
+.TRAN 100m
+

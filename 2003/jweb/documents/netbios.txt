@@ -1,0 +1,85 @@
+                  Lihtne rünnak NetBiosi kaudu
+
+ Vähemalt momendil on netis veel palju W95/98 kasutavaid masinaid ja leidub
+ka palju neid, kes on installimise ajal või siis lihtsalt hiljem oma masinat
+näperdades sisse lülitanud sellise asja nagu failide ja printeri sharemine
+ehk siis maakeeli jagamine, üle võrgu. See et W95/98 baasil olevates sise -
+võrkudes nii on tehtud on juba loogiline. Point on nüüd selles, et mõnedel 
+arvutitel ja eriti nendel, kes on nö. "näperdanud", ei ole pandud passwordi!
+  Enda suurim üllatus on olnud ühe Eesti väikelinna politsei korrapidaja
+arvuti, mille kõvakettal võis tegutseda nagu omas kodus, ei saa mainimata
+jätta, et see masin sisaldas ka ligipääsu autoregistrile...
+  Ok! Kuidas sa siis selle arvuti leiad? Enda jaoks on kaks põhilist viisi:
+1. Tsekkan mingi www.blabla.ee ümbruses olevaid IP-sid ja 
+2. Vaatan kes on Tele2 sissehelistamis serveris aktiivsed. Viimast saab teada
+minnes Telnetiga:
+
+  telnet 212.107.32.154 79
+
+ Tänud Anc0 -le selle meetodi eest !!!
+
+
+Edasi on sul vaja teada arvuti nime. Kuidas ? Lähed DOS prompti ja trükid:
+
+      nbtstat -A oma.ohvri.ip.aadress
+
+ "A" - peab kindlasti suur olema!!! Kui nüüd selle aadressi taga on NetBiosi
+kaudu opereeriv arvuti, siis tuleb ekraanile midagi sellist:
+
+
+C:\nbtstat -A 212.107.37.235
+
+
+       NetBIOS Remote Machine Name Table
+
+   Name               Type         Status
+---------------------------------------------
+SERVER         <00>  UNIQUE      Registered
+SOTS           <00>  GROUP       Registered
+SERVER         <03>  UNIQUE      Registered
+SERVER         <20>  UNIQUE      Registered
+SOTS           <1E>  GROUP       Registered
+SOTS           <1D>  UNIQUE      Registered
+..__MSBROWSE__.<01>  GROUP       Registered
+
+MAC Address = 44-45-53-54-00-00
+
+C:\
+
+ Sul läheb nüüd vaja kõige esimest masina nime, mille taga on "UNIQUE". Oled
+selle kindlaks teinud, lähed oma Windowsi juurkataloogi, mis tavaliselt on 
+  C:\WINDOWS\ 
+ja otsid sealt üles faili:
+ lmhosts
+Kui seda ei ole, siis teed ta ise ja kirjutad sinna:
+
+ ohvri.ip.aadress   nimiMisOliEsimene
+
+Näiteks toodud juhul:
+
+212.107.37.235 SERVER
+
+Salvestad selle ära ja lähed Windowsis  START-FIND-COMPUTERS ja kirjutad
+sinna selle nime, mis said (selles näites "SERVER" - ilma jutumärkideta :))
+vajutad nuppu FIND ja jääb kolm varianti:
+ 1. Ei arvutit
+ 2. Küsib passwordi
+ 3. Laseb ligi (:
+ 
+ Märkused
+ --------
+
+ * Üldiselt on tulemusrikkam tsekata mingite www.MingiMaakohasAsuv.ee, kuna
+nendes on security lohakam.
+ * Tele2 sissehelistajatel on väga harva file-sharing enabled, kuid kui mõne
+leiab, siis on lõbu seda rohkem.
+ * Printerid ja CD-ROMid on tihti kättesaadavad. Printerid lasevad üldjuhul ka
+ennast sinu masinasse ära installida.
+
+
+           Pc Spectrum 
+          Aatiplex Team 
+          aatron@hot.ee
+           05/06/2000
+-------------------------------------------------------------------------------
+  

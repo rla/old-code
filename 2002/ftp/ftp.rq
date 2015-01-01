@@ -1,0 +1,252 @@
+'(c) Raivo Laanemets 2002-2004
+'rl@starline.ee
+
+$include "Rapidq.inc"
+$typecheck on
+
+dim form as qform
+dim rich as qrichedit
+dim time as qtimer
+dim comsock as qsocket
+dim datasock as qsocket
+dim conbtn as qbutton
+dim closebtn as qbutton
+dim connected as integer
+dim comport as integer
+dim portbtn as qbutton
+dim dataport as integer
+dim storbtn as qbutton
+dim cli as integer
+dim saadabtn as qbutton
+dim fail as qfilestream
+dim asci as qbutton
+dim sisu as string
+dim status as qstatusbar
+dim client as integer
+dim transf as integer
+dim n as integer
+dim binbtn as qbutton
+dim filelist as qfilelistbox
+dim sendbtn as qbutton
+dim datac as integer
+
+declare sub timeover
+declare sub yhenda
+declare sub close
+declare sub port
+declare sub store
+declare sub saada
+declare sub asctype
+declare sub bintype
+declare sub saada_fail
+declare sub andmed
+
+function getfile(path as string) as string
+  dim kord as integer
+  dim posit as integer
+  dim tmpstr as string
+  tmpstr=path
+  for kord=1 to 20 do
+    posit=instr(1,tmpstr,"\")
+    if posit=0 then kord=20
+    tmpstr=delete$(tmpstr,1,posit)
+  next
+  getfile=tmpstr  
+end function
+
+status.parent=form
+status.addpanels ""
+status.panel(0).caption="Ftp"
+
+connected=0
+
+transf=0
+
+n=0
+
+datac=0
+
+sub timeover
+  dim text as string
+  if comsock.transferred>0 then
+    if comsock.IsServerReady(comport) then
+      text=comsock.readline(comport)
+      rich.addstring text
+    end if
+  end if 
+  if datasock.ConnectionReady(dataport)>0 then
+    cli=datasock.accept(dataport)
+    if cli>0 then 
+      client=cli
+      print "connectio!"
+      if datac=1 then andmed
+    end if  
+  end if
+ 
+  time.interval=200
+end sub
+
+time.interval=200
+time.ontimer=timeover
+time.enabled=0
+
+form.height=300
+form.width=550
+form.caption="FtpUploader"
+form.center
+
+filelist.top=30
+filelist.left=400
+filelist.width=130
+filelist.height=150
+filelist.parent=form
+
+sendbtn.top=200
+sendbtn.left=425
+sendbtn.caption="Saada"
+sendbtn.onclick=saada_fail
+sendbtn.parent=form
+
+rich.top=175
+rich.width=350
+rich.left=25
+rich.height=75
+rich.scrollbars=ssVertical
+rich.hidescrollbars=0
+rich.readonly=1
+rich.parent=form
+
+conbtn.top=100
+conbtn.left=25
+conbtn.onclick=yhenda
+conbtn.caption="Ühenda"
+conbtn.parent=form
+
+saadabtn.top=75
+saadabtn.left=25
+saadabtn.onclick=saada
+saadabtn.caption="Saada"
+saadabtn.parent=form
+
+asci.top=75
+asci.left=100
+asci.onclick=asctype
+asci.caption="ASCII"
+asci.parent=form
+
+binbtn.top=75
+binbtn.left=175
+binbtn.onclick=bintype
+binbtn.caption="BIN"
+binbtn.parent=form
+
+closebtn.top=100
+closebtn.left=100
+closebtn.caption="Katkesta"
+closebtn.onclick=close
+closebtn.parent=form
+
+portbtn.top=100
+portbtn.left=175
+portbtn.caption="PORT"
+portbtn.onclick=port
+portbtn.parent=form
+
+storbtn.top=100
+storbtn.left=250
+storbtn.caption="STOR"
+storbtn.onclick=store
+storbtn.parent=form
+
+sub yhenda
+  comport=comsock.connect("235.80.62.26", 1137)
+  rich.addstring comsock.readline(comport)
+  rich.addstring "USER jim17"
+  comsock.writeline(comport, "USER jim17")
+  rich.addstring comsock.readline(comport)
+  rich.addstring "PASS mypass"
+  comsock.writeline(comport, "PASS mypass")
+  rich.addstring comsock.readline(comport)
+  time.enabled=1
+end sub
+
+sub close
+  comsock.writeline(comport, "QUIT")
+  rich.addstring "QUIT"
+  time.enabled=0
+  comsock.close
+end sub
+
+sub port
+  if n=255 then 
+    showmessage("Failide ülelaadimine")
+    exit sub
+  end if  
+  dataport=datasock.open(38400 + n)
+  connected=1
+  rich.addstring "PORT 192,168,0,4,150," +str$(n)
+  comsock.writeline(comport, "PORT 192,168,0,4,150," +str$(n))
+  n=n+1
+end sub
+
+sub store
+  rich.addstring "STOR rc.exe"
+  comsock.writeline(comport, "STOR play.bas")
+end sub
+
+sub saada
+  transf=0
+  dim mess as string
+  fail.open("rc.exe", fmOpenRead)
+  while fail.position<fail.size do
+    mess=fail.readStr(4500)
+    datasock.write(client, mess, 4500)
+    transf=transf+datasock.transferred
+    status.panel(0).caption=str$(transf) +" baiti"
+  wend
+  datasock.close(client)
+  print "closed"
+  fail.close
+end sub
+
+sub asctype
+  rich.addstring "TYPE ASCII"
+  comsock.writeline(comport, "TYPE ASCII")
+end sub
+
+sub bintype
+  rich.addstring "TYPE I"
+  comsock.writeline(comport, "TYPE I")
+end sub
+
+sub saada_fail
+  dataport=datasock.open(38400 + n)
+  connected=1
+  rich.addstring "PORT 192,168,0,4,150," +str$(n)
+  comsock.writeline(comport, "PORT 192,168,0,4,150," +str$(n))
+  rich.addstring comsock.readline(comport)
+  comsock.writeline(comport, "STOR " +getfile(filelist.filename))
+  n=n+1
+  datac=1
+end sub
+
+sub andmed
+  dim mess as string
+  
+  fail.open(filelist.filename, fmOpenRead)
+  
+  while fail.position<fail.size do
+    mess=fail.readStr(4500)
+    datasock.write(client, mess, 4500)
+    transf=transf+datasock.transferred
+    status.panel(0).caption=filelist.filename +" " +str$(round((fail.position/fail.size)*100)) +"%"
+  wend 
+   
+  status.panel(0).caption=filelist.filename +" ok"
+  datasock.close(client)
+  datac=0
+  print "closed"
+  fail.close
+  
+end sub
+form.showmodal

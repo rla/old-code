@@ -1,0 +1,1471 @@
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass slides
+\begin_preamble
+% Uncomment to print out only slides and overlays
+%
+%\onlyslides{\slides}
+
+% Uncomment to print out only notes
+%
+%\onlynotes{\notes}
+\end_preamble
+\language estonian
+\inputencoding auto
+\fontscheme palatino
+\graphics dvips
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry true
+\use_amsmath 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation landscape
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes true
+\author ",,," 
+\end_header
+
+\begin_body
+
+\begin_layout Slide
+\noindent
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Declarative semantics for active rules
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size larger
+Sergio Flesca, Sergio Greco
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Aktiivreeglite deklaratiivne semantika
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size larger
+Raivo Laanemets
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Sissejuhatus (1)
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Aktiivne reegel
+\emph default
+ - mingi reegel, mis kirjeldab mingisugust tingimuslikku tegevust, mis sooritata
+kse teatud sündmuse toimumise tõttu.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+Normaalses
+\begin_inset Quotes erd
+\end_inset
+
+ andmebaasis 
+\emph on
+(RDBMS)
+\emph default
+ nimetame selliseid reegleid 
+\emph on
+triggeriteks.
+\end_layout
+
+\begin_layout Itemize
+Loogilises andmebaasis 
+\emph on
+(Prolog, Datalog)
+\emph default
+ on nende nimeks lihtsalt 
+\emph on
+aktiivreeglid.
+\end_layout
+
+\begin_layout Itemize
+Sündmuse tõttu toimuvat andmebaasi muutust 
+\begin_inset Formula $D\to D'$
+\end_inset
+
+ vaatleme kui mingite teiste faktide kustutamist/lisamist.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Sissejuhatus (2)
+\end_layout
+
+\begin_layout Standard
+Kuna andmebaas võib sisaldada rohkem kui ühte aktiivreeglit, siis tekivad
+ küsimused:
+\end_layout
+
+\begin_layout Standard
+\noindent
+1.
+ Kuidas mitut reeglit rakendada?
+\end_layout
+
+\begin_layout Standard
+\noindent
+2.
+ Kas rakendamisel on reeglite järjekord tähtis?
+\end_layout
+
+\begin_layout Standard
+\noindent
+3.
+ Kas reeglite rakendusena tekib lõpmatu tsükkel?
+\end_layout
+
+\begin_layout Standard
+\noindent
+4.
+ Kas reeglid 
+\begin_inset Formula $r_{1},..,r_{n}$
+\end_inset
+
+ ja andmebaas 
+\begin_inset Formula $D$
+\end_inset
+
+ määravad üheselt 
+\begin_inset Formula $D'$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+\noindent
+5.
+ Milline on reeglite 
+\begin_inset Formula $r_{1},..,r_{2}$
+\end_inset
+
+ rakenduse arvutuslik efektiivsus?
+\end_layout
+
+\begin_layout Standard
+Siin uurime põhiliselt probleeme (1,2,3,4).
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Aktiivreeglite süntaks (1)
+\end_layout
+
+\begin_layout Standard
+Lisaks tavalistele aatomitele võtame kasutusele aatomid, millega saab väljendada
+ andmebaasi fakti lisamist ja fakti kustutamist.
+\end_layout
+
+\begin_layout Standard
+Aatomid kujul 
+\begin_inset Formula $-A,+A$
+\end_inset
+
+ reeglis 
+\begin_inset Formula $r$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+Kui sellised aatomid asuvad 
+\begin_inset Formula $r$
+\end_inset
+
+ päises, nimetame neid 
+\emph on
+andmebaasi muutvateks aatomiteks
+\emph default
+.
+ 
+\emph on
+(update atom).
+ 
+\emph default
+Kui 
+\begin_inset Formula $+A$
+\end_inset
+
+ (
+\begin_inset Formula $-A$
+\end_inset
+
+) on tuletatav reeglite
+\emph on
+ 
+\emph default
+rakendamisel, siis lisatakse (kustutatakse) andmebaasi(st) 
+\begin_inset Formula $A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Kui sellised aatomid asuvad 
+\begin_inset Formula $r$
+\end_inset
+
+ keha osas, nimetame neid 
+\emph on
+tegevust kajastavateks literaalideks.
+ (update literal)
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Aktiivreeglite süntaks (2)
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Reeglid
+\emph default
+ on kujul
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+A\leftarrow B_{1},..,B_{n},C_{1},..,C_{m},\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+kus 
+\begin_inset Formula $A$
+\end_inset
+
+ on aatom, 
+\begin_inset Formula $B_{1},..,B_{n}$
+\end_inset
+
+ on tegevust kajastavad literaalid ja 
+\begin_inset Formula $C_{1},..,C_{n}$
+\end_inset
+
+ on normaalsed literaalid.
+ Aatom võib olla nii 
+\emph on
+tavaline
+\emph default
+ aatom või aatom kujul 
+\begin_inset Formula $-A$
+\end_inset
+
+, 
+\begin_inset Formula $+A$
+\end_inset
+
+.
+ Reeglit nimetatakse 
+\emph on
+aktiivseks
+\emph default
+, kui tema päises on andmebaasi muutev aatom (
+\emph on
+update atom
+\emph default
+).
+ Reeglit nimetame 
+\emph on
+tavaliseks
+\emph default
+, kui tema päises on normaalne aatom.
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Protseduraalne semantika (1)
+\end_layout
+
+\begin_layout Standard
+Olgu antud reeglid:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $r_{1}:\,-mgr(X,P,D)\leftarrow-proj(P),mgr(X,P,D).$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $r_{2}:\,+mgr(X,P,D)\leftarrow-mgr(X,P,D),\neg diff\_mgr(X,D).$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $r_{3}:\,-mgr(X,P,D)\leftarrow,+mgr(X,P,D),\neg proj(P).$
+\end_inset
+
+
+\newline
+
+\begin_inset Formula $diff\_mgr(X,D)\leftarrow mgr(X',P,D),X\ne X$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+ja koosnegu andmebaas faktidest 
+\begin_inset Formula $proj(p),mgr(x,p,d)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Näide 1
+\series default
+: Kasutaja teeb päringu 
+\begin_inset Formula $\delta=\{-proj(p)\}$
+\end_inset
+
+ ehk soovib kustutada projekti 
+\begin_inset Formula $p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Protseduraalne semantika (2)
+\end_layout
+
+\begin_layout Standard
+Reegel 
+\begin_inset Formula $r_{1}:\,-mgr(X,P,D)\leftarrow-proj(P),mgr(X,P,D)$
+\end_inset
+
+ tähendab: kui projekt 
+\begin_inset Formula $P$
+\end_inset
+
+ kustutatakse, siis kõik projekti 
+\begin_inset Formula $P$
+\end_inset
+
+ projektijuhid tuleb kustutada.
+\end_layout
+
+\begin_layout Standard
+Reegel 
+\begin_inset Formula $r_{2}:\,+mgr(X,P,D)\leftarrow-mgr(X,P,D),\neg diff\_mgr(X,D)$
+\end_inset
+
+ tähendab: kui projekti 
+\begin_inset Formula $P$
+\end_inset
+
+ juht 
+\begin_inset Formula $X$
+\end_inset
+
+ kustutatakse osakonnas 
+\begin_inset Formula $D$
+\end_inset
+
+, ja selles osakonnas pole ühtegi teist juhti, siis juht 
+\begin_inset Formula $X$
+\end_inset
+
+ tuleb alles jätta.
+\end_layout
+
+\begin_layout Standard
+Reegel 
+\begin_inset Formula $r_{3}:\,-mgr(X,P,D)\leftarrow+mgr(X,P,D),\neg proj(P)$
+\end_inset
+
+ tähendab: kui projekti 
+\begin_inset Formula $P$
+\end_inset
+
+ juhti 
+\begin_inset Formula $X$
+\end_inset
+
+ osakonnast 
+\begin_inset Formula $D$
+\end_inset
+
+ tahetakse lisada andmebaasi, aga projekt 
+\begin_inset Formula $P$
+\end_inset
+
+ ei ole andmebaasis, siis juhti 
+\begin_inset Formula $X$
+\end_inset
+
+ ei lisata.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Protseduraalne semantika (3)
+\end_layout
+
+\begin_layout Standard
+Eespool vaadeldud reeglid moodustavad projektide ja projektijuhtide andmebaasil
+ terviklikkust (
+\emph on
+integrity
+\emph default
+) garanteerivad kitsendused.
+\end_layout
+
+\begin_layout Standard
+Protseduraalne semantika tähendab: päringu 
+\begin_inset Formula $\delta$
+\end_inset
+
+ saamisel rakenda reegleid 
+\begin_inset Formula $r_{1},..,r_{3}$
+\end_inset
+
+ järjekorras: kõigepealt 
+\begin_inset Formula $r_{1}$
+\end_inset
+
+, siis 
+\begin_inset Formula $r_{2}$
+\end_inset
+
+ ja lõpuks 
+\begin_inset Formula $r_{3}$
+\end_inset
+
+, kusjuures üks reegel võib vallandada mingi teise reegli rakendumise.
+ Tegevust kajastavad literaalid määratakse konkreetse transaktsiooni (
+\begin_inset Formula $\delta$
+\end_inset
+
+ rakendamine algusest lõpuni) piires.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Protseduraalne semantika (4)
+\end_layout
+
+\begin_layout Standard
+Vaatleme näites (1) tehtud päringut 
+\begin_inset Formula $\delta=\{-proj(p)\}$
+\end_inset
+
+, kasutades protseduraalset semantikat.
+ Andmebaasis on alguses faktid 
+\begin_inset Formula $\{ proj(p),mgr(x,p,d)\}$
+\end_inset
+
+.
+ Kõigepealt kustutame 
+\begin_inset Formula $proj(p).$
+\end_inset
+
+ 
+\begin_inset Formula $r_{1}$
+\end_inset
+
+ tulemusena saame 
+\begin_inset Formula $-mgr(x,p,d)$
+\end_inset
+
+, siis 
+\begin_inset Formula $r_{2}$
+\end_inset
+
+ rakendamisel saame 
+\begin_inset Formula $+mgr(x,p,d)$
+\end_inset
+
+, 
+\begin_inset Formula $r_{3}$
+\end_inset
+
+ korral 
+\begin_inset Formula $-mgr(x,p,d)$
+\end_inset
+
+, mis käivitab uuesti 
+\begin_inset Formula $r_{2}$
+\end_inset
+
+.
+ Nii tekib 
+\begin_inset Formula $r_{2}$
+\end_inset
+
+ ja 
+\begin_inset Formula $r_{3}$
+\end_inset
+
+ kaudu lõpmatu tsükkel, mis järjest lisab ja kustutab fakti 
+\begin_inset Formula $mgr(x,p,d).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Protseduraalne semantika (5)
+\end_layout
+
+\begin_layout Standard
+Võibolla oleksime suutnud lõpmatut tsüklit vältida, kasutades veidi teistsugusei
+d reegeid.
+\end_layout
+
+\begin_layout Standard
+Näites (1) oli ainult 3 aktiivset reeglit.
+ Kui neid on 30, siis tsüklite vältimine ja andmebaasi terviklikkuse tagamine
+ on väga raske.
+\end_layout
+
+\begin_layout Standard
+Üldisel juhul on 
+\begin_inset Formula $n$
+\end_inset
+
+ reegli tsüklilisuse kontrollimine mittelahenduv ülesanne.
+\end_layout
+
+\begin_layout Standard
+Järeldus: seega peame valima mingi parema viisi aktiivreeglite rakendamiseks
+ andmebaasis.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Deklaratiivne semantika (1)
+\end_layout
+
+\begin_layout Standard
+Loogilistel programmidel (keeles 
+\begin_inset Formula $Prolog$
+\end_inset
+
+ või 
+\begin_inset Formula $Datalog$
+\end_inset
+
+) on läbiuuritud semantika.
+\end_layout
+
+\begin_layout Standard
+Et aktiivreeglitega programmile 
+\begin_inset Formula $\mathcal{AP}$
+\end_inset
+
+
+\series bold
+ 
+\series default
+rakendada deklaratiivset semantikat, tuleb 
+\begin_inset Formula $\mathcal{AP}$
+\end_inset
+
+ teisendada loogiliseks programmiks 
+\begin_inset Formula $\mathcal{DP}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Selleks on välja pakutud mitu lahendust.
+ Meie vaatleme 
+\emph on
+S.Flesca
+\emph default
+ ja 
+\emph on
+S.Grecko
+\emph default
+ esitatud algoritmi.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Deklaratiivne semantika (2)
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Andmebaasiks
+\emph default
+ nimetame paari 
+\begin_inset Formula $D=(D^{+},\overline{D})$
+\end_inset
+
+.
+ 
+\begin_inset Formula $D^{+}$
+\end_inset
+
+ tähistab kõikide tõeste faktide hulka andmebaasis 
+\begin_inset Formula $D$
+\end_inset
+
+ ja 
+\begin_inset Formula $\overline{D}$
+\end_inset
+
+ kõikide tundmatute faktide hulka andmebaasis 
+\begin_inset Formula $D$
+\end_inset
+
+.
+ 
+\begin_inset Formula $D^{-}$
+\end_inset
+
+ tähistab kõikide 
+\begin_inset Formula $D$
+\end_inset
+
+ väärade faktide hulka.
+\end_layout
+
+\begin_layout Standard
+Päringut 
+\begin_inset Formula $M$
+\end_inset
+
+ nimetame (siin räägime lisamisest või kustutamisest)
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Konfliktide vabaks,
+\emph default
+ kui 
+\begin_inset Formula $M$
+\end_inset
+
+ ei sisalda seisu uuendavaid fakte kujul 
+\begin_inset Formula $+A$
+\end_inset
+
+ ja 
+\begin_inset Formula $-A$
+\end_inset
+
+ (korraga ei lisa ja kustuta ühte fakti).
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Mittevasturääkivaks
+\emph default
+, kui iga 
+\begin_inset Formula $M$
+\end_inset
+
+ aatomi 
+\begin_inset Formula $+A$
+\end_inset
+
+ (
+\begin_inset Formula $-A$
+\end_inset
+
+) jaoks on selge, et 
+\begin_inset Formula $\neg-A\in M$
+\end_inset
+
+ (
+\begin_inset Formula $\neg+A\in M$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Deklaratiivne semantika (3)
+\end_layout
+
+\begin_layout Standard
+Olgu 
+\begin_inset Formula $D=(D^{+},\overline{D})$
+\end_inset
+
+ andmebaas ja 
+\begin_inset Formula $M$
+\end_inset
+
+ mittevasturääkiv päring.
+ Siis päringu 
+\begin_inset Formula $M$
+\end_inset
+
+ 
+\emph on
+rakendamine
+\emph default
+ 
+\begin_inset Formula $D_{1}=M(D)$
+\end_inset
+
+ andmebaasile 
+\begin_inset Formula $D$
+\end_inset
+
+ on defineeritud kui:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $p\in D_{1}^{+}$
+\end_inset
+
+, kui 
+\begin_inset Formula $+p\in M$
+\end_inset
+
+ või 
+\begin_inset Formula $p\in D^{+}$
+\end_inset
+
+ ja 
+\begin_inset Formula $\neg-p\in M$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $p\in\overline{D_{1}}$
+\end_inset
+
+, kui kehtib üks järgmistest:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $p\in\overline{D}$
+\end_inset
+
+ ja 
+\begin_inset Formula $+p,-p\notin M$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $p\in D^{+}$
+\end_inset
+
+ja 
+\begin_inset Formula $-p\in\overline{M}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $p\in D^{-}$
+\end_inset
+
+ ja 
+\begin_inset Formula $+p\in\overline{M}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Deklaratiivne semantika (4)
+\end_layout
+
+\begin_layout Standard
+Kus 
+\begin_inset Formula $\circ p\in\overline{M},\circ\in\{+,-\}$
+\end_inset
+
+ kui 
+\begin_inset Formula $-p\notin M$
+\end_inset
+
+ ja 
+\begin_inset Formula $-p\notin M$
+\end_inset
+
+, st.
+ 
+\begin_inset Formula $p$
+\end_inset
+
+ kustutamine või lisamine ei ole 
+\begin_inset Formula $M$
+\end_inset
+
+ järgi leitav.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $M(D)$
+\end_inset
+
+ definitsiooni järgi saame algoritmi aktiivprogrammi 
+\begin_inset Formula $\mathcal{AP}$
+\end_inset
+
+ koos päringuga 
+\begin_inset Formula $\delta$
+\end_inset
+
+ teisendamiseks loogiliseks programmiks 
+\begin_inset Formula $\mathcal{DP}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Teisendusalgoritm (1)
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\size small
+Sisend:
+\series default
+ 
+\begin_inset Formula $\mathcal{UP}=(\delta,\mathcal{AP})$
+\end_inset
+
+
+\newline
+
+\series bold
+Väljund:
+\series default
+ loogiline programm 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+
+\newline
+1.
+ Lisa 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+-sse 
+\begin_inset Formula $\mathcal{AP}$
+\end_inset
+
+ mitteaktiivsed reeglid.
+\newline
+2.
+ Iga 
+\begin_inset Formula $\mathcal{AP}$
+\end_inset
+
+ reegli 
+\begin_inset Formula $\circ a(t)\leftarrow B$
+\end_inset
+
+ jaoks lisa 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+-sse reegel 
+\begin_inset Formula $\circ a(t)\leftarrow B,\neg ck\_a(t)$
+\end_inset
+
+.
+\newline
+3.
+ Iga reegli 
+\begin_inset Formula $r\in st(\mathcal{UP})$
+\end_inset
+
+ korral asenda 
+\begin_inset Formula $r$
+\end_inset
+
+ kehas 
+\begin_inset Formula $\circ p(t)$
+\end_inset
+
+ 
+\begin_inset Formula $\circ p(t)\vee p'(t)$
+\end_inset
+
+-ga.
+\newline
+4.
+ Iga sammus (2) saadud n-aarse predikaadi 
+\begin_inset Formula $ck\_a$
+\end_inset
+
+ jaoks lisa 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+-sse reegel 
+\begin_inset Formula $ck\_a(X_{1},..,X_{n})\leftarrow+a(X_{1},..,X_{n}),-a(X_{1},..,X_{n})$
+\end_inset
+
+.
+\newline
+5.
+ Iga 
+\begin_inset Formula $\circ p\in\delta$
+\end_inset
+
+ korral lisa 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+-sse fakt 
+\begin_inset Formula $\circ p'$
+\end_inset
+
+ (vt.
+ samm (3)).
+\newline
+6.
+ Teisenda 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+-st sammus (3) tekkinud disjunktsioonid.
+\newline
+7.
+ Tagasta 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+, kus 
+\begin_inset Formula $\circ p$
+\end_inset
+
+ interpreteeritakse kui tavalised predikaatsümbolid.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Teisendusalgoritm (2)
+\end_layout
+
+\begin_layout Standard
+Algoritmi väljundina saadud programmis 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+ loodud predikaatsümboleid 
+\begin_inset Formula $+p(t)$
+\end_inset
+
+ (
+\begin_inset Formula $-p(t)$
+\end_inset
+
+) interpreteerime kui faktide lisamist (kustutamist).
+\end_layout
+
+\begin_layout Standard
+Rakendame teisendusalgoritmi näites (1) toodud aktiivprogrammile ja päringule
+ 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Deklaratiivne semantika (5)
+\end_layout
+
+\begin_layout Standard
+Enne algoritmi sammu 6 rakendamist on meil programm:
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $-mgr(X,P,D)\leftarrow(-proj(P)\vee proj'(P)),$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+
+\begin_inset Formula $mgr(X,P,D),\neg ck\_mgr(X,P,D).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $+mgr(X,P,D)\leftarrow(-mgr(X,P,D)\vee mgr''(X,P,D)),$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+
+\begin_inset Formula $\neg diff\_mgr(X,P,D),\neg ck\_mgr(X,P,D).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $-mgr(X,P,D)\leftarrow(+mgr(X,P,D)\vee mgr'(X,P,D)),$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+
+\begin_inset Formula $\neg proj(P),\neg ck\_mgr(X,P,D).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $proj'(p).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $ck\_mgr(X,P,D)\leftarrow+ck\_mgr(X,P,D),-ck\_mgr(X,P,D)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $diff\_mgr(X,D)\leftarrow mgr(X',P,D),X\neq X.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Deklaratiivne semantika (6)
+\end_layout
+
+\begin_layout Standard
+Eelmisel slaidil saadud programm tuleb veel ümber kirjutada ilma disjunktsioonid
+eta reeglite kehas.
+\end_layout
+
+\begin_layout Standard
+Mis saab programmist 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+ edasi, sõltub programmi loogilisest semantikast.
+\end_layout
+
+\begin_layout Standard
+Programmi peatumine sõltub vastava loogilise programmi peatumisest.
+\end_layout
+
+\begin_layout Standard
+Samuti sõltub saadava andmebaasi 
+\begin_inset Formula $D_{1}$
+\end_inset
+
+ ühesus (
+\emph on
+confluence
+\emph default
+) 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+ ühesusest konkreetses semantikas.
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Stabiilse mudeli semantika (1)
+\end_layout
+
+\begin_layout Standard
+Stabiilse mudeli semantika (
+\emph on
+stable model
+\emph default
+ semantics) kasutab suletud maailma eeldust.
+ Eitus on realiseeritud kui 
+\emph on
+negation as failure
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Kui programmil 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+ ei leidu ühtegi stabiilset mudelit, siis programmiga midagi edasi teha
+ ei saa.
+\end_layout
+
+\begin_layout Standard
+Kui programmil 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+ leidub täpselt üks stabiilne mudel, siis ütleme, et semantika on determineeritu
+d (
+\emph on
+deterministic
+\emph default
+).
+ Sellisel juhul on saadav andmebaas üheselt määratud (
+\emph on
+confluent
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+Kui programmil 
+\begin_inset Formula $st(\mathcal{UP})$
+\end_inset
+
+ on rohkem kui üks stabiilne mudel, siis on meil mitteühene semantika (
+\emph on
+nonconfluent semantics
+\emph default
+).
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Stabiilse mudeli semantika (2)
+\end_layout
+
+\begin_layout Standard
+Artiklis vaadeldakse erinevaid stabiilse mudeli semantikaid.
+\end_layout
+
+\begin_layout Standard
+Üldiselt jõutakse järeldusele, et suure väljendusvõimsusega semantikat (suurem
+ võimalus, et programmil leidub mudel) kasutades on tulemuse arvutuse efektiivsu
+s väiksem ja vastup
+\change_inserted 0 1161885070
+idi.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted 0 1161885070
+Artiklis uuritakse 
+\emph on
+well-founded, max-deterministic, total-deterministic
+\emph default
+ jt.
+ semantikaid.
+ Sealjuures vaadeldakse, millal vastava mudeli leidumine on garanteeritud.
+\change_deleted 0 1161885070
+idi.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted 0 1161885070
+Uuritakse semantikaid: 
+\change_unchanged
+
+\end_layout
+
+\begin_layout Slide
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\size huge
+Kokkuvõte
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted 0 1161885070
+Vaatlesime
+\change_unchanged
+ erinevaid semantikaid aktiivreeglitega loogiliste andmebaaside jaoks.
+\end_layout
+
+\begin_layout Standard
+Erinevatel semantikatel on erinevad probleemid.
+\end_layout
+
+\begin_layout Standard
+Protseduraalne semantika ei ole deklaratiivne ja tema probleemideks on lõpmatud
+ tsüklid ja mitte üheselt defineeritud lõpptulemus.
+\end_layout
+
+\begin_layout Standard
+Deklaratiivsete lähenemise korral teisendame aktiivprogrammi koos päringuga
+ loogiliseks programmiks ja rakendame mõnda loogilist semantikat.
+ Nii saame mõned probleemid lahendada, aga mõned jäävad alles.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,10 @@
+body, h1, h2, h3, h4, p, li { font-family: Helvetica, sans-serif }
+body { margin: 10%; }
+h1 { text-align: center; }
+.author { text-align: center; font-size: 14pt; }
+.date { text-align: center; font-size: 14pt; }
+.spacing { height: 80px; }
+.center { text-align: center; }
+.PhotoDescription { text-align: justify; vertical-align: top; padding-left: 20px; }
+p { text-align: justify; }
+img.photo { border: 1px solid #000; }

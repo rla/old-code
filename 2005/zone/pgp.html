@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+  <title>Avalik võti</title>
+  <meta name="Description" content="Avalik võti">
+  <meta name="Author" content="Raivo Laanemets">
+  <meta name="Copyright" content="(c) 2005 Raivo Laanemets">
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-13">
+  <style type="text/css">
+  body, li, i, h1, h2, h3, h4, h5, p {
+    font-family: Helvetica, sans-serif;
+  }
+  p, pre {
+    padding-left: 20px;
+  }
+  
+  .code {
+  
+    background-color: #eeeeee;
+    padding: 15px;
+    font-family: Courier, serif;
+    margin: 10px;
+  
+  }
+  </style>
+  </head>
+<body style="width:600px">
+<h1>Mustrid programmeerimises</h1>
+<p>
+Muster on üldistatud lahendus mingile probleemide klassile.
+</p>
+<h2>Mustrite süstemaatika</h2>
+<ol>
+  <li>Programeerimiskeele eripära ja selle poolt pakutavate vahendite kasutamine.</li>
+  <li>Erilahendus - üldistus puudub, mõeldud on väga konkreetse probleemi lahendust.</li>
+  <li>Standardlahendus - mingil määral üldistatud lahendus mingit tüüpi probleemile.</li>
+  <li>Musterlahendus - kindel lahendus antud probleemide klassile.</li>
+</ol>
+
+<h2>Tee heade lahenduste leidmiseks</h2>
+<ul>
+  <li>Tee üldisemat laadi lahendused võimalikult lihtsaks.</li>
+  <li>Objektidel(isenditel) lase suhelda vaid iseenda, oma väljadega või meetodi atribuutidega.</li>
+  <li>Lahendus on lõplik kui seda ei saa minimalistlikumalt teha.</li>
+  <li>Mitut asja ei pea korraga lahendama.</li>
+  <li>Väldi andmestruktuuride duplikeerimist.</li>
+</ul>
+
+<h2>I tüüpi mustrid. Keele võimaluste ärakasutamine</h2>
+<h3>Andmehulkade kandjad (Messenger)</h3>
+Näide: Kandja Punkt(sisaldab kolme koordinaati) teeb lihtsamaks punkti
+kasutamise funktsiooni argumendina(vaja läheb ainult ühte argumenti, kui kasutame
+kandjat Punkt, vastasel juhul vajame kolme argumenti). Kandja, antud juhul punkt,
+võiks sisaldada ainult piilumismeetodeid.
+<div class="code">
+<pre>
+class Punkt {
+	public int x,y,z;
+	public Punkt(int x, int y, int z) {
+		this.x=x;
+		this.y=y;
+		this.z=z;
+	}
+}
+</pre>
+</div>
+<h3>Info korjaja (Collecting parameter)</h3>
+Kasutatakse funktsiooni argumendina funktsiooni seest info korjamiseks.
+<div class="code">
+<pre>
+class Korjaja extends ArrayList {}
+class MinuKlass {
+	public void f(Korjaja k) {
+		k.add("esimene");
+	}
+	public void g(Korjaja k) {
+		k.add("teine");
+	}
+}
+</pre>
+</div>
+
+<p><i>Koostas: Raivo Laanemets, <a href="mailto:rlaanemt@ut.ee">rlaanemt@ut.ee</a><br>
+Copyright (c) 2005 Raivo Laanemets<br>
+Autor ei vastuta lingitud materjali õigsuse eest.<br>
+Lehte viimati täiendatud: kolmapäev, 28. juuni 2005.</i></p>
+<p>
+<a href="http://validator.w3.org/check?uri=referer"><img
+  src="http://www.w3.org/Icons/valid-html401"
+  alt="Valid HTML 4.01!" height="31" width="88"></a>
+</p>
+</body>
+</html>

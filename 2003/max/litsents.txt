@@ -1,0 +1,13 @@
+Nõuded riistavarale
+
+Miinimum:
+	protsessor: 486 60MHZ
+	operatsioonisüsteem: Windows 95 (ei tööta win 3.1)
+	operatiivmälu: 24 MB
+	kettaruum: 2 Mb
+Soovitatav:
+	protsessor: Pentium 166
+	operatsioonisüsteem: Windows 2000/NT
+	operatiivmälu: 32 MB
+	kettaruum: 2 Mb
+	internet 56K

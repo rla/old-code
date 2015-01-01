@@ -1,0 +1,65 @@
+Testsuite: ee.pri.rl.wiki.tokenizer.test.WikiTokenizerTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.051 sec
+------------- Standard Output ---------------
+heading1: Test document :1
+heading2: Introduction :3
+sectionBegin::5
+text:This document describes :5
+underlined:jWiki:5
+text: :5
+link:wiki:5
+linkLabel:Wiki:5
+text: markup parser. The parser:6
+text:uses deterministic finite state automata for tokenizing the markup:7
+text:and nondeterministic backtracking recursive top-down recursive parser:8
+text:to produce abstract syntax tree. The syntax tree is then transformed:9
+text:into xml and empty text nodes are removed. :9
+image:email.png:9
+imageAlign:top:9
+text::10
+text:Hehe, tex code: :10
+tex:x+y+1:10
+text:.:11
+sectionEnd::12
+heading1: Processing Chain :12
+sectionBegin::14
+text:The processing chain of wiki text follows::15
+sectionEnd::16
+listBegin::16
+listItemBegin::16
+text:Rewrite every line end to single n character.:17
+listItemEnd::17
+listItemBegin::17
+text: Add some extra spaces at the end of file.:18
+listItemEnd::18
+listItemBegin::18
+text: Tokenize text using the jwiki tokenizer.:19
+listItemEnd::19
+listItemBegin::19
+text: Parse text using the jwiki parser.:20
+listItemEnd::20
+listItemBegin::20
+text: Traverse abstract syntax tree and remove empty and meaningless:21
+text:nodes.:22
+listItemEnd::22
+listItemBegin::22
+text: Transform tex code nodes into images.:23
+listItemEnd::23
+listItemBegin::23
+text: Transform abstract syntax tree into xml dom.:24
+listItemEnd::24
+listItemBegin::24
+text: Produce xml code from xml dom tree.:25
+listItemEnd::25
+listItemBegin::25
+text: (Optional) use xsl to produce (x)html from xml code.:26
+listItemEnd::26
+listItemBegin::26
+text: :26
+italic:haha:26
+text::27
+listItemEnd::27
+listEnd::27
+------------- ---------------- ---------------
+
+Testcase: testWikiTokenizer took 0.049 sec

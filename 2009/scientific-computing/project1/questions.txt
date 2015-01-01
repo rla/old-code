@@ -1,0 +1,5 @@
+1. In discretization, what should be the value of N? I think that this problem is not addressed in the skeleton.
+2. Same as above for time discretization, maybe these should be in the common.py as constants.
+3. Can we get an example of the Laplacian for some N for testing purposes?
+4. In all formulas "delta x^2" is meant as "(delta x)^2"?
+5. In page 5 we calculate b_i for step t+1 since we need u's from steps t and t-1?

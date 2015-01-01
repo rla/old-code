@@ -1,0 +1,198 @@
+\section{Moodul ''dpllp``}
+
+Moodul DPLL algoritmi kasutamiseks läbi Prolog muutujate.
+
+\begin{itemize}
+\item {\tt dpllp(+{\it F})} - Kehtestatavuse lahendaja, mille sisendiks
+on konjuktiivsel normaalkujul listiesituses
+antud valem. Valemi muutujad, mis on vajalikud
+valemi tõesuseks, väärtustatakse väärtusega 1 (tõene)
+või 0 (väär).
+Näide kasutamisest:
+
+\begin{verbatim}
+?- dpllp((A v B) => C).
+C = 1 ;
+A = 0,
+B = 0,
+C = 0
+?-
+\end{verbatim}
+
+
+\end{itemize}
+
+\section{Moodul ''dpll``}
+
+DPLL kehtestatavusalgoritmi peamoodul.
+
+\begin{itemize}
+\item {\tt dpll(+{\it F}:valem, -{\it V})} - DPLL algoritmi realisatsioon. Valem {\it F} on konjuktiivsel
+normaalkujul valem, mis on antud listiesituses ja mille
+muutujad on kodeeritud täisarvudena. Väljund {\it V} on muutujate
+väärtustus, mis on antud andmestruktuuriga {\tt olek}.
+Näide kasutamisest:
+
+\begin{verbatim}
+?- dpll([[1, 2, 3], [-1]], V1).
+V1 = v(0, 1, _G657)
+Yes
+\end{verbatim}
+
+
+\end{itemize}
+
+\section{Moodul ''abi``}
+
+Üldiste abimeetodite moodul.
+
+\begin{itemize}
+\item {\tt algseadista\_loendur(-{\it Lo})} - Uue loenduri {\it Lo} algseadistamine väärtusele 0.
+
+\item {\tt kl\_vaartuseta\_muutujad(+{\it F}:valem, ?{\it Ci}:int, +{\it S}:olek, -{\it Ps}:list, -{\it Ns}:list)} - Valemist {\it F} klausli {\it Ci} väärtustamata positiivsena esinevate muutujate Ps
+ja negatiivsena esinevate muutujate {\it Ns} leidmine.
+
+\item {\tt m\_filtreeri\_vaartuseta(+{\it Ms}:list, +{\it S}:olek, -{\it Ms1}:list)} - Muutujate listist {\it Ms} väärtustamata muutujate väljafiltreerimine
+listi {\it Ms1}.
+
+\item {\tt algvaartustus(+{\it Fin}:list, -{\it F}:valem, -{\it S}:olek, -{\it V}:term)} - DPLL algoritmides algandmestruktuuride koostamine.
+{\it Fin} - sisendvalem, {\it F} - valem sisekujul, {\it S} - tühi väärtustus,
+{\it V} - väärtustuse muutujate osa.
+
+\item {\tt indekslist(+{\it Xs}:list, -{\it Ps}:list)} - Listi {\it Xs} konverteerimine listiks Ps, mille elementideks
+on paarid {\it I-E}, kus {\it I} on elemendi täisarvuline indeks
+ja {\it E} on element ise. Indeksid algavad väärtusega 1 ja väljendavad
+elemendi esinemispositsiooni listi algusosast alates.
+
+\end{itemize}
+
+\section{Moodul ''vaartustus``}
+
+Väärtustuse lisamiseks/kontrollimiseks kasutatvad protseduurid.
+
+\begin{itemize}
+\item {\tt tyhi\_vaartustus(+{\it F}:valem, -{\it V}:olek)} - Valemi {\it F} muutujate jaoks tühja väärtustuse koostamine.
+
+\item {\tt muutuja\_vaartuseta(+{\it V}:olek, +{\it I}:int)} - Kontrollimine, kas etteantud indeksiga muutuja
+on vaartustuses {\it V} väärtustatud hetkel või mitte.
+
+\item {\tt klausel\_vaartuseta(+{\it V}:olek, +{\it I}:int)} - Kontrollimine, kas etteantud indeksiga klausel
+on vaartustuses {\it V} väärtustatud hetkel või mitte.
+
+\item {\tt vaartusta\_muutuja(+{\it V}:olek, +{\it I}:int, +{\it Val})} - Etteantud indeksiga {\it I} muutuja väärtustamine
+väärtusega {\it Val} väärtustuses {\it V}.
+
+\item {\tt vaartusta\_klausel(+{\it V}:olek, +{\it I}:int, +{\it Val})} - Klausli indeksiga {\it I} väärtustamine
+väärtusega {\it Val} väärtustuses {\it V}.
+
+\end{itemize}
+
+\section{Moodul ''valem``}
+
+Valemiga tegevuste sooritamise moodul.
+
+\begin{itemize}
+\item {\tt klausli\_muutujad(+{\it F}:valem, +{\it I}:int, -{\it Ps}:list, -{\it Ns}:list)} - Leia valemist {\it F} klauslis indeksiga {\it I} positiivse
+literaalina esinevate muutujate indeksid Ps
+ja negatiivsena esinevate muutujate indeksid {\it Ns}.
+
+\item {\tt klausli\_pos\_muutujad(+{\it F}:valem, +{\it I}:int, -{\it Ps}:list)} - Leia valemist {\it F} klauslis indeksiga {\it I} positiivse
+literaalina esinevate muutujate indeksid {\it Ps}.
+
+\item {\tt klausli\_neg\_muutujad(+{\it F}:valem, +{\it I}:int, -{\it Ps}:list)} - Leia valemist {\it F} klauslis indeksiga {\it I} negatiivse
+literaalina esinevate muutujate indeksid Ns.
+
+\item {\tt muutuja\_klauslid(+{\it F}:valem, +{\it I}:int, -{\it Ps}:list, -{\it Ns}:list)} - Leia valemist {\it F} klauslite indeksid Ps,
+kus muutuja indeksiga {\it I} esineb positiivselt ja klauslite
+indeksid Ns, kus muutuja indeksiga {\it I} esineb negatiivselt.
+
+\item {\tt pos\_muutuja\_klauslid(+{\it F}:valem, +{\it I}:int, -{\it Ps}:list)} - Leia valemist {\it F} klauslite indeksid Ps,
+kus muutuja indeksiga {\it I} esineb positiivselt.
+
+\item {\tt neg\_muutuja\_klauslid(+{\it F}:valem, +{\it I}:int, -{\it Ps}:list)} - Leia valemist {\it F} klauslite indeksid Ns,
+kus muutuja indeksiga {\it I} esineb negatiivselt.
+
+\item {\tt teisenda(+{\it F1}:valem, -{\it F2}:valem)} - Konjuktiivsel normaalkujul listiesituses valemi {\it F1} teisendamine sisekujule {\it F2}.
+Näide kasutamisest:
+
+\begin{verbatim}
+?- teisenda([[-1, 2, -3], [-2, -4], [4]], T).
+T = valem(
+4,
+3,
+vc(c([], [1]), c([1], [2]), c([], [1]), c([3], [2])),
+cv(v([2], [1, 3]), v([], [2, 4]), v([4], []))
+)
+\end{verbatim}
+
+
+\end{itemize}
+
+\section{Moodul ''kontrolli``}
+
+Valemi kontrollimine vahetult pärast muutuja väärtustamist.
+
+\begin{itemize}
+\item {\tt kontrolli(-{\it O}:otsus, +{\it L}:int, +{\it F}:valem, +{\it V}:olek, +{\it Ct}:int, +{\it Ys}:list)} - Kontrolli hetkel väärtustust viimati tehtud
+lahendussammu järgi. {\it O} - väljund, {\it L} - viimati tõeseks
+valitud literaal, {\it F} - valem, mida lahendatakse, {\it V} - hetkel
+kehtiv väärtustus, {\it Ct} - seni tõeseks saadud klauslite arv,
+{\it Ys} - ühikliteraalide pinu.
+Väljund {\it O} võib olla üks järgmistest: \texttt{sat} - valem on tõene;
+\texttt{yhik(Ls)} - võta järgmistes sammudes tõeseks ühikliteraalid \texttt{Ls};
+\texttt{vali} - vali järgmises sammus suvaline muutuja.
+
+\end{itemize}
+
+\section{Moodul ''propageeri``}
+
+Protseduur muutuja väärtustuse valimise propageerimiseks.
+
+\begin{itemize}
+\item {\tt propageeri(+{\it L}:int, +{\it F}:valem, +{\it V}:olek, -{\it Cf}:int, -{\it Ct}:int)} - Etteantud tõese literaali {\it L} väärtuse propageerimine
+(valemi {\it F} vastava muutuja/klauslite väärtustamine).
+Väljundparameetrid: {\it Cf} - saadud väärade klauslite arv;
+{\it Ct} - saadud tõeste klauslite arv.
+
+\end{itemize}
+
+\section{Moodul ''silur``}
+
+Programmi silumist abistavad protseduurid.
+
+\begin{itemize}
+\item {\tt sisse} - Siluri väljundi näitamise lubamine. Kui siluri väljundi näitamine
+on lubatud, kirjutatakse standardväljundisse infot algoritmi sammude
+kohta.
+
+\item {\tt valja} - Siluri väljundi näitamise keelamine. Kui siluri väljundi näitamine
+on lubatud, kirjutatakse standardväljundisse infot algoritmi sammude
+kohta.
+
+\end{itemize}
+
+\section{Moodul ''knk``}
+
+Prologi muutujatega antud valemi teisendamine listiesituses konjuktiivsele normaalkujule.
+
+\begin{itemize}
+\item {\tt knk(+{\it F}:valem, -{\it G}:valem)} - Lausearvutusvalemi {\it F} teisendamine konjuktiivsele
+normaalkujule {\it G}. Protseduur aksepteerib loogiliste
+operaatoritena \texttt{-} (eitus), \texttt{v} (disjunktsioon)
+\texttt{\&} (konjuktsioon), \texttt{=>} (implikatsioon),
+\texttt{<=>} (ekvivalents). Operaatorite prioriteedid kasvavalt:
+\texttt{-}, \texttt{\&}, \texttt{v}, \texttt{=>}, \texttt{<=>}.
+Protseduur ei eemalda valemist tautoloogiaid.
+Näide kasutamisest:
+
+\begin{verbatim}
+?- knk((A v B) => C, W).
+W = (-A v C)& (-B v C)
+\end{verbatim}
+
+
+\item {\tt konj\_list(+{\it F}:valem, -{\it L}:list)} - Valemi {\it F} teisendamine konjuktiivsele normaalkujule.
+Protseduur aksepteerib neidsamu operaatoreid, mida \texttt{knk/2}.
+
+\end{itemize}
+

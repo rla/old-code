@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="raivo" name="ee.pri.rl.treedistance.test.TreeDistanceTest" tests="3" time="0.2" timestamp="2009-05-26T16:07:44">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="sun.boot.library.path" value="/usr/lib/java/jre/lib/i386" />
+    <property name="java.vm.version" value="11.0-b15" />
+    <property name="ant.library.dir" value="/opt/ant/lib" />
+    <property name="ant.version" value="Apache Ant version 1.7.1 compiled on June 27 2008" />
+    <property name="ant.java.version" value="1.6" />
+    <property name="java.vm.vendor" value="Sun Microsystems Inc." />
+    <property name="java.vendor.url" value="http://java.sun.com/" />
+    <property name="path.separator" value=":" />
+    <property name="doc" value="doc" />
+    <property name="java.vm.name" value="Java HotSpot(TM) Client VM" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="user.country" value="US" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="user.dir" value="/home/raivo/school/ut/2009_algorithmics/treedistance" />
+    <property name="lib" value="lib" />
+    <property name="ant.file.treedistance" value="/home/raivo/school/ut/2009_algorithmics/treedistance/build.xml" />
+    <property name="java.runtime.version" value="1.6.0_10-b33" />
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment" />
+    <property name="basedir" value="/home/raivo/school/ut/2009_algorithmics/treedistance" />
+    <property name="java.endorsed.dirs" value="/usr/lib/java/jre/lib/endorsed" />
+    <property name="os.arch" value="i386" />
+    <property name="java.io.tmpdir" value="/tmp" />
+    <property name="ant.core.lib" value="/opt/ant/lib/ant.jar" />
+    <property name="line.separator" value="
+" />
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="os.name" value="Linux" />
+    <property name="ant.home" value="/opt/ant" />
+    <property name="ant.project.name" value="treedistance" />
+    <property name="sun.jnu.encoding" value="ISO-8859-1" />
+    <property name="java.library.path" value="/usr/lib/java/jre/lib/i386/client:/usr/lib/java/jre/lib/i386:/usr/lib/java/jre/../lib/i386:/usr/lib/jdk1.7.0/jre/lib/i386:/usr/lib/jdk1.7.0/jre/lib/i386/client:/usr/java/packages/lib/i386:/lib:/usr/lib" />
+    <property name="src" value="src" />
+    <property name="java.class.version" value="50.0" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="sun.management.compiler" value="HotSpot Client Compiler" />
+    <property name="os.version" value="2.6.24.5-smp" />
+    <property name="ant.file" value="/home/raivo/school/ut/2009_algorithmics/treedistance/build.xml" />
+    <property name="doc.reports" value="doc/reports" />
+    <property name="user.home" value="/home/raivo" />
+    <property name="user.timezone" value="" />
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob" />
+    <property name="java.specification.version" value="1.6" />
+    <property name="file.encoding" value="ISO-8859-1" />
+    <property name="java.class.path" value="/home/raivo/school/ut/2009_algorithmics/treedistance/lib/commons-cli.jar:/home/raivo/school/ut/2009_algorithmics/treedistance/lib/commons-io-1.4.jar:/home/raivo/school/ut/2009_algorithmics/treedistance/lib/junit-4.5.jar:/home/raivo/school/ut/2009_algorithmics/treedistance/bin:/opt/ant/lib/ant-launcher.jar:/opt/ant/lib/ant.jar:/opt/ant/lib/ant-junit.jar" />
+    <property name="user.name" value="raivo" />
+    <property name="doc.reports.test" value="doc/reports/test" />
+    <property name="java.vm.specification.version" value="1.0" />
+    <property name="java.home" value="/usr/lib/java/jre" />
+    <property name="sun.arch.data.model" value="32" />
+    <property name="java.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="user.language" value="en" />
+    <property name="build" value="bin" />
+    <property name="java.vm.info" value="mixed mode, sharing" />
+    <property name="java.version" value="1.6.0_10" />
+    <property name="java.ext.dirs" value="/usr/lib/java/jre/lib/ext:/usr/java/packages/lib/ext" />
+    <property name="sun.boot.class.path" value="/usr/lib/java/jre/lib/resources.jar:/usr/lib/java/jre/lib/rt.jar:/usr/lib/java/jre/lib/sunrsasign.jar:/usr/lib/java/jre/lib/jsse.jar:/usr/lib/java/jre/lib/jce.jar:/usr/lib/java/jre/lib/charsets.jar:/usr/lib/java/jre/classes" />
+    <property name="java.vendor" value="Sun Microsystems Inc." />
+    <property name="file.separator" value="/" />
+    <property name="jar" value="treedistance.jar" />
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="sun.cpu.isalist" value="" />
+  </properties>
+  <testcase classname="ee.pri.rl.treedistance.test.TreeDistanceTest" name="testWithIO" time="0.058" />
+  <testcase classname="ee.pri.rl.treedistance.test.TreeDistanceTest" name="testWithIOComplex" time="0.053" />
+  <testcase classname="ee.pri.rl.treedistance.test.TreeDistanceTest" name="test" time="0.0030" />
+  <system-out><![CDATA[Swap A and B in first tree
+Merge A and C in both trees into L0
+Merge B and L0 in both trees into L1
+Swaps: 1
+Swap B and G in first tree
+Swap A and H in first tree
+Merge H and G in both trees into L2
+Swap L2 and F in first tree
+Merge E and F in both trees into L4
+Swap L4 and A in first tree
+Merge A and L4 in both trees into L8
+Swap L8 and C in first tree
+Merge L8 and C in both trees into L11
+Swaps: 5
+Swap A and B in first tree
+Merge A and C in both trees into L0
+Merge B and L0 in both trees into L1
+Swaps: 1
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,39 @@
+#LyX 1.4.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\language estonian
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Formula $\dfrac{\dfrac{\dfrac{\dfrac{\dfrac{\dfrac{\emptyset|_{A=1,B=0}}{(C\vee\neg B)|_{A=1,B=0}}R1n}{(\neg B)\wedge(C\vee\neg B)|_{A=1,B=0}}R1n}{(\neg B)\wedge(C\vee\neg B)|_{A=1}}R4n}{(\neg A\vee\neg B)\wedge(C\vee\neg B)|_{A=1}}R2n}{(A\vee B\vee\neg C)\wedge(\neg A\vee\neg B)\wedge(C\vee\neg B)|_{A=1}}R1p}{(A\vee B\vee\neg C)\wedge(\neg A\vee\neg B)\wedge(C\vee\neg B)}R3p$
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

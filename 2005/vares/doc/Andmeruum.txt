@@ -1,0 +1,45 @@
+Andmeruumi konfiguratsioonifaili kirjeldus
+Krüpeerimata kuju
+==========================================
+Raivo Laanemets
+06.aprill 2005
+
+Fail on jagatud ridadeks, rea lõppu tähistab sõltuvalt platvormist /n või /r/n.
+Macintosh'i korral võib esineda ka /r. Igal real võivad olla mistahes sõne moodustavad märgid,
+välja arvatud reavahetus(vastasel korral oleks tegemist kahe reaga), faililõpp (#26 - *nixi keskkonnas
+ei tähista see faili lõppu ja võib tekitada probleeme Windows-masinal lugemisega), nullmärk (#0 - tähistab
+enamasti sõne lõppu, võib probleeme tekitada faili lugemisel).
+
+Andmeruumi konfiguratsioonifaili ei ole mõeldud käsitsi muutmiseks (kuigi see on võimalik).
+
+1.rida - reserveeritud
+2.rida - reserveeritud
+3.rida - reserveeritud
+
+Neid kahte rida saab kasutada hiljem laienduste tegemiseks. Esialgu tuleb võib need read tühjaks jätta.
+
+4.rida - Andmeruumi nimi (suvaline sõne).
+5.rida *** (kolm tärni) siit algavad andmeruumi hoidlate kirjeldused.
+5+1 - esimese hoidla kirjeldus (esimene hoidla: n=1)
+...
+5+n - viimase hoidla kirjeldus
+5+n+1 *** (kolm tärni) siit algab arvutist võetavate failide nimekiri.
+5+n+2 - esimese faili nimi (esimene fail: k=1)
+...
+5+n+1+k - viimase faili nimi.
+
+Hoidla konf.
+============
+
+<identifikaator>;<teenuse nimi>;<vajalikud_parameetrid>;<suurus MB>;<hinnang>
+
+Näide
+
+1;FTP:anonymous*rl@starline.e;10;10
+2;FS:/mnt/backup;60;10
+
+
+Hoidlate klassid: (18.aprill 2005)
+
+FTP - ftp protokollil töötav hoidla
+FS - kohalikku failisüsteemi ühendatud plokkseade vms.

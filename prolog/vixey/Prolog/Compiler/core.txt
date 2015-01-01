@@ -1,0 +1,15 @@
+%% and/2 ,/2
+%% or/2 ;/2
+%% call/1 call/3
+%% !/0
+%% fail/0
+%% =../2
+%% var/1
+%% compoound/1
+%% read_line/1
+%% write_char/1
+%% atom_codes/2
+%% succ/2
+
+%%TODO functor/3, arg/3
+

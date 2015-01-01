@@ -1,0 +1,47 @@
+_________________________________________________________________________________
+
+Content-Type: plain/text
+Date        : 21/07/2000  00:00
+Sender      : Narrow <nss@privacyx.com>
+Subject     : Lihtne paroolide hankimis viis!
+X-System    : KÕIK
+X-Status    : Narrow-EST-#01
+X-Credits   : Legion2000, prizm, lamagra, s1gnal_9, Aatiplex Team
+_________________________________________________________________________________
+
+Selle dokumendi autor ei vastuta millegi eest! See information on
+ainult selleks, et inimesed teaksid, et see on võimalik!
+
+Tegelt on mul väga palju mõtteid aga ei viitsi .txt faile kirjutada.
+Paroolide hankimiseks läheb sul vaja veeb-brovser ja vähemalt DOS.
+Probleem on selles, et WS_FTP (ftp klient) uploadimise ajal uploadib ka
+WS_FTP.INI. Selles failis on kõik paroolid salvestatud!
+
+Kuidas ma leian seda faili?
+Väga lihtsalt. Mine http://ftpsearch.lycos.com/ ja pane otsima "WS_FTP.INI".
+Ta peaks leidma väga palju selliseid faile! Veel üks võimalus oleks
+proovida http://mingi.www.server/WS_FTP.INI ,sest paljud inimesed kasutavad
+seda ftp klienti ;) või isegi http://tasuta.www/~kasutaja/WS_FTP.INI.
+
+Leidsin WS_FTP.INI, mida ma nüüd teen?
+Nüüd pead sa vaatama, kas see fail sisaldab endas paroole. Peaks välja
+nägema umbes nii:
+
+[Mingi JURA]
+HOST=ftp.mingi.server.ee
+UID=<kasutajanimi>
+PWD=71626266727178 (parool on krüptitud)
+PASVMODE=0
+
+Kui PWD näeb umbes nii välja: "V84C1FBFDC9C7DB726CA850CD059E5269A9678976B7D7176",
+siis seda ei saa lahti krüptida ja võid selle WS_FTP.INI faili maha lasta ;)
+
+Leidsin WS_FTP.INI kus on krüptitud parool sees, mida ma nüüd teen?
+Nüüd pead sa selle lahti krüptima. Selleks tõmba "WS_FTP.INI Decrypter..."
+siit: http://www.zone.ee/unix/
+
+Pane proge peale: wsftp.exe WS_FTP.INI. Nüüd peaks PWD=<jura> asemel tulema
+PWD=<õige parool>. Olen ise proovinud seda viisi ja võin öelda, et see viis
+töötab 99.99% :)
+
+Ma ei tea miks, aga kell näitab _jälle_ 00:00!

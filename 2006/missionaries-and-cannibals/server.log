@@ -1,0 +1,8 @@
+ERROR: (/home/murakas/y/rlaanemt/misjonarid/misjonarid/misjonarid_http.pl:6):
+	Undefined procedure: encoding/1
+Warning: (/home/murakas/y/rlaanemt/misjonarid/misjonarid/misjonarid_http.pl:6):
+	Goal (directive) failed: user:encoding(utf8)
+ERROR: (/home/murakas/y/rlaanemt/misjonarid/misjonarid/misjonarid.pl:10):
+	Undefined procedure: misjonarid:encoding/1
+Warning: (/home/murakas/y/rlaanemt/misjonarid/misjonarid/misjonarid.pl:10):
+	Goal (directive) failed: misjonarid:encoding(utf8)

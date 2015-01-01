@@ -1,0 +1,15 @@
+#results
+  %table
+    %tr
+      %th Name
+      %th Value
+      %th Actions
+      - for s in @settings
+        %tr
+          %td= s.name
+          %td= s.value
+          %td
+            =link_to 'Edit', edit_setting_path(s)
+            
+  =will_paginate @settings
+		

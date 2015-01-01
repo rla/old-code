@@ -1,0 +1,74 @@
+`G'             ->    #`For'#
+
+`For'           ->    for (`Väärtustamine'|`Võrdlus')`Plokk'
+
+`Plokk'         ->    {`Lausete_kogum'
+`Lausete_kogum' ->    `Lause'}
+`Lausete_kogum' ->    `Lause'`Lausete_kogum'
+
+`Lause'         ->    `Väärtustamine';
+`Lause'         ->    `Võrdlus';
+
+`Väärtustamine' ->    `Identifikaator'=`Väärtus'
+
+`Väärtus'       ->    `Avaldis'
+
+`Avaldis'       ->    `Liitmine'
+`Avaldis'       ->    `Korrutamine'
+
+`Liitmine'      ->    `Korrutamine'+`Avaldis'
+
+`Korrutamine'   ->    `Konstant'
+`Korrutamine'   ->    `Korrutamine'*`Konstant'
+
+`Konstant' ->    `Arv'
+`Arv'      ->    `Täisarv'
+`Täisarv'  ->    `Number'
+`Täisarv'  ->    `Täisarv'`Number'
+
+`Võrdlus'  ->    `Muutuja'>`Konstant'
+
+
+`Number'   -> 0
+           -> 1
+           -> 2
+           -> 3
+           -> 4
+           -> 5
+           -> 6
+           -> 7
+           -> 8
+           -> 9
+           
+           
+`Identifikaator' -> `Täht'
+`Identifikaator' -> `Identifikaator'`Täht'
+`Identifikaator' -> `Identifikaator'`Number'
+
+
+`Täht'      -> a
+            -> b
+            -> c
+            -> d
+            -> e
+            -> f
+            -> g
+            -> h
+            -> i
+            -> j
+            -> k
+            -> l
+            -> m
+            -> n
+            -> o
+            -> p
+            -> q
+            -> r
+            -> s
+            -> t
+            -> u
+            -> v
+            -> w
+            -> x
+            -> y
+            -> z

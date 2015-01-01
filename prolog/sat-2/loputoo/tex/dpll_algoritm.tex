@@ -1,0 +1,370 @@
+\chapter{DPLL algoritm}
+
+\textit{DP (Davis-Putnam)} algoritm \cite{davis60} oli üks esimesi
+süstemaatilisi algoritme esimest järku predikaatarvutuse valemitega kirja pandud teoreemide
+tõestamiseks arvuti abil. Olgugi, et algoritm on küllaltki ebaefektiivne võrreldes
+paar aastat hiljem (1965) avaldatud Robinsoni algoritmiga, on tarvitatud sellest
+algoritmist pärit meetodeid hiljem kehtestatavuse algoritmide arendamiseks.
+\textit{DP} kasutas loogilise tõesuse kontrollimise asemel valemi eituse
+mittekehtestatavuse väljaselgitamist, mis on esimesega samaväärne probleem.
+
+Töö piiratud maht võimaldab anda ainult väga põgusa ülevaate
+originaalalgoritmist. Algoritm koosnes neljast osast:
+
+\begin{enumerate}
+  \item Esialgse valemi $F$ eituse $\neg F$ leidmine.
+  \item Valemi $\neg F$ kirjutamine prenex-kujule\footnotemark[2] $G_p$
+  (prefikskuju leidmine).
+  \item $G_p$ eksistentsikvantorite eemaldamine
+  vastavate muutujate funktsionaalsümbolitega asendamise teel
+  (skolemiseerimine\footnotemark[2]). Saadakse valem $G_s$. Tähtis on teada,
+  et $G_p$ ja $G_s$ ei ole loogiliselt ekvivalentsed, kuid on mittekehtestatavuse suhtes ekvivalentsed, st. $G_p$ on mittekehtestatav parajasti siis, kui $G_s$ on mittekehtestatav.
+  \item Valemist $G_s$ muutuja- ja kvantorivabade lausearvutusvalemite
+  $G_{s,1},G_{s,2},\dots$ genereerimine kuni nendest $n$ esimese valemi
+  konjuktsioon $G_{s,1}\wedge\dots\wedge G_{s,n}$ on mittekehtestatav. 
+\end{enumerate}
+
+\footnotetext[2]{Prenex-kuju/skolemiseerimine jt.
+valdkonnaga seotud mõisted seletatakse lahti allikas
+\cite{schoning04}.}
+
+Algoritm töötas nii kaua, kuni sammus (4) oli genereeritud piisaval hulgal
+kvantori- ja muutujavabu valemeid. On ära näidatud, et kui esialgne valem $F$
+on loogiliselt tõene, siis leidub lõplik kogus valemeid $G_{s,1},G_{s,2},\dots$
+ja programm lõpetab oma töö, vastasel korral jääbki ta valemeid genereerima.
+Kuna predikaatloogika on poollahenduv, siis see ongi parim tulemus, mille me
+võime saada.
+
+Reeglid sammus (4) valemite konjuktsiooni $W=G_{s,1}\wedge\dots\wedge G_{s,n}$
+kehtestatavuse kindlakstegemiseks olid järgmised:
+
+\begin{enumerate}
+  \item \emph{Ühikklauslite elimineerimine}
+  	\begin{enumerate}
+        \item Kui valem $W$ sisaldab ühikklauslit $C_i$ literaaliga $l$ ja
+        samuti ühikklauslit literaaliga $\bar{l}$, siis sisaldab $W$ vastuolu
+        ning on mittekehtestatav.
+        \item Kui (a) ei ole rakendatav ja valem $W$ sisaldab ühikklauslit $C_i$
+        literaaliga $l$, siis kustutada valemist $W$ kõik klauslid, mis sisaldavad literaali $l$ ja
+        igast klauslist, mis sisaldab $l$ komplementaari $\bar{l}$,
+        kustutada $\bar{l}$. Saadav valem $W'$ on mittekehtestatav parajasti
+        siis, kui seda on $W$.
+   \end{enumerate}
+   \item \emph{Puhta literaali elimineerimine}\\
+        Kui muutuja $x$ esineb valemi $W$ klauslites ainult
+        positiivse või negatiivse literaalina, siis võib kõik muutujat $x$
+        sisaldavad klauslid eemaldada, saades valemi $W'$, mis on mittekehtestatav parajasti siis,
+        kui seda on $W$.
+   \item \emph{Muutujate elimineerimine}\\
+   		Kui valem $W$ on kujul $W=(A\vee l)\wedge(B\vee \bar{l})\wedge R$, kus $A$,
+   		$B$ ja $R$ literaali $l$ ega tema komplementaari $\bar{l}$ ei sisalda,
+   		siis võib valemi $W$ ümber kirjutada kujule $W'=(A\vee B\vee)\wedge R$.
+   		Valem $W$ on mittekehtestatav parajasti siis, kui $W'$ on mittekehtestatav.
+\end{enumerate}
+
+Hiljem publitseeritud artiklis \cite{davis62} asendatakse
+muutujate elimineerimisreegel teistsugusel kujul oleva nn.
+\emph{jaotamisreegliga}:
+
+Kui valem $W$ on kujul $W=(A\vee l)\wedge(B\vee \bar{l})\wedge R$, kus $A$,
+$B$ ja $R$ literaali $l$ ega tema komplementaari $\bar{l}$ ei sisalda,
+siis võib valemi $W$ jaotada valemiteks $W_1=A\wedge R$ ja $W_2=B\wedge R$ ning
+esialgne valem on mittekehtestatav parajasti siis kui mõlemad $W_1$ ja $W_2$ on
+mittekehtestatavad.
+
+Koos selle reegliga moodustab \textit{DP} algoritm algoritmi \textit{DPLL}.
+
+Hetkel levinud \textit{DPLL}-tüüpi kehtestatavuse algoritmid kasutavad
+originaalsest algoritmist erinevat lähenemist. Eelkõige on algoritmid
+realiseeritud tagurdusalgoritmidena, mis töötavad muutujate osalise
+väärtustusega, samm-sammult valides muutujatele väärtused, lihtsustades
+valemit pärast iga väärtustamist, kuni saadakse selline lõpptulemus, mille 
+korral valemit võib lugeda seni leitud väärtustuse piires tõeseks.
+
+
+\section{Boole-Shannoni dekompositsioon}
+
+Boole-Shannoni dekompositsioon (lahutus) vastab \textit{DPLL} algoritmis
+jaotamisreeglile. Sisuliselt on siin tegemist universaalse vahendiga
+$n$-muutuja ($n>0$) Boole'i funktsiooni avaldamiseks kahe, või erijuhul ühe,
+$n-1$ muutuja Boole'i funktsiooni kaudu.
+
+Olgu antud antud $n$-muutuja Boole'i funktsioon $f(x_1,\dots,x_n)$. Sellest
+funktsioonist võime saada kaks $n-1$-muutja funktsiooni, asendades muutuja
+$x_i$ väärtusega 1 esimeses ja 0 teises. Nendeks funktsioonideks on:
+
+$$f_{\bar{x_1}}(x_1,\dots,x_{i-1},x_{i+1}\dots,x_n)=f(x_1,\dots,x_{i-1},0,x_{i+1}\dots,x_n)$$
+
+ja
+
+$$f_{x_1}(x_1,\dots,x_{i-1},x_{i+1}\dots,x_n)=f(x_1,\dots,x_{i-1},1,x_{i+1}\dots,x_n).$$
+
+Sealjuures kehtib ka samaväärsus
+
+$$f=f_{\bar{x_1}}\vee f_{x_1},$$
+
+mille korrektsuse tõestuse võib leida allikast \cite{tombak07}. Põhimõtteliselt
+on võimalik kehtestatavuse algoritm koostada ainult dekompositsiooni kasutades,
+sest rakendades seda rekursiivselt järjest igale alamvalemile, jõuame ükskord
+olukorrani, kus kõik muutujad on asendatud väärtustega 1 või 0, ning saame
+valemi väärtuse välja arvutada. Paraku oleks see väga ebaefektiivne algoritm,
+võrreldav tõeväärtustabeli koostamisega.
+
+Vaatleme dekompositsiooni rakendust KNK valemile $F=(x\vee\neg y\vee z) \wedge
+(\neg x\vee y\vee\neg z) \wedge (x\vee\neg y\vee\neg z) \wedge (\neg x\vee\neg
+y\vee\neg z)$ muutuja $y$ järgi. Saame valemid:
+
+$$F_y=(x\vee 0\vee z) \wedge
+(\neg x\vee 1\vee\neg z) \wedge (x\vee 0\vee\neg z) \wedge (\neg x\vee 0\vee\neg
+z)$$
+ja
+$$F_{\bar{y}}=(x\vee 1\vee z) \wedge
+(\neg x\vee 0\vee\neg z) \wedge (x\vee 1\vee\neg z) \wedge (\neg x\vee 1\vee\neg
+z).$$
+
+Oh lihtne märgata, et saadud valemeid oleks võimalik oluliselt lihtsustada.
+Üldiselt saame lihtsustamise põhimõtted kirja panna lihtsa eeskirjana, mis
+lihtsustab dekompositsiooni $F \Leftrightarrow F_x \vee F_{\bar{x}}$ valemid
+$F_x$ ja $F_{\bar{x}}$:
+
+\begin{enumerate}
+  \item Valemist $F_x$ eemalda kõik klauslid, kus muutuja $x$ esineb
+  positiivselt ja kõikidest $F_x$ klauslitest, kus $x$ esineb negatiivselt,
+  eemalda $x$.
+  \item Valemist $F_{\bar{x}}$ eemalda kõik klauslid, kus muutuja $x$ esineb
+  negatiivselt ja kõikidest $F_{\bar{x}}$ klauslitest, kus $x$ esineb positiivselt,
+  eemalda $x$.
+\end{enumerate}
+
+See algoritm võimaldab lihtsustada $F_x$ ja $F_{\bar{x}}$ n.ö. vahepealse
+väljarvutamiseta, kuigi asendades $x$ väärtuse valemisse sisse, saame valemi
+lihtsustada ka tuntud lausearvutuse samaväärsusi $x\vee 0 \equiv x$ ja $x\vee 1
+\equiv 1$ kasutades.
+
+Võttes eespool toodud näite uuesti ette, rakendame lihtsustusi leitud valemitele
+$F_y$ ja $F_{\bar{y}}$, saades semantiliselt samaväärsed, kuigi süntaktiliselt
+märksa lihtsamad KNK valemid:
+
+$$F_y=(x\vee z)\wedge (x\vee\neg z)\wedge(\neg x\vee\neg z)$$
+ja
+$$F_{\bar{y}}=(\neg x\vee\neg z).$$
+
+Dekompositsiooni ei saa rakendada kuitahes palju arv kordi, sest
+valemi muutujate arv väheneb iga korraga ühe võrra (kuigi lihtsustuste
+tõttu võivad kaduda valemist ka need muutujad, mille järgi ei ole lahutust
+rakendatud). On võimalik kahe erineva olukorra tekkimine:
+
+\begin{enumerate}
+  \item[(*a)] Valemist eemaldatakse kõik klauslid - sellisel juhul ei saa valem
+  enam vääraks muutuda, sest ei ole võimalik, et mõni valemi klausel oleks
+  väär. Sellisel juhul on valem tõene.
+  \item[(*b)] Valemisse juhtub sisse jääma klausel, millest on eemaldatud kõik
+  muutujad - selline valem on väär, kuivõrd temas leidub väär klausel.
+\end{enumerate}
+
+Rakendades dekompositsiooni näites saadud valemile $F'_{\bar{y}}$ edasi muutuja
+$x$ järgi, saame omakorda valemid $F_{\bar{y},x}=\neg z$ ja
+$F_{\bar{y},\bar{x}}$, millest viimane ei sisalda ühtegi klauslit ja on
+seetõttu tõene ning seega oleme leidnud kehtestava väärtustuse
+$\{y=0,x=0\}$.
+
+Pannes kokku nii väärtustamise kui valemite lihtsustamise, saab koostada
+järgmise algoritmi (1):
+
+\newpage
+
+\begin{algorithm}{SAT($F$)}
+\ainputoutput{konjuktiivsel normaalkujul valem $F$.}{tulemus, kas valem $F$ on
+kehtestatav.}
+\abody
+
+\begin{algorithmic}[1]
+\IF {$F$ ei sisalda ühtegi klauslit}
+	\RETURN \TRUE
+\ELSIF {$F$ sisaldab tühja klauslit}
+	\RETURN \FALSE
+\ELSE
+	\STATE Vali valemist $F$ muutuja $x$.
+	\STATE Rakenda valemile $F$ dekompositsiooni $x$ järgi, saades valemid $F_x$
+	ja $F_{\bar{x}}$.
+	\STATE Lihtsusta valemeid $F_x$ ja $F_{\bar{x}}$.
+	\RETURN \proc{SAT($F_x$)}$\vee$\proc{SAT($F_{\bar{x}}$)}.
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+Esitatud rekursiivsest pseudokoodist on näha, et ridadel (1-2) kontrollitakse
+eespool antud lõpptingimuse (*a) täidetust, kus valemi $F$ kõik klauslid on
+tõeseks muutunud ja lihtsustamiste tulemusena ei ole valemisse $F$ enam
+ühtegi klauslit jäänud. Sellisel juhul tagastab protseduur \texttt{true},
+st. etteantud valem on kehtestatav.
+
+Ridadel (3-4) kontrollitakse seevastu lõpptingimuse (*b) täidetust, st.
+inspekteeritavasse valemisse on sattunud väär klausel. Sellisel juhul ei ole
+enam mõtet midagi edasi arvutada, sest valemit ei õnnestu ühelgi viisil
+tõeseks muuta. Protseduur tagastab \texttt{false}, st. etteantud valem $F$ on
+mittekehtestatav.
+
+Kui protseduuri kutsungist ei väljutud ridade (1-4) kaudu, siis rakendadakse
+valemile Boole-Snannoni dekompositsiooni (6-7), vahetult mille järel toimub
+lihtsustamine (8). See annab kaks valemit $F_x$ ja $F_{\bar{x}}$, milles on
+vähem muutujaid, kui esialgses valemis $F$. Real (9) rakendatakse mõlemale
+alamvalemile algoritmi \proc{SAT} rekursiivselt.
+
+Nagu eespool mitu korda mainitud, realiseeritakse sellised algoritmid
+tagurdusalgoritmidega. Tagurduse valikupunktiks on siin rida (9). Siin on näha,
+et valik tuleb teha kahe valemi $F_x$ ja $F_{\bar{x}}$ vahel, millele algoritmi
+rekursiivselt edasi rakendada. Kui me oskaks kohe valida õige valemi, oleks
+sellise algoritmi keskmine keerukus lineaarne muutujate arvu suhtes.
+Paraku me ei oska õiget valemit valida ja selletõttu tuleb halvimal juhul mõlemad valemid läbi
+proovida, aga see muudab algoritmi tööaja juba eksponentsiaalseks. On näidatud,
+et leidub isegi terve valemite klass, mille jaoks see algoritm töötab alati
+eksponentsiaalses ajas \cite{tombak07}.
+
+\subsection{Ühikklauslite elimineerimine}
+
+Boole-Shannoni dekompositsioonil on erikuju. Olgu $F$ konjuktiivsel
+normaalkujul olev valem. Kui $F$ sisaldab sellist klauslit $C$, mis koosneb
+ainult ühest literaalist, st. $C=l$ ja $l\equiv x$, siis võib sooritada $F$
+lahutuse ($F_x$, $F_{\bar{x}}$) muutuja $x$ järgi ja ignoreerida valemit
+$F_{\bar{x}}$, sest see on samaselt väär. Seda põhjendab asjaolu, et
+väärtustusel $v(x)=0$, $C=l=0$. See aga tähendab omakorda, et valem
+$F_{\bar{x}}$ sisaldab väära klauslit. Täpselt sarnane olukord kehtib ka juhul
+kui $l\equiv\neg x$, aga siis võime vaatluse alt välja jätta valemi $F_x$.
+
+Ühikklauslite elimineerimine kui Boole-Shannoni lahutuse erikuju vastab
+originaalses \textit{DPLL} algoritmis ühikklauslite elimineerimisreegli juhule
+(b). Selle reegli saame lisada otse algoritmi (1), saades juba märksa
+efektiivsema, kuigi siiski veel eksponentsiaalses ajas töötava, algoritmi:
+
+\begin{algorithm}{DPLLSAT($F$)}
+\ainputoutput{konjuktiivsel normaalkujul valem $F$.}{tulemus, kas valem $F$ on
+kehtestatav.}
+\abody
+
+\begin{algorithmic}[1]
+\IF {$F$ ei sisalda ühtegi klauslit}
+	\RETURN \TRUE
+\ELSIF {$F$ sisaldab tühja klauslit}
+	\RETURN \FALSE
+\ELSIF {$F$ sisaldab ühikklauslit $C_i=l$}
+	\STATE Rakenda valemile $F$ dekompositsiooni $x$ järgi, saades valemid
+	$F_x$ ja $F_{\bar{x}}$.
+	\IF {$l\equiv x$}
+		\STATE Lihtsusta valemit $F_x$.
+		\RETURN \proc{DPLLSAT($F_x$)}.
+	\ELSE
+		\STATE Lihtsusta valemit $F_{\bar{x}}$.
+		\RETURN \proc{DPLLSAT($F_{\bar{x}}$)}
+	\ENDIF
+\ELSE
+	\STATE Vali valemist $F$ muutuja $x$.
+	\STATE Rakenda valemile $F$ dekompositsiooni $x$ järgi, saades valemid $F_x$
+	ja $F_{\bar{x}}$.
+	\STATE Lihtsusta valemeid $F_x$ ja $F_{\bar{x}}$.
+	\RETURN \proc{DPLLSAT($F_x$)}$\vee$\proc{DPLLSAT($F_{\bar{x}}$)}.
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Puhta literaali elimineerimine}
+
+Puhta literaali elimineerimine on lisaks ühikklausli elimineerimisele veel üks
+täiendav heuristiline reegel kehtestatavuse leidmiseks. Olgugi et see esines
+originaalses \proc{DPLL} algoritmis, on temast hilisemates variantides
+loobutud eelkõige selle tõttu, et praktikas on osutunud tema kasutamine
+ebaefektiivse realisatsiooni tõttu vähetõhusaks.
+
+Puhta literaali $l$ elimineerimine kujub endast valemi $F=C_1\wedge\dots\wedge
+C_k$ klauslitest nende eemaldamist, kus $l$ esineb. Sealjuures ei tohi
+üheski klauslis $C_1\wedge\dots\wedge C_k$ esineda $l$ komplementaari $\bar{l}$.
+Reegli õigustuse võib leida allikast \cite{tombak07}. Puhta literaali reeglile
+vastab Boole-Shannoni dekompositsiooni rakendamine valemile $F$ literaalile $l$
+vastava muutuja $x$ järgi. Siis ütleb reegel, et me võime ignoreerida valemit
+$F_{\bar{x}}$, kui $l\equiv x$ ja valemit $F_x$ juhul $l\equiv -x$.
+
+Paraku on puhta literaali eemaldamisel mittekasulik omadus
+valemi lahendite arvu suhtes. Nimelt kaotame selle kasutamisel osa lahenditest,
+sest võib juhtuda, et valem võib olla tõene ka juhul, kui puhas literaal $l$ on
+väär, st. esialgne valem ja pärast teisendust saadud valem ei ole loogiliselt
+samaväärsed. Näitena sobib valem $F=x\vee y$, millest saaksime rangelt
+puhta literaali elimineerimist tarvitades lahendi $x=1, y=1\}$, aga sealjuures
+ignoreeriksime täielikult lahendeid $\{x=0, y=1\}$ ja $\{x=1, y=0\}$.
+
+See halb omadus on põhjuseks, miks puhta literaali elimineerimise reegel on
+käesolevas töös vaadeldud \textit{DPLL} algoritmi variandist välja jäetud.
+Teiseks põhjuseks on valemist puhta literaali otsimise arvutuslik keerukus
+valemi andmestruktuurist, mis on esitatud töö teises pooles, sest andmestruktuur on
+optimeeritud ühikliteraali leidmiseks ning valemi kiireks lihtsustamiseks
+vahetult pärast muutuja valikut.
+
+
+\section{Lahendite loendamine}
+
+Seni oleme töös vaadelnud ainult kehtestatavuse algoritmi. Selgub, et
+lahendite loendamiseks tuleb seda (2) ainult vähe muuta.
+Loendamine kasutab ära asjaolu, et ülalkirjeldatud algoritm üritab leida
+kehtestatavat väärtustust üksikute muutujate väärtustamise kaupa, kusjuures
+alati lõpetab protseduur ühes kahest olukorrast (*a, *b), mida on töös eespool
+juba kirjeldatud.
+
+On ilmselt selge, et valemi lahendite arv (kujutades ette protseduuri
+\proc{SAT} või \proc{DPLLSAT} rakendamist valemile $F$ ja vahetult olukorra (*a)
+või (*b) esinemist) on neil juhtudel järgmine:
+
+\begin{itemize}
+  \item[(*a):] Valemis $F$ oli esialgu $n$ muutujat, nendest
+  on ära väärtustatud $k$ tükki. See tähendab, et ülejäänud $t=n-k$ muutujale võib anda
+  suvalise väärtustuse, ilma et peaks kartma, et valem $F$ vääraks muutuks. $t$
+  muutujale saab kokku anda $2^t$ erinevat väärtustust, seega on $F$
+  lahendite arv $2^{n-k}$.
+  \item[(*b):] Kuna valem $F$ on väär, siis on tema lahendite arv 0.
+\end{itemize}
+
+Vastavalt nendele juhtudele on vaja modifitseerida algoritmi \proc{SAT} või
+\proc{DPLLSAT} ainult niipalju, et anda sisendparameetrina kaasa valemi $F$
+esialgne lahendite arv $n$ ja seni väärtustatud muutjate arv $k$. Protseduuri
+rekursiivses sammus (\proc{SAT}, rida 9; \proc{DPLLSAT}, rida 18) tuleb
+loomulikult igal sammul väärtustatud muutujate arvule juurde liita 1 . Saadav
+algoritm on esitatud järgnevalt:
+
+\begin{algorithm}{DPLL\_LOENDA($F,N,K$)}
+\ainputoutput{knk valem $F$, $F$ muutjate arv $N$, väärtustatud muutujate arv
+$K$.}{valemi $F$ lahendite arv $S$.}
+\abody
+
+\begin{algorithmic}[1]
+\IF {$F$ ei sisalda ühtegi klauslit}
+	\RETURN $2^{N-K}$
+\ELSIF {$F$ sisaldab tühja klauslit}
+	\RETURN 0
+\ELSIF {$F$ sisaldab ühikklauslit $C_i=l$}
+	\STATE Rakenda valemile $F$ dekompositsiooni $x$ järgi, saades valemid
+	$F_x$ ja $F_{\bar{x}}$.
+	\IF {$l\equiv x$}
+		\STATE Lihtsusta valemit $F_x$.
+		\RETURN \proc{DPLL\_LOENDA($F_x$)}.
+	\ELSE
+		\STATE Lihtsusta valemit $F_{\bar{x}}$.
+		\RETURN \proc{DPLL\_LOENDA($F_{\bar{x}}$)}
+	\ENDIF
+\ELSE
+	\STATE Vali valemist $F$ muutuja $x$.
+	\STATE Rakenda valemile $F$ dekompositsiooni $x$ järgi, saades valemid $F_x$
+	ja $F_{\bar{x}}$.
+	\STATE Lihtsusta valemeid $F_x$ ja $F_{\bar{x}}$.
+	\RETURN \proc{DPLL\_LOENDA($F_x$)}$ + $\proc{DPLL\_LOENDA($F_{\bar{x}}$)}.
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+Sarnaselt algoritmile \proc{DPLLSAT}, saab antud protseduuri kirja panna
+tagurdusalgoritmina, mida on tehtud ka töö teises pooles realiseeritud
+programmis. Selleks piisab võtta kasutusele globaalne muutuja, mille
+väärtust suurendada iga kord $2^{n-k}$ võrra ($n$ - muutujate koguarv, $k$ -
+väärtustatud muutujate arv), kui algoritm leiab kehtestava väärtustuse.
+Seejärel tuleb lasta algoritmil tagurdada kuni viimase rekursioonitasemeni,
+milles pole läbi vaadatud mõlemat valemit. (rida 18 algoritmis
+\proc{DPLL\_LOENDA}) ning pärast protseduuri rakendamise lõppu lugeda selle
+muutuja väärtus, mis annabki lahendite arvu.
+

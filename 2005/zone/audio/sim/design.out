@@ -1,0 +1,232 @@
+********************************************************************************
+***                                                                          ***
+*** SIMetrix Intro Version 5.1a - 06/02/2005 05:24:35 PM                     ***
+*** Platform: GNU/Linux                                                      ***
+***                                                                          ***
+*** TITLE:   * /var/www/htdocs/zone/audio/sim/x-amp.sxsch                    ***
+*** NETLIST: /var/www/htdocs/zone/audio/sim/design.net                       ***
+***                                                                          ***
+********************************************************************************
+
+********************************************************************************
+***                                                                          ***
+***                                Input Deck                                ***
+***                                                                          ***
+********************************************************************************
+
+X1 R8_N R4_N X1_vsp V3_N X1_out LF353/NS pinnames: inp inn vsp vsn out
+V1 V1_P 0 SIN 750m 1.25 500 -2m 0
+X2 R7_P X2_inn X1_vsp V3_N R9_N LF353/NS pinnames: inp inn vsp vsn out
+V2 X1_vsp 0 18
+R1 R8_N 0 15k
+V3 0 V3_N 18
+V4 IPROBE1_P V4_N 30
+R2 R4_N 0 10k
+R3 X1_out Q2_S 1k
+V5 Q3_D Q2_S 30
+R4 Q2_S R4_N 91k
+R5 0 R6_N 1K
+R6 Q2_S R6_N 1K
+R7 R7_P 0 30k
+R8 X2_inn R8_N 10k
+R9 V4_N R9_N 1K
+R10 V4_N X2_inn 100k
+R11 R6_N V4_N 1K
+R12 R6_N V3_N 2.2k
+R13 Q3_G R9_N 220
+X$Q2 Q2_D X1_out Q2_S IRF530 pinnames: D G S
+X$Q3 Q3_D Q3_G V4_N IRF530 pinnames: D G S
+C1 R8_N V1_P 2.2u  
+V$IPROBE1 IPROBE1_P Q2_D 0.0 
+.GRAPH IPROBE1#p CurveLabel=IPROBE1
+E$Probe1$TP_DIFFPRB 1 0 Q2_S V4_N 1 
+.graph 1 Curvelabel = "Diff Probe" nowarn=true yunit="V"
+.TRAN 20m
+.subckt IRF530 D G S
+.model mosfet NMOS( LEVEL=7 VTO=3.705 RS=0.05585 KP=4.543 RD=0.0492 TC1RD=0.031 RG=7.5 IS=1e-36
++ CGDMAX=1.70E-09 CGDMIN=3.00E-11 XG2CGD=0.5 XG1CGD=0.1 CBD=2.61E-10 VTCGD=0.9)
+.model diode D( IS=1.62e-12 RS=0.0147 TT=1.929e-07)
+M1 D G S S mosfet
+D1 S D Diode
+Cgs G S 6.17E-10
+.ends
+.SUBCKT LF353/NS  1   2  99  50  28
+*
+*Features:
+*Low supply current =                1.8mA
+*Wide bandwidth =                     4MHz
+*High slew rate =                   13V/uS
+*Low offset voltage =                 10mV
+*
+*NOTE: Model is for single device only and simulated
+*      supply current is 1/2 of total device current.
+*
+****************INPUT STAGE************** 
+*
+IOS 2 1 25P
+*^Input offset current
+R1 1 3 1E12
+R2 3 2 1E12
+I1 99 4 100U
+J1 5 2 4 JX
+J2 6 7 4 JX
+R3 5 50 20K
+R4 6 50 20K
+*Fp2=12 MHz
+C4 5 6 3.31573E-13
+*
+***********COMMON MODE EFFECT***********
+*
+I2 99 50 1.7MA
+*^Quiescent supply current
+EOS 7 1 POLY(1) 16 49 5E-3 1
+*Input offset voltage.^
+R8 99 49 50K
+R9 49 50 50K
+*
+*********OUTPUT VOLTAGE LIMITING********
+V2 99 8 2.13
+D1 9 8 DX
+D2 10 9 DX
+V3 10 50 2.13
+*
+**************SECOND STAGE**************
+*
+EH 99 98 99 49 1
+F1 9 98 POLY(1) VA3 0 0 0 1.0985E7
+G1 98 9 5 6 1E-3
+R5 98 9 100MEG
+VA3 9 11 0
+*Fp1=40.3 HZ
+C3 98 11 39.493P
+*
+***************POLE STAGE***************
+*
+*Fp3=42 MHz
+G3 98 15 9 49 1E-6
+R12 98 15 1MEG
+C5 98 15 3.7894E-15
+*
+*********COMMON-MODE ZERO STAGE*********
+*
+G4 98 16 3 49 1E-8
+L2 98 17 31.831M
+R13 17 16 1K
+*
+**************OUTPUT STAGE**************
+*
+F6  99 50 VA7 1
+F5  99 23 VA8 1
+D5  21 23 DX
+VA7 99 21 0
+D6  23 99 DX
+E1  99 26 99 15 1
+VA8 26 27 0
+R16 27 28 35
+V5  28 25 0.1V
+D4  25 15 DX
+V4  24 28 0.1V
+D3  15 24 DX
+*
+***************MODELS USED**************
+*
+.MODEL DX D(IS=1E-15)
+.MODEL JX PJF(BETA=1.25E-5 VTO=-2.00 IS=50E-12)
+*
+.ENDS
+*$
+*//////////////////////////////////////////////////////////
+*LM6218 Fast Settling Dual OP-AMP MACRO-MODEL
+*//////////////////////////////////////////////////////////
+*
+* connections:      non-inverting input
+*                   |   inverting input
+*                   |   |   positive power supply
+*                   |   |   |   negative power supply
+*                   |   |   |   |   output
+*                   |   |   |   |   |
+*                   |   |   |   |   |
+
+********************************************************************************
+***                                                                          ***
+*** Starting Transient analysis at 05:24:35 PM                               ***
+***                                                                          ***
+*** Analysis card: .TRAN 20m                                                 ***
+***                                                                          ***
+********************************************************************************
+
+********************************************************************************
+***                                                                          ***
+***                             Device parameters                            ***
+***                                                                          ***
+********************************************************************************
+Model parameters for devices of type VMOS
+=========================================
+Model:       Q2.mosfet    Q3.mosfet    
+
+cbd          261p         261p         
+cgdmax       1.7n         1.7n         
+cgdmin       30p          30p          
+is           1000E-39     1000E-39     
+kp           4.543        4.543        
+rd           49.2m        49.2m        
+rg           7.5          7.5          
+rs           55.85m       55.85m       
+tc1rd        31m          31m          
+vt0          3.705        3.705        
+vtcgd        900m         900m         
+xg1cgd       100m         100m         
+xg2cgd       500m         500m         
+
+
+Model parameters for devices of type JFET2
+==========================================
+Model:       X1.JX        X2.JX        
+
+beta         12.5u        12.5u        
+is           50p          50p          
+vto          -2           -2           
+
+
+Model parameters for devices of type Diode
+==========================================
+Model:       Q2.Diode     Q3.Diode     X1.DX        X2.DX        
+
+is           1.62p        1.62p        1f           1f           
+rs           14.7m        14.7m        0            0            
+tt           192.9n       192.9n       0            0            
+
+
+Analysis statistics
+===================
+
+Nominal temperature = 27
+Operating temperature = 27
+Total iterations = 1617
+Transient iterations = 1599
+Transient timepoints = 364
+Accepted timepoints = 346
+Total analysis time = 0.863
+Transient time = 0
+Matrix reordering time = 0
+L-U decomposition time = 0
+Matrix solve time = 0
+Load time = 0
+Transient L-U decomp time = 0
+Transient solve time = 0
+Circuit build time = 0.038
+Simulator initialise time = 0.003
+JI2 Iterations = 18
+Diag. GMIN stepping iterations = 0
+Junc. GMIN stepping iterations = 0
+Source stepping iterations = 0
+PTA iterations = 0
+Number of matrix fill ins = 225
+Circuit equations = 95
+
+Run statistics
+==============
+
+Netlist read in time = 0.044
+Total run time = 1.115 seconds
+Analysis concluded 06/02/2005 05:24:36 PM

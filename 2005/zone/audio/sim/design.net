@@ -1,0 +1,31 @@
+* /var/www/htdocs/zone/audio/sim/x-amp.sxsch
+*#SIMETRIX
+X1 R8_N R4_N X1_vsp V3_N X1_out LF353/NS pinnames: inp inn vsp vsn out
+V1 V1_P 0 SIN 750m 1.25 500 -2m 0
+X2 R7_P X2_inn X1_vsp V3_N R9_N LF353/NS pinnames: inp inn vsp vsn out
+V2 X1_vsp 0 18
+R1 R8_N 0 15k
+V3 0 V3_N 18
+V4 IPROBE1_P V4_N 30
+R2 R4_N 0 10k
+R3 X1_out Q2_S 1k
+V5 Q3_D Q2_S 30
+R4 Q2_S R4_N 91k
+R5 0 R6_N 1K
+R6 Q2_S R6_N 1K
+R7 R7_P 0 30k
+R8 X2_inn R8_N 10k
+R9 V4_N R9_N 1K
+R10 V4_N X2_inn 100k
+R11 R6_N V4_N 1K
+R12 R6_N V3_N 2.2k
+R13 Q3_G R9_N 220
+X$Q2 Q2_D X1_out Q2_S IRF530 pinnames: D G S
+X$Q3 Q3_D Q3_G V4_N IRF530 pinnames: D G S
+C1 R8_N V1_P 2.2u  
+V$IPROBE1 IPROBE1_P Q2_D 0.0 
+.GRAPH IPROBE1#p CurveLabel=IPROBE1
+E$Probe1$TP_DIFFPRB 1 0 Q2_S V4_N 1 
+.graph 1 Curvelabel = "Diff Probe" nowarn=true yunit="V"
+.TRAN 20m
+

@@ -1,0 +1,20 @@
+raivo@raivo:~/Desktop/teadusarvutused/workspace/prax2/src$ python RLPrax2_1.py 10
+Täpne tulemus: 0.305555555556
+Simuleeritud tulemus: 0.5
+Viga: 0.194444444444
+raivo@raivo:~/Desktop/teadusarvutused/workspace/prax2/src$ python RLPrax2_1.py 100
+Täpne tulemus: 0.305555555556
+Simuleeritud tulemus: 0.25
+Viga: 0.0555555555556
+raivo@raivo:~/Desktop/teadusarvutused/workspace/prax2/src$ python RLPrax2_1.py 1000
+Täpne tulemus: 0.305555555556
+Simuleeritud tulemus: 0.287
+Viga: 0.0185555555556
+raivo@raivo:~/Desktop/teadusarvutused/workspace/prax2/src$ python RLPrax2_1.py 10000
+Täpne tulemus: 0.305555555556
+Simuleeritud tulemus: 0.3072
+Viga: 0.00164444444444
+raivo@raivo:~/Desktop/teadusarvutused/workspace/prax2/src$ python RLPrax2_1.py 100000
+Täpne tulemus: 0.305555555556
+Simuleeritud tulemus: 0.30596
+Viga: 0.000404444444444

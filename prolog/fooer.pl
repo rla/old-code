@@ -1,0 +1,1 @@
+fooer(X, T):- T =..[foo,X].

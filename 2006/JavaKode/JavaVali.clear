@@ -1,0 +1,23 @@
+class JavaVali {
+	
+	
+	private boolean isendivali; 
+	private String nimi; 
+	private String tyyp; 
+	
+	public JavaVali(String nimi, boolean isendivali, String tyyp) {
+	
+		
+		
+		this.nimi=nimi;
+		this.isendivali=isendivali;
+		this.tyyp=tyyp;
+	
+	}
+	
+	public String toString() {
+	
+		return  +tyyp + +tyyp + +nimi;
+	
+	}
+}

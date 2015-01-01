@@ -1,0 +1,7 @@
+#
+READ a;
+uuesti: y=(a*3)+(a*2);
+IF y<1000 THEN GOTO uuesti;
+WRITE y
+#
+

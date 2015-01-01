@@ -1,0 +1,24 @@
+Testsuite: ee.pri.rl.wiki.tokenizer.test.DoubleListTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.041 sec
+------------- Standard Output ---------------
+listBegin::2
+listItemBegin::2
+text:Haha:3
+list2Begin::3
+list2ItemBegin::3
+text: Hehe:4
+list2ItemEnd::4
+list2ItemBegin::4
+text: Hehe2:5
+list2ItemEnd::6
+list2End::6
+listItemEnd::6
+listEnd::6
+listBegin::6
+listItemBegin::6
+text:Hoho:7
+listItemEnd::7
+listEnd::7
+------------- ---------------- ---------------
+
+Testcase: testDoubleListHandling took 0.039 sec

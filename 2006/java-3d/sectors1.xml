@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sectors>
+  <sector name="room1">
+    <tile texture="floor">
+      <coordinate x="-5" y="2" z="5"/>
+      <coordinate x="5" y="2" z="5"/>
+      <coordinate x="5" y="2" z="-5"/>
+      <coordinate x="-5" y="2" z="-5"/>
+    </tile>
+    <tile texture="wall2">
+      <coordinate x="-5" y="2" z="-5"/>
+      <coordinate x="-5" y="12" z="-5"/>
+      <coordinate x="5" y="12" z="-5"/>
+      <coordinate x="5" y="2" z="-5"/>
+    </tile>
+    <tile texture="wall2">
+      <coordinate x="-5" y="2" z="5"/>
+      <coordinate x="-5" y="12" z="5"/>
+      <coordinate x="-5" y="12" z="-5"/>
+      <coordinate x="-5" y="2" z="-5"/>
+    </tile>
+  </sector>
+  <sector name="room2">
+    <tile texture="floor">
+      <coordinate x="6" y="2" z="5"/>
+      <coordinate x="16" y="2" z="5"/>
+      <coordinate x="16" y="2" z="-5"/>
+      <coordinate x="6" y="2" z="-5"/>
+    </tile>
+    <tile texture="wall2">
+      <coordinate x="6" y="2" z="-5"/>
+      <coordinate x="6" y="12" z="-5"/>
+      <coordinate x="16" y="12" z="-5"/>
+      <coordinate x="16" y="2" z="-5"/>
+    </tile>
+    <tile texture="wall2">
+      <coordinate x="6" y="2" z="5"/>
+      <coordinate x="6" y="12" z="5"/>
+      <coordinate x="6" y="12" z="-0"/>
+      <coordinate x="6" y="2" z="-0"/>
+    </tile>
+    <tile texture="wall2">
+      <coordinate x="6" y="2" z="-4"/>
+      <coordinate x="6" y="12" z="-4"/>
+      <coordinate x="6" y="12" z="-5"/>
+      <coordinate x="6" y="2" z="-5"/>
+    </tile>
+  </sector>
+  <sector name="doorway">
+    <tile texture="door1">
+      <coordinate x="5" y="2" z="-0"/>
+      <coordinate x="6" y="2" z="-0"/>
+      <coordinate x="6" y="2" z="-4"/>
+      <coordinate x="5" y="2" z="-4"/>
+    </tile>
+    <tile texture="door1">
+      <coordinate x="5" y="12" z="-0"/>
+      <coordinate x="6" y="12" z="-0"/>
+      <coordinate x="6" y="12" z="-4"/>
+      <coordinate x="5" y="12" z="-4"/>
+    </tile>
+    <tile texture="door1">
+      <coordinate x="5" y="2" z="-4"/>
+      <coordinate x="5" y="12" z="-4"/>
+      <coordinate x="6" y="12" z="-4"/>
+      <coordinate x="6" y="2" z="-4"/>
+    </tile>
+    <tile texture="door1">
+      <coordinate x="5" y="2" z="-0"/>
+      <coordinate x="5" y="12" z="-0"/>
+      <coordinate x="6" y="12" z="-0"/>
+      <coordinate x="6" y="2" z="-0"/>
+    </tile>
+  </sector>
+  <sector name="special">
+    <unittile x="2" y="2" z="0" texture="door1" orientation="0"/>
+  </sector>
+</sectors>

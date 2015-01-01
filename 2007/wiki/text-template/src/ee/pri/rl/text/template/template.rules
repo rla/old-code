@@ -1,0 +1,8 @@
+begin end
+begin ""   text
+text  "{{" token
+token "}}" text
+text  !    end
+
+S: text  text
+S: token token

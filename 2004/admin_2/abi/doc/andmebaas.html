@@ -1,0 +1,23 @@
+<html>
+<head>
+  <title>Andmebaas</title>
+</head>
+<body>
+<h1>Andmebaas</h1>
+Muutuja nimi tähistab saidi nime.
+<pre>
+1) Tabel &#60;nimi&#62;_sisu:
+	id char(30) - objekti nimi. primaarvõti.
+	tekst text - objekti sisu.
+	tyyp set(html, text, css, php) - objekti tüüp.
+	pealkiri char(110) - kui tegemist lehega, siis selle lehe pealkiri.
+	keel - antud objekti keel.
+
+2) Tabel &#60;nimi&#62;_lehed: (kasutatakse objekti kui lehe määramiseks)
+	id char(30) - objekti(lehe) nimi. primaarvõti.
+
+3) Tabel &#60;nimi&#62;_keeled:
+	keel char(2) - keele lühend. primaarvõti.
+</pre>
+</body>
+</html>

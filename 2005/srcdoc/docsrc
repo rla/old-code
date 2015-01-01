@@ -1,0 +1,6 @@
+#!/bin/sh
+
+rm -rf $1'.html'
+source-highlight $1
+cat ~/.srcdoc.html | rewritew title "$2" | rewrite contents $1'.html' > 'srcdoc/'$1'.html'
+rm -rf $1'.html'

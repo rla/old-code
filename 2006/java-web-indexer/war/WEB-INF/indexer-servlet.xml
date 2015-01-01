@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+
+<beans>
+
+	<!-- Indekseerija konfiguratsioon -->
+	<bean id="indexerConfiguration" class="ee.pri.rl.indexer.indexing.configuration.DefaultIndexerConfiguration"/>
+
+	<!-- Indekseerija teenuse uba -->
+	<bean id="indexerService"
+		class="ee.pri.rl.indexer.web.service.IndexerService" singleton="true" />
+		
+	<!-- Indekseerija otsingute vahemälu -->
+	<bean id="searchCache"
+		class="ee.pri.rl.indexer.web.service.cache.SearchCache" singleton="true">
+		<property name="indexerService">
+			<ref bean="indexerService" />
+		</property>
+	</bean>
+		
+	<!-- Indekseerija lõimede teenuse uba -->
+	<bean id="indexerThreadService"
+		class="ee.pri.rl.indexer.web.service.ThreadService" singleton="true" />
+
+	<!-- Otsija kontroller -->
+	<bean id="indexerSearchController" class="ee.pri.rl.indexer.web.controller.SearchController">
+		<property name="searchCache">
+			<ref bean="searchCache" />
+		</property>
+	</bean>
+	
+	<!-- Indekseerija kontroller -->
+	<bean id="indexerIndexingController" class="ee.pri.rl.indexer.web.controller.IndexingController" singleton="true" />
+	
+	<!-- Kausta indekseerija kontroller -->
+	<bean id="indexerIndexDirectoryController" class="ee.pri.rl.indexer.web.controller.IndexDirectoryController">
+		<property name="indexerService">
+			<ref bean="indexerService" />
+		</property>
+		<property name="threadService">
+			<ref bean="indexerThreadService" />
+		</property>
+		<property name="configuration">
+			<ref bean="indexerConfiguration" />
+		</property>
+	</bean>
+	
+	<!-- Indekseerija statistika kontroller -->
+	<bean id="indexerStatisticsController" class="ee.pri.rl.indexer.web.controller.StatisticsController">
+		<property name="indexerService">
+			<ref bean="indexerService" />
+		</property>
+	</bean>
+	
+	<!-- Indekseerija lõimede kontroller -->
+	<bean id="indexerThreadsController" class="ee.pri.rl.indexer.web.controller.ThreadsController">
+		<property name="threadService">
+			<ref bean="indexerThreadService" />
+		</property>
+	</bean>
+
+	<!-- URL - kontroller mapping -->
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/search.htm">indexerSearchController</prop>
+				<prop key="/indexing.htm">indexerIndexingController</prop>
+				<prop key="/indexDirectory.htm">indexerIndexDirectoryController</prop>
+				<prop key="/statistics.htm">indexerStatisticsController</prop>
+				<prop key="/threads.htm">indexerThreadsController</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Vajalik Springi kontroller -->
+	<bean id="urlViewController"
+		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+		
+	<!-- Vaadete asukohtade lahendaja -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+</beans>

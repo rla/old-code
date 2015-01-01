@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<project name="treedistance" default="jar">
+
+	<property name="src" value="src" />
+	<property name="lib" value="lib" />
+	<property name="build" value="bin" />
+	<property name="jar" value="treedistance.jar" />
+	<property name="doc" value="doc" />
+	<property name="doc.reports" value="${doc}/reports" />
+	<property name="doc.reports.test" value="${doc.reports}/test" />
+
+	<path id="compile.classpath">
+		<fileset dir="${lib}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<path id="test.classpath">
+		<fileset dir="${lib}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement path="${build}" />
+	</path>
+
+	<target name="compile" description="Compile the project">
+		<mkdir dir="${build}" />
+		<javac destdir="${build}">
+			<src path="${src}" />
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="clean" description="Clean the project">
+		<delete dir="${build}" />
+		<delete dir="${doc.reports}" />
+		<delete file="${jar}" />
+	</target>
+	
+	<target name="jar" depends="compile, test" description="Package the project into jar">
+		<jar destfile="${jar}" basedir="${build}" />
+	</target>
+	
+	<target name="test" depends="compile" description="Runs essential test-cases">
+		<delete dir="${doc.reports.test}" />
+		<mkdir dir="${doc.reports.test}" />
+			
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath refid="test.classpath" />
+			<formatter type="xml" />
+			<batchtest fork="yes" todir="${doc.reports.test}">
+				<fileset dir="${src}">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
+</project>

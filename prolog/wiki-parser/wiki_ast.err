@@ -1,0 +1,6 @@
+wiki_ast.m:001: In module `wiki_ast':
+wiki_ast.m:001:   warning: modules `bool', `int', `io' and `list' are imported
+wiki_ast.m:001:   in the interface, but are not used in the interface.
+wiki_ast.m:001: In module `wiki_ast':
+wiki_ast.m:001:   warning: modules `bool', `int', `io' and `list' are imported
+wiki_ast.m:001:   in the interface, but are not used in the interface.

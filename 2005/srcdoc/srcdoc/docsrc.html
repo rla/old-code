@@ -1,0 +1,31 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Wrapper to source-highlight + rewrite</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="http://www.rl.pri.ee/laanemets.css" />
+</head>
+<body>
+<h1>Wrapper to source-highlight + rewrite</h1>
+<div class="spacing"></div>
+<div style="border: 1px solid #000000; padding: 20px">
+<!-- Generator: GNU source-highlight 2.5
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><i><font color="#9A1900">#!/bin/sh</font></i>
+
+rm -rf $<font color="#993399">1</font><font color="#FF0000">'.html'</font>
+source-highlight $<font color="#993399">1</font>
+cat <font color="#990000">~/.</font>srcdoc<font color="#990000">.</font>html <font color="#990000">|</font> rewritew title <font color="#FF0000">"$2"</font> <font color="#990000">|</font> rewrite contents $<font color="#993399">1</font><font color="#FF0000">'.html'</font> <font color="#990000">&gt;</font> <font color="#FF0000">'srcdoc/'</font>$<font color="#993399">1</font><font color="#FF0000">'.html'</font>
+rm -rf $<font color="#993399">1</font><font color="#FF0000">'.html'</font></tt></pre>
+
+</div>
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="http://www.rl.pri.ee/pictures/email.png" alt="email" align="top"/>, <a href="http://www.rl.pri.ee/index.html">Index</a>
+
+</body>
+</html>

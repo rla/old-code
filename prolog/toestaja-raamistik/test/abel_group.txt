@@ -1,0 +1,8 @@
+# N"aidata, et Abeli r"uhmas leidub parempoolne p"o"ordelement.
+
+P(x, i(x), e)
+
+P(e, x, x)
+P(i(x), x, e)
+P(x, y, v) & P(v, z, w) & P(y, z, u) => P (x, u, w)
+P(y, z, v) & P(x, v, w) & P(x, y, u) => P (u, z, w)

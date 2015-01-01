@@ -1,0 +1,11 @@
+OOP projekt "Vares"
+===================
+Kaustade kirjeldus
+
+
+/build - siia salvestatakse valmiskompileeritud klassifailid.
+/doc - projekti dokumentatsioon.
+/javadoc - javadoc poolt genereeritud dokumentatsioon projekti klassidele.
+/proov - krüpeerimata ja krüpeeritud andmeruumifailide näidised.
+/src - projekti lähtekood.
+/graafiline - graafilise kasutajaliidesega versioon.

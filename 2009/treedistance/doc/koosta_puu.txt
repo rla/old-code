@@ -1,0 +1,1 @@
+./treebest nj -t ds ~/Desktop/align/families_work/00/TF105200/full.nucl.mfa > ~/workspace/treedistance/data/tf105200.ds.nhx

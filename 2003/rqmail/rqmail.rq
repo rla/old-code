@@ -1,0 +1,739 @@
+$include "Rapidq.inc"
+$include "settings.inc"
+$typecheck on
+
+$resource letter As "letter.bmp"
+$resource letter1 As "letter1.bmp"
+$resource letter2 As "letter2.bmp"
+$resource emailimg As "email.bmp"
+
+Dim Connected As Integer '1-ühendatud 0-ühendamata/katkestatud
+Dim pop3 As Qsocket 'pop3 socket
+Dim smtp As Qsocket 'smpt socket
+Dim pop3prt As Integer 'pop3 socket descriptor
+Dim smtpprt As Integer 'smpt socket descriptor
+Dim N As Integer 'saabunud mailide arv
+Dim ReplyTo As String 'mail, millele vastatakse
+Dim MailF As Qfilestream 'fail milles hoitakse infot vaadatud mailide kohta
+Dim Vaadatud As Integer
+Dim PlayWave As Integer '1-hääled on 0-hääli ei ole
+
+PlayWave=1
+
+Create ImageList As QImageList 'mailide pildid
+ Height=16
+ Width=16
+ AddBMPHandle letter, 0
+ AddBMPHandle letter1, 0
+ AddBMPHandle letter2, 0
+End Create
+
+Vaadatud=0
+
+Dim BlackFont As Qfont 'must kiri  
+  BlackFont.Name="Arial"
+  BlackFont.Color=&H000000
+Dim BlueFont As Qfont 'sinine kiri
+  BlueFont.Name="Arial"
+  BlueFont.Color=&Hff0000 
+Dim GreenFont As Qfont 'roheline   
+  GreenFont.Name="Arial"
+  GreenFont.Color=&H00ff00
+Dim RedFont As Qfont 'punane 
+  RedFont.Name="Arial"
+  RedFont.Color=&H0000ff
+
+Dim Server As String 'pop3 serveri nimi või ip
+Server="solo.delfi.ee"
+Dim User As String 'pop3 serveri kasutajanimi
+User="kasutaja"
+Dim Pass As String 'pop3 serveri parool
+Pass="parool"
+Dim Pop3Port As Integer 'pop3 serveri port
+Pop3Port=110
+Dim OServer As String
+OServer="mail.neti.ee"
+Dim OPort As Integer
+OPort=25
+Dim YhKohe As Integer '1-ühendab serveriga käivitades
+YhKohe=1
+
+Declare Sub TrayChk
+Declare Sub MailTimeSub
+
+Create TrayTime As Qtimer ' tray kraam
+  Interval=2000
+  OnTimer=TrayChk
+  Enabled=1
+End Create
+
+Create MailTime As Qtimer
+  Interval=30000
+  OnTimer=MailTimeSub
+  Enabled=0
+End Create
+
+Declare Function Send Lib "wsock32.dll" Alias "send" (ByVal s As Long, buf As String, ByVal leng As Long, ByVal flags As Long) As Long
+
+Declare Sub Pop3Write(mess As String)
+Declare Sub TabChange
+Declare Sub YhClick
+Declare Sub KatkClick
+Declare Sub ExitClick
+Declare Sub TrayClick
+Declare Sub FormClose
+Declare Sub Writeln(sock As Integer, s As String)
+Declare Sub ErrQuit
+Declare Sub GetN 'mailide arvu saamine
+Declare Sub GetList 'maililisti saamine
+Declare Sub HoiaElus 'hoiab yhendust ja värsekdab maililisti
+Declare Sub LoeMaili
+Declare Sub InSaveClick 'salvestab maili faili
+Declare Sub SaadaClick
+Declare Sub RichBlue(mess As String) 'kirjutab ServRichi siniselt
+Declare Sub RichGreen(mess As String)
+Declare Sub RichRed(mess As String)
+Declare Sub GetNMess(mitm As Integer)
+Declare Sub GetNMail(mitm As Integer)
+Declare Sub FormResize
+Declare Sub DeleteMail
+Declare Sub PlayWaveSub(fnimi As String)
+
+Connected=0 'alguses ühendamata
+
+$include "mailreadf.inc"
+
+Create Form As Qform
+  Caption="Mail"
+  Width=600
+  Height=550
+  BorderStyle=bsSingle
+  OnClose=FormClose
+  Center
+  Create Tab As Qtabcontrol
+    Align=alClient
+    AddTabs "Server", "Mailid", "Saadud", "Uus", "Seaded"
+    TabHeight=25
+    TabWidth=60
+    OnChange=TabChange
+    HotTrack=True
+    Create Panel0 As Qpanel
+      Top=40
+      Left=5
+      Align=alClient
+      BevelInner=bvLowered
+      Visible=True
+      Create ServGauge As Qgauge
+        Top=240
+        Left=40
+        Width=150
+        Max=100
+        Height=20
+        Position=0
+      End Create
+      Create InComLabel As Qlabel
+        Top=20
+        Left=20
+        Caption="Sissetulev mail:"
+      End CReate
+      Create ServLabel As Qlabel
+        Top=40
+        Left=20
+        Caption="Server"
+      End Create
+      Create ServEdit As QEdit
+        Top=40
+        Left=70
+        Text=Server
+      End Create
+      Create UserLabel As Qlabel
+        Top=70
+        Left=20
+        Caption="Kasutaja"
+      End Create
+      Create UserEdit As Qedit
+        Top=70
+        Left=70
+        Text=User
+      End Create
+      Create PassLabel As Qlabel
+        Top=100
+        Left=20
+        Caption="Parool"
+      End Create
+      Create PassEdit As Qedit
+        Top=100
+        Left=70
+        Text=Pass
+      End Create
+      Create PortLabel As Qlabel
+        Top=130
+        Left=20
+        Caption="Port"
+      End Create
+      Create PortEdit As Qedit
+        Top=130
+        Left=70
+        Width=40
+        Text=str$(Pop3Port)
+      End Create
+      Create OutComLabel As Qlabel
+        Top=20
+        Left=250
+        Caption="Väljuv mail:"
+      End Create
+      Create SMTPServLabel As Qlabel
+        Top=40
+        Left=250
+        Caption="Server"
+      End Create
+      Create SMPTServEdit As Qedit
+        Top=40
+        Left=290
+        Text=OServer
+      End Create
+      Create SMPTPortLabel As Qlabel
+        Top=70
+        Left=250
+        Caption="Port"
+      End Create
+      Create SMPTPortEdit As Qedit
+        Top=70
+        Left=290
+        Text=str$(Oport)
+        Width=40
+      End Create
+      Create MailImage As Qimage
+        Top=40
+        Left=440
+        Height=99
+        Width=99
+        BMPHandle=emailimg
+      End Create
+      Create Yhbtn As Qbutton
+        Top=200
+        Left=40
+        Caption="&Ühenda"
+        OnClick=YhClick
+      End Create
+      Create KatkBtn As Qbutton
+        Top=200
+        Left=150
+        Caption="&Katkesta"
+        Enabled=0
+        OnClick=KatkClick
+      End Create
+      Create TrayBtn As Qbutton
+        Top=200
+        Left=370
+        Caption="&Tray->"
+        OnClick=TrayClick
+      End Create
+      Create ExitBtn As Qbutton
+        Top=200
+        Left=260
+        Caption="&Välju"
+        OnClick=ExitClick
+      End Create
+      Create ServRich As QRichedit
+        HideScrollBars=0
+        ScrollBars=ssVertical
+        Height=100
+        Align=alBottom
+      End Create
+    End Create
+    Create Panel1 As Qpanel
+      Top=40
+      Left=5
+      Align=alClient
+      BevelInner=bvLowered
+      Visible=False
+      Create Mlist As Qlistview
+        AddColumns "", "Pealkiri", "Kellelt", "Kuupäev"
+        Column(0).Width=40
+        Column(1).Width=200
+        Column(2).Width=200
+        Column(3).Width=100
+        RowSelect=1
+        HotTrack=1
+        ViewStyle=vsReport
+        Top=30
+        Left=30
+        Width=520
+        Height=375
+        OnDblClick=LoeMaili
+        SmallImages=ImageList
+      End Create
+      Create LoeBtn As QButton
+        Top=425
+        Left=200
+        Caption="&Loe"
+        OnClick=LoeMaili
+      End Create
+      Create DelBtn As Qbutton
+        Top=425
+        Left=275
+        Caption="&Kustuta"
+        OnClick=DeleteMail
+      End Create
+      Create MailLabel As Qlabel
+        Top=425
+        Left=30
+      End Create
+    End Create
+    Create Panel2 As Qpanel
+      Top=40
+      Left=5
+      Align=alClient
+      BevelInner=bvLowered
+      Visible=False
+      Create InFromLabel As Qlabel
+        Top=20
+        Left=20
+        Caption="Kellelt"
+      End Create
+      Create InFrom As Qedit
+        Top=20
+        Left=70
+        Width=200
+        Readonly=1
+      End Create
+      Create InDateLabel As Qlabel
+        Top=50
+        Left=20
+        Caption="Kuupäev"
+      End Create
+      Create InDate As Qedit
+        Top=50
+        Left=70
+        Width=200
+        Readonly=1
+      End Create
+      Create InSubjectL As Qlabel
+        Top=80
+        Left=20
+        Caption="Teema"
+      End Create
+      Create InSubject As Qedit
+        Top=80
+        Left=70
+        Width=200
+        Readonly=1
+      End Create
+      Create InSaveBtn As Qbutton
+        Top=20
+        Left=320
+        Caption="Salvesta"
+        OnClick=InSaveClick
+      End Create
+      Create MRich As Qrichedit
+        Align=alBottom
+        Readonly=1
+        Height=300
+        HideScrollBars=0
+        ScrollBars=ssVertical
+      End Create
+    End Create
+    Create Panel3 As Qpanel
+      Top=40
+      Left=5
+      Align=alClient
+      BevelInner=bvLowered
+      Visible=False
+      Create OFromLabel As Qlabel
+        Top=20
+        Left=20
+        Caption="Kellele"
+      End Create
+      Create OFrom As Qedit
+        Top=20
+        Left=70
+        Width=200
+      End Create
+      Create OSubjectL As Qlabel
+        Top=80
+        Left=20
+        Caption="Teema"
+      End Create
+      Create OSubject As Qedit
+        Top=80
+        Left=70
+        Width=200
+      End Create
+      Create UusRich As Qrichedit
+        Align=alBottom
+        Height=300
+        HideScrollBars=0
+        ScrollBars=ssVertical
+      End Create
+      Create SaadaBtn As Qbutton
+        Top=20
+        Left=320
+        OnClick=SaadaClick
+        Caption="Saada"
+      End Create
+    End Create
+    Create Panel4 As Qpanel
+      Top=40
+      Left=5
+      Align=alClient
+      BevelInner=bvLowered
+      Visible=False
+    End Create
+    Create NotCon As Qlabel 'näitab seda kui yhendamata
+      Caption="Pole Ühendatud"
+      Top=180
+      Left=240
+      Visible=False
+    End Create
+  End Create
+  Create Status As Qstatusbar
+    Align=alBottom
+    Addpanels "",""
+    Panel(0).Width=75
+    Panel(0).Caption="Ühendamata"
+    Panel(1).Caption="Made by Raivx"
+  End Create
+End Create
+
+$include "tabchange.inc"
+
+$include "yhclick.inc"
+
+Sub KatkClick
+  Call ErrQuit 'olgugi et mitte error
+  ServGauge.Position=0
+  pop3.Close
+  Connected=0
+  YhBtn.Enabled=1
+  KatkBtn.Enabled=0
+  ServEdit.Enabled=1
+  UserEdit.Enabled=1
+  PassEdit.Enabled=1
+  PortEdit.Enabled=1
+  MailTime.Enabled=0
+  PlayWaveSub("error.wav")
+  ShowMessage("Väja logitud")
+End Sub
+
+Sub ExitClick
+  Form.Close
+End Sub
+
+Sub FormClose
+  Dim TrayF As Qfilestream 'tray kraam
+  TrayF.Open("trayclose", fmCreate)
+  TrayF.Close
+  MailF.Close
+End Sub
+
+Sub TrayClick
+  If FileExists("trayok") Then  Kill "trayok"
+  Form.Visible = False
+End Sub
+
+Sub TrayChk
+  If FileExists("trayok") Then 
+    Form.Visible=1    
+    Kill "trayok"
+  End If
+End Sub
+
+Sub WriteLn(sock As Integer, s As String)
+  Dim tmp As String
+  tmp=s +chr$(13) +chr$(10)
+  Send(sock, tmp, len(tmp), 0) 
+End Sub
+
+Sub ErrQuit
+  Pop3Write("QUIT")
+  Pop3Read(pop3prt)  
+End Sub
+
+Sub FormResize
+  'Tab.Repaint
+End Sub
+
+'$include "getmess.inc" 'getN ,getNmess
+
+Sub GetN 'käivitatakse kohe peale ühendamist 
+  Dim mess As String
+  Dim ii As Integer
+  Dim Gpos As Integer
+  
+  Mlist.Clear
+  
+  Pop3Write("STAT")
+  mess=Pop3Read(pop3prt)
+  
+  mess=Right$(mess, Len(mess)-Instr(0, mess, " "))
+  mess=Left$(mess, Instr(0, mess, " ")-1)
+  
+  ServGauge.Position=30
+  
+  N=val(mess)
+   
+  If N=0 Then
+    MailTime.Enabled=1
+    ServGauge.Position=100    
+    Connected=1
+    PlayWaveSub("connect.wav")
+    MailLabel.Caption="Kokku: " +Str$(N) +" maili"
+    Exit Sub
+  End If
+  
+  Gpos=Round(70/N)
+  
+  For ii=1 To N Do
+    GetNMess(ii)
+    ServGauge.Position=ServGauge.Position+Gpos
+  Next
+  
+  MailTime.Enabled=1
+  MailLabel.Caption="Kokku: " +Str$(N) +" maili"
+  PlayWaveSub("connect.wav")
+  
+End Sub
+
+Sub GetNMess(mitm As Integer) 'saab N nda teate päise
+  Dim mess As String
+  Dim Subject As String
+  Dim From As String
+  Dim Date As String
+
+  Pop3Write("TOP " +str$(mitm) +" 0")
+  Mlist.AddItems str$(mitm)
+  Mlist.Item(mitm-1).ImageIndex=0
+  
+  Do
+    mess=Pop3Read(pop3prt)
+    If Ucase$(Left$(mess, 7))="SUBJECT" Then Subject=Right$(mess, Len(mess)-8)
+    If Ucase$(Left$(mess, 4))="FROM" Then From=Right$(mess, Len(mess)-5)
+    If Ucase$(Left$(mess, 4))="DATE" Then Date=Right$(mess, Len(mess)-5)
+  Loop Until Left$(mess, 1)="." Or Ucase$(Left$(mess, 4))="-ERR" 
+  
+  Mlist.AddSubItem mitm-1, Left$(Subject, Len(Subject)-1)
+  Mlist.AddSubItem mitm-1, Left$(From, Len(From)-1)
+  Mlist.AddSubItem mitm-1, Left$(Date, Len(Date)-1)
+  
+End Sub
+
+Sub MailTimeSub
+  Dim MT As Integer
+  Dim mess As String
+  Dim ii As Integer
+  
+  Pop3Write("STAT")
+  mess=Pop3Read(pop3prt)
+
+  mess=Right$(mess, Len(mess)-Instr(0, mess, " "))
+  mess=Left$(mess, Instr(0, mess, " ")-1)
+  
+  MT=val(mess) 'MT-uute mailide arv
+  
+  If MT<>N Then
+    MailTime.Enabled=0
+    PlayWaveSub("complete.wav")
+    ShowMessage("Saabunud on " +str$(MT-N) +" uut maili")
+    MailTime.Enabled=1
+  Else
+    Vaadatud=0
+    Exit Sub  
+  End If
+  
+  'Kui uusi maile on saabunud siis->
+  For ii=1 To MT-N Do
+    GetNMess(N+ii)
+  Next
+  N=MT
+  MailLabel.Caption="Kokku " +str$(N) +" maili."
+End Sub
+
+Sub LoeMaili
+  If MList.ItemIndex=-1 Then
+    ShowMessage("Vali mail ,mida tahad lugeda.")
+    Exit sub
+  End If
+  
+  Mlist.Item(Mlist.ItemIndex).ImageIndex=2
+  
+  Dim mess As String
+  Dim topridu As Integer
+  Dim Date As String
+  Dim Subject As String
+  Dim From As String
+  Dim Mitm As Integer
+  
+  topridu=-2 'päise ridade arv(algväärtus)
+  
+  MRich.Clear 'puhastatakse maili editbox
+  Mitm=Mlist.ItemIndex+1
+  
+  Pop3Write("TOP " +Str$(Mitm) +" 0")
+  Pop3Read(pop3prt)
+  
+  Do
+    mess=Pop3Read(pop3prt)
+    Inc(topridu)
+    If Ucase$(Left$(mess, 7))="SUBJECT" Then Subject=Right$(mess, Len(mess)-9)
+    If Ucase$(Left$(mess, 4))="FROM" Then From=Right$(mess, Len(mess)-6)
+    If Ucase$(Left$(mess, 4))="DATE" Then Date=Right$(mess, Len(mess)-6)
+  Loop Until Left$(mess, 1)="." Or Ucase$(Left$(mess, 4))="-ERR"
+  
+  InSubject.Text=Left$(Subject, Len(Subject)-1)
+  InFrom.Text=Left$(From, Len(From)-1)
+  InDate.Text=Left$(Date, Len(Date)-1)
+  
+  Pop3Write("RETR " +Str$(mitm))
+  Pop3Read(pop3prt)
+  
+  Do
+    topridu=topridu-1
+    mess=Pop3Read(pop3prt)
+    If topridu<0 And Len(mess)>3 Then MRich.AddString mess
+  Loop Until Left$(mess, 1)="." Or Ucase$(Left$(mess, 4))="-ERR"
+  
+  Panel1.Visible=0
+  Panel2.Visible=1
+  Tab.TabIndex=2
+  PlayWaveSub("complete.wav")
+End Sub
+
+Create InSaveDlg As QSaveDialog
+  FileName=".txt"
+End Create
+
+Sub InSaveClick
+  If InSaveDlg.Execute Then MRich.SaveToFile(InSaveDlg.Filename)
+End Sub
+
+Sub SaadaClick
+  Dim mess As String
+  Dim Time As Integer
+  Dim fromstr As String
+  Dim bodyf As Qfilestream
+  
+  OServer=SMPTServEdit.Text
+  OPort=val(SMPTPortEdit.Text)
+  smtpprt=smtp.Connect(OServer, OPort)
+  If smtpprt<=0 Then
+    Showmessage("Error 005")
+    Exit Sub
+  End If
+  
+  ServRich.AddString "Ühendatud " +OServer +":" +"OPort"
+  mess=SMTPRead(smtpprt)
+  ServRich.AddString mess
+  If Left$(mess, 3)="400" Then
+    ShowMessage("Error 006")
+    Exit Sub
+  End If
+  IF smtp.Transferred > Len(mess) Then mess=smtp.Read(smtpprt , 32000)
+  
+  ServRich.AddString ">HELO " +user
+  WriteLn(smtpprt, "HELO " +user)
+  mess=SMTPRead(smtpprt)
+  ServRich.AddString mess
+  If Left$(mess, 3)<>"250" Then
+    ShowMessage("Error 007")
+    Exit Sub
+  End If 
+  
+  fromstr=user +"@" +server
+  ServRich.AddString ">MAIL FROM: " +fromstr
+  WriteLn(smtpprt, "MAIL FROM: " +fromstr)
+  mess=SMTPRead(smtpprt)
+  ServRich.AddString mess
+  If Left$(mess, 3)<>"250" Then
+    ShowMessage("Error 008")
+    Exit Sub
+  End If   
+  
+  ServRich.AddString ">RCPT TO: " +OFrom.Text
+  WriteLn(smtpprt, "RCPT TO: " +OFrom.Text)
+  mess=SMTPRead(smtpprt)
+  ServRich.AddString mess
+  If Left$(mess, 3)<>"250" Then
+    ShowMessage("Error 009")
+    Exit Sub
+  End If
+  
+  ServRich.AddString ">DATA"
+  WriteLn(smtpprt, "DATA")
+  mess=SMTPRead(smtpprt)
+  ServRich.AddString mess
+  If Left$(mess, 3)<>"354" Then
+    ShowMessage("Error 010")
+    Exit Sub
+  End If
+  
+  'nyid algab maili data saatmine->
+  WriteLn(smtpprt, "From: " +"billgates@microsoft.com")
+  WriteLn(smtpprt, "To: " +OFrom.Text)
+  WriteLn(smtpprt, "Reply-to: " +"billgates@microsoft.com")
+  WriteLn(smtpprt, "Subject: " +OSubject.Text)
+  
+  UusRich.SaveToFile("temp.ml")
+  bodyf.open("temp.ml", fmOpenRead)
+  While bodyf.Position<bodyf.Size Do
+    WriteLn(smtpprt, bodyf.ReadLine)
+  Wend
+  bodyf.Close
+  WriteLn(smtpprt, ".")
+  ServRich.AddString SMTPRead(smtpprt)
+  ServRich.AddString ">QUIT"
+  WriteLn(smtpprt, "QUIT")
+  ServRich.AddString SMTPRead(smtpprt)
+  
+  smtp.Close
+End Sub
+
+Sub DeleteMail
+  Dim mess As String
+  Dim DelIndex As Integer
+  
+  DelIndex=MList.ItemIndex+1
+  Pop3Write("DELE " +str$(DelIndex))
+  
+  mess=Pop3Read(pop3prt)
+  If Ucase$(Left$(mess, 3))="+OK" Then
+    Mlist.Item(Mlist.ItemIndex).ImageIndex=1
+    PlayWaveSub("complete.wav")
+  End If
+End Sub
+
+Sub RichBlue(mess As String)
+  ServRich.SelAttributes=BlueFont
+  ServRich.AddString mess
+End Sub
+
+Sub RichGreen(mess As String)
+  ServRich.SelAttributes=GreenFont
+  ServRich.AddString mess
+End Sub
+
+Sub RichRed(mess As String)
+  ServRich.SelAttributes=RedFont
+  ServRich.AddString mess
+  PlayWaveSub("error.wav")
+End Sub
+
+Sub Pop3Write(mess As String)
+  WriteLn(pop3prt, mess)
+  ServRich.SelAttributes=BlackFont
+  ServRich.AddString mess
+  SendMessage(ServRich.Handle, &Hb7, 0, 0)
+End Sub
+
+Sub SWrite(mess As String)
+  WriteLn(smtpprt, mess)
+  ServRich.SelAttributes=GreenFont
+  ServRich.AddString mess
+  SendMessage(ServRich.Handle, &Hb7, 0, 0) 
+End Sub
+
+Sub PlayWaveSub(fnimi As String)
+  If FileExists(fnimi) And PlayWave Then Playwav fnimi, 1
+End Sub
+
+Form.ShowModal

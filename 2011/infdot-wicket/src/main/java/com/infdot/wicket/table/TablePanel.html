@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<wicket:panel>
+
+<table class="infdot-wicket-table">
+	<thead>
+		<tr>
+			<th wicket:id="header">
+				<wicket:container wicket:id="header">[column header]</wicket:container>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr wicket:id="row">
+			<td wicket:id="cell">
+				<wicket:container wicket:id="cell">[cell contents]</wicket:container>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div wicket:id="pager" class="infdot-wicket-table-pager"></div>
+</wicket:panel>
+
+<wicket:fragment wicket:id="pager">
+	<a wicket:id="previous" href="#">Previous</a>
+	<span wicket:id="page">[page]</span>/<span wicket:id="total">[total]</span>
+	<a wicket:id="next" href="#">Next</a>
+</wicket:fragment>
+
+<wicket:fragment wicket:id="sortableHeader">
+	<span wicket:id="header">[column header]</span>
+	<a wicket:id="asc">ASC</a>/<a wicket:id="desc">DESC</a>
+</wicket:fragment>
+
+<wicket:fragment wicket:id="staticHeader">
+	<span wicket:id="header">[column header]</span>
+</wicket:fragment>
+
+</html>

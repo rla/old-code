@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<project name="text-template" default="jar">
+	<property name="src" value="src" />
+	<property name="build" value="build" />
+	<property name="lib" value="../lib" />
+	<property name="doc" value="doc" />
+	<property name="doc.test.reports" value="${doc}/reports" />
+	<property name="jar" value="text-template.jar" />
+	<property name="rep.jar" value="../lib/${jar}" />
+	
+	<property name="tokenizer.rules" value="ee/pri/rl/text/template/template.rules" />
+	
+	<path id="compile.classpath">
+		<pathelement path="${build}" />
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	
+	<target name="compile" description="Compile the project">
+		<mkdir dir="${build}" />
+		<javac destdir="${build}" >
+			<src path="${src}" />
+			<classpath refid="compile.classpath" />
+		</javac>
+		<copy file="${src}/${tokenizer.rules}" tofile="${build}/${tokenizer.rules}" />
+	</target>
+	
+	<taskdef name="tokenizerCreator" classname="ee.pri.rl.tokenizer.support.ant.TokenizerCreator" classpathref="compile.classpath" />
+	
+	<target name="rules" depends="compile" description="Transform rules into serialized form">
+		<tokenizerCreator input="${src}/${tokenizer.rules}" output="${build}/${tokenizer.rules}.ser"/>
+	</target>
+	
+	<target name="clean" description="Clean the project">
+		<delete dir="${build}" />
+	</target>
+	
+	<target name="jar" depends="compile, rules, test" description="Package the project into jar">
+		<jar destfile="${jar}" basedir="${build}" />
+	</target>
+	
+	<target name="test" depends="compile, rules">
+		<mkdir dir="${doc.test.reports}"/>
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath refid="compile.classpath"/>
+			<formatter type="plain"/>
+			<batchtest fork="yes" todir="${doc.test.reports}">
+				<fileset dir="${src}">
+					<include name="**/*Test.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
+	<target name="copy-jar" description="Copy jar to upper project repository" depends="jar">
+		<copy file="${jar}" tofile="${rep.jar}" />
+	</target>
+	
+</project>

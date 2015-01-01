@@ -1,0 +1,113 @@
+$include "Rapidq.inc"
+type sissek
+  kuup as string * 10
+  time as string * 8
+  teade as string * 256
+end type
+ 
+dim sissekanne as sissek
+dim form as qform
+dim edit as qrichedit
+dim exitbtn as qbutton
+dim list as qlistbox
+dim fail as qfilestream
+dim lisabtn as qbutton
+dim kustutabtn as qbutton
+
+'sissekanne.kuup=date$
+'sissekanne.time=time$
+'sissekanne.teade="markmik.exe valmis!"
+'fail.open("C:\Markmik\markmik.mrk", fmCreate)
+'fail.writeUDT(sissekanne)
+'fail.close
+
+
+declare sub valju
+declare sub list_refr
+declare sub lisa_ok
+declare sub loe
+declare sub kustuta
+
+form.height=300
+form.width=400
+form.caption="Märkmik"
+form.center
+
+edit.top=30
+edit.left=10
+edit.height=100
+edit.width=200
+edit.parent=form
+
+lisabtn.top=150
+lisabtn.left=50
+lisabtn.caption="Lisa"
+lisabtn.parent=form
+lisabtn.onclick=lisa_ok
+
+'kustutabtn.top=175
+'kustutabtn.left=50
+'kustutabtn.caption="Kustuta"
+'kustutabtn.parent=form
+'kustutabtn.onclick=kustuta
+
+list.top=30
+list.left=250
+list.width=125
+list.height=160
+list.parent=form
+list.ondblClick=loe
+
+exitbtn.top=225
+exitbtn.left=250
+exitbtn.caption="Ok"
+exitbtn.onclick=valju
+exitbtn.parent=form
+
+list_refr
+
+form.showmodal
+
+sub valju
+  form.close
+end sub
+
+sub list_refr
+fail.open("C:\Markmik\markmik.mrk", fmOpenRead)
+while fail.position < fail.size do
+  fail.ReadUDT(sissekanne)
+  list.additems sissekanne.kuup +"   " +sissekanne.time
+wend  
+fail.close
+end sub
+
+sub lisa_ok
+  dim lisatmp as sissek
+  fail.open("C:\Markmik\markmik.mrk", fmOpenReadWrite)
+  while fail.position < fail.size do
+    fail.readudt(lisatmp)
+  wend
+  sissekanne.teade=edit.text
+  sissekanne.time=time$
+  sissekanne.kuup=date$
+  fail.writeUDT(sissekanne)
+  fail.close
+  list.clear
+  list_refr
+  edit.clear
+end sub
+
+sub loe
+  dim tmp as sissek
+  dim kontr as string
+  fail.open("C:\Markmik\markmik.mrk", fmOpenRead)
+  while fail.position < fail.size do
+    fail.readUDT(tmp)
+    kontr=tmp.kuup +"   " +tmp.time
+    if kontr=list.item(list.itemindex) then 
+      edit.clear
+      edit.addstring tmp.teade
+    end if  
+  wend  
+  fail.close
+end sub

@@ -1,0 +1,29 @@
+raivo@raivo:~/workspace/treedistance$ time ./td.sh -in1 data/tf105200.ds.nhx -in2 data/tf105200.dm.nhx -uw -0.5 -ms 100000 -r 1.5
+
+Merge Cftr_MOUSE and Cftr_RAT in both trees into L0
+Merge CFTR_HUMAN and CFTR_PANTR in both trees into L7
+Merge L7 and CFTR_PONPY in both trees into L13
+Merge CFTR_MACMU and L13 in both trees into L19
+Merge CFTR_OTOGA and CFTR_MICMU in both trees into L25
+Merge L19 and L25 in both trees into L30
+Merge CFTR_ECHTE and CFTR_LOXAF in both trees into L36
+Merge CFTR_TETNG and CFTR_GASAC in both trees into L1446
+Merge CFTR_CANFA and Q9N1D7_FELCA in both trees into L1645
+Merge L1446 and CFTR_ORYLA in both trees into L1651
+Merge si_dkey-270i2_F3_BRARE and L1651 in both trees into L1670
+Merge CFTR_SORAR and CFTR_ERIEU in both trees into L1680
+Merge L36 and CFTR_DASNO in both trees into L1682
+Swap L0 and CFTR_ORNAN in first tree
+Swap L0 and CFTR_ORNAN in first tree
+Merge L0 and L0 in both trees into L1871
+Merge L1871 and Q2QL94_MONDO in both trees into L1872
+Swap CFTR_ORNAN and CFTR_XENTR in first tree
+Merge L1872 and CFTR_ORNAN in both trees into L2259
+Merge L2259 and A0M8U4_CHICK in both trees into L2260
+Merge L2260 and CFTR_XENTR in both trees into L2261
+Merge L2261 and L1670 in both trees into L2262
+Swaps: 3
+
+real    0m1.853s
+user    0m1.632s
+sys     0m0.144s

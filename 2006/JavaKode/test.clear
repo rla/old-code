@@ -1,0 +1,10 @@
+class Test extends OldTest {
+
+	private int[] i={2,3};
+	String j=;
+
+}
+
+class Punkt {
+	int x, y;
+}

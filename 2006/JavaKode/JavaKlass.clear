@@ -1,0 +1,7 @@
+class JavaKlass {
+	
+	
+	private String nimi; 
+	private JavaMeetod[] meetodid; 
+	private JavaVali[] valjad; 
+}

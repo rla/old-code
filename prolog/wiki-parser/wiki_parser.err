@@ -1,0 +1,5 @@
+Mercury/cs/wiki_parser.c:71: warning: 'mercury__wiki_parser__read_lines_3_0' used but never defined
+Mercury/cs/wiki_parser.c:72: warning: 'mercury__wiki_parser__find_blocks_4_0' used but never defined
+Mercury/cs/wiki_parser.c:73: warning: 'mercury__wiki_parser__separator_1_0' used but never defined
+Mercury/cs/wiki_parser.c:74: warning: 'mercury__wiki_parser__write_block_types_3_0' used but never defined
+Mercury/cs/wiki_parser.c:75: warning: 'mercury__wiki_parser__list_prefix_2_0' used but never defined

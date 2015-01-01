@@ -1,0 +1,7 @@
+Testsuite: ee.pri.rl.tokenizer.serialization.test.TokenizerSerializationTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.069 sec
+------------- Standard Output ---------------
+Compiling took 0ms
+------------- ---------------- ---------------
+
+Testcase: testSerializationDeserialization took 0.066 sec

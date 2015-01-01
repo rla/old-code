@@ -1,0 +1,68 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Homepage uploading tool</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../../../laanemets.css" />
+</head>
+<body>
+<h1>Homepage uploading tool</h1>
+<div class="spacing"></div>
+
+<h2>Introduction</h2>
+
+<p>This tool will help to upload your (static) homepage. How it works:
+it looks for an index file in current directory. The uploading uses FTP
+transfer. The program will look into the index file and uploads every local
+file that is linked to it. For each linked local html file it recursively
+executes itself. This results in upload where only the files linked to html
+pages are uploaded.</p>
+
+<h2>Installation</h2>
+<p>Firstly unzip the distribution and then install it using make. The default install
+will put the program in system-wide directory and requires root access to do that.
+However, you can install the tool manually into your own home dirctory as well.</p>
+<pre>
+:# make install
+</pre>
+
+<h2>Configuration</h2>
+<p>In your home directory there should be a file
+called .upload.pl. The file contains configuration for the upload program.<br />
+Example contents:
+<pre>
+% Configuration
+
+% The remote root of homepage files
+remote_root('ftp://user:pass@ftp.host.com/path/to/web/root').
+
+% Local root of homepage files.
+% The default construct points to user home directory (~).
+local_root(R):- expand_file_name('~', [R]).
+</pre>
+</p>
+
+<h2>Usage</h2>
+
+<pre>
+:$ upload
+</pre>
+
+<h2>Distribution</h2>
+<p>
+The upload program is distributed under GNU General Public License. You can download
+the program from <a href="upload.zip">here</a>.
+</p>
+
+<h2>Source documentation</h2>
+
+<p><a href="upload/srcdoc/srcdoc_index.html">See srcdoc index</a></p>
+
+<div class="spacing"></div>
+<hr />
+Raivo Laanemets, <img src="../../../pictures/email.png" alt="email" align="top"/>, 23.10.06, <a href="../../../index.html">Index</a>
+
+</body>
+</html>
